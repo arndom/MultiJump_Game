@@ -1,0 +1,59 @@
+{
+  "colors": {
+    "backgroundColor": "#d50ce0",
+    "textColor": "#ffffff",
+    "buttonTextColor": "#043154",
+    "buttonColor": "#F5A234",
+    "scoreColor": "#F5A234",
+    "highscoreColor": "#F5D734",
+    "titleColor": "#F5A234",
+    "instructionsColor": "#B86F0D",
+    "tryAgainColor": "#EE3240",
+    "scoreModifierColor": "#ffffff",
+    "loseLifeColor": "#EE3240",
+    "buttonHoverColor": "#cf892e",
+    "buttonClickColor": "#F5A234",
+    "countdownTimer": "#ffffff",
+    "gameCountdownTimer": "#FFFFFF"
+  },
+  "@@editor": [
+    {
+      "key": "colors",
+      "name": "Game Colors",
+      "icon": "🎨",
+      "source": "colors.json",
+      "fields": [
+        {
+          "key": "backgroundColor",
+          "name": "Background color",
+          "type": "color"
+        },
+        {
+          "key": "scoreColor",
+          "name": "Score color",
+          "type": "color"
+        },
+        {
+          "key": "scoreModifierColor",
+          "name": "Score Modifier color",
+          "type": "color"
+        },
+        {
+          "key": "loseLifeColor",
+          "name": "Lose Life Color",
+          "type": "color"
+        },
+        {
+          "key": "countdownTimer",
+          "name": "Countdown Start Timer Color",
+          "type": "color"
+        },
+        {
+          "key": "gameCountdownTimer",
+          "name": "Game Countdown Timer Color",
+          "type": "color"
+        }
+      ]
+    }
+  ]
+}

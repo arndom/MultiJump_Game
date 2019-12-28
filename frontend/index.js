@@ -19,6 +19,8 @@ import "./index.css";
 import App from "./Wrapper/App";
 import Koji from '@withkoji/vcc';
 
+window.Koji = Koji;
+
 const render = Component => {
   ReactDOM.render(
     <AppContainer>

@@ -9,9 +9,9 @@ class Game extends PureComponent {
   };
 
   static defaultProps = {
-    setAppView() {},
-    setOutcome() {},
-    setScore() {},
+    setAppView() { },
+    setOutcome() { },
+    setScore() { },
   };
 
   initGame = () => {
@@ -20,9 +20,28 @@ class Game extends PureComponent {
     window.setOutcome = this.props.setOutcome;
 
     // Require the functions
-    window.preload = require('./preload').default;
-    window.setup = require('./setup').default;
-    window.draw = require('./draw').default;
+    window.preload = require('../Game/preload').default;
+    window.setup = require('../Game/setup').default;
+    window.draw = require('../Game/draw').default;
+    window.init = require('../Game/setup').init;
+    window.touchStarted = require('../Game/draw').touchStarted;
+    window.touchEnded = require('../Game/draw').touchEnded;
+    window.detectMobile = require('../Game/utilities.js').detectMobile;
+    window.submitScore = require('../Game/utilities.js').submitScore;
+    window.playMusic = require('../Game/utilities.js').playMusic;
+    window.Entity = require('../Game/entities.js').Entity;
+    window.Ball = require('../Game/entities.js').Ball;
+    window.addScore = require('../Game/entities.js').addScore;
+    window.loseLife = require('../Game/draw.js').loseLife;
+    window.Hoop = require('../Game/entities.js').Hoop;
+    window.HoopSide = require('../Game/entities.js').HoopSide;
+    window.FloatingText = require('../Game/entities.js').FloatingText;
+    window.init = require('../Game/draw.js').init;
+    window.Smooth = require('../Game/functions.js').Smooth;
+    window.Ease = require('../Game/functions.js').Ease;
+    window.SineWave = require('../Game/functions.js').SineWave;
+    window.CosineWave = require('../Game/functions.js').CosineWave;
+    window.Guide = require('../Game/entities.js').Guide;
 
     // Create the game
     this.p5Game = new window.p5(null, document.getElementById('game-container'));

@@ -1,0 +1,188 @@
+{
+  "settings": {
+    "fontFamily": "Acme",
+    "title": "SHOOT IT",
+    "instructions1": "Throw the ball by dragging it",
+    "instructions2": "Test your basketball skills!",
+    "instructions3": "",
+    "gameOverText": "GAME OVER",
+    "playButtonText": "PLAY NOW",
+    "health": "3",
+    "tryAgainText": "TRY AGAIN",
+    "loseLifeText": [
+      "TRY AGAIN",
+      "ONE MORE TIME",
+      "AGAIN",
+      "ONCE MORE",
+      "FOCUS",
+      "YOU CAN DO IT",
+      "DON'T GIVE UP"
+    ],
+    "scoreAdvanceText": [
+      "GOOD JOB",
+      "NICE",
+      "KEEP GOING",
+      "AMAZING",
+      "AWESOME",
+      "GREAT GOING",
+      "YES"
+    ],
+    "scoreGain": 1,
+    "scoreModifierIncrement": 1,
+    "scoreIncreaseInterval": 5,
+    "boardMoveStart": 3,
+    "hoopHeightOnBoard": 80,
+    "hoopWidth": 100,
+    "emailInputEmabled": false,
+    "leaderboardButtonText": "LEADERBOARD",
+    "ballCanPassThrough": true,
+    "gameLength": 30,
+    "timeUpText": "Time's up!",
+    "timeUpDuration": 3,
+    "textStroke": 0.08
+  },
+  "@@editor": [
+    {
+      "key": "settings",
+      "name": "Game Settings",
+      "icon": "💡",
+      "source": "settings.json",
+      "fields": [
+        {
+          "key": "gameLength",
+          "name": "Game Length",
+          "description": "How long the game will last.",
+          "type": "range",
+          "typeOptions": {
+            "min": 10,
+            "max": 300,
+            "step": 1
+          }
+        },
+        {
+          "key": "gameOverText",
+          "name": "Game Over Text",
+          "type": "text"
+        },
+        {
+          "key": "loseLifeText",
+          "name": "Miss text",
+          "description": "Text popup when you miss.",
+          "type": "text[]",
+          "arrayOptions": {
+            "addItemLabel": "Add Text"
+          }
+        },
+        {
+          "key": "scoreAdvanceText",
+          "name": "Score Text",
+          "description": "Text popup when you score a point.",
+          "type": "text[]",
+          "arrayOptions": {
+            "addItemLabel": "Add Text"
+          }
+        },
+        {
+          "key": "scoreGain",
+          "name": "Starting Score Gain",
+          "description": "How many points do you get before any advancements.",
+          "type": "range",
+          "typeOptions": {
+            "min": 0,
+            "max": 100,
+            "step": 1
+          }
+        },
+        {
+          "key": "scoreIncreaseInterval",
+          "name": "Score Increase Interval",
+          "description": "After each X rounds, the score gain modifier increases. (Integer)",
+          "type": "range",
+          "typeOptions": {
+            "min": 1,
+            "max": 20,
+            "step": 1
+          }
+        },
+        {
+          "key": "scoreModifierIncrement",
+          "name": "Score Modifier Increment",
+          "description": "By how much will the score modifier increase after each increment.",
+          "type": "range",
+          "typeOptions": {
+            "min": 0,
+            "max": 10,
+            "step": 1
+          }
+        },
+        {
+          "key": "boardMoveStart",
+          "name": "Board Move Start",
+          "description": "After what score does the board stop moving?",
+          "type": "range",
+          "typeOptions": {
+            "min": 0,
+            "max": 500,
+            "step": 1
+          }
+        },
+        {
+          "key": "hoopHeightOnBoard",
+          "name": "Hoop Height On Board",
+          "description": " At what percentage of the board height will the hoop be placed? 0 - Top, 100 - Bottom",
+          "type": "range",
+          "typeOptions": {
+            "min": 0,
+            "max": 100,
+            "step": 1
+          }
+        },
+        {
+          "key": "hoopWidth",
+          "name": "Hoop Width",
+          "description": "How wide is the hoop? The wider it is, the easier it is to score!",
+          "type": "range",
+          "typeOptions": {
+            "min": 70,
+            "max": 170,
+            "step": 1
+          }
+        },
+        {
+          "key": "ballCanPassThrough",
+          "name": "Ball Can Pass Through",
+          "description": "Whether the ball will pass through the hoop or get removed upon scoring.",
+          "type": "boolean"
+        },
+        {
+          "key": "timeUpText",
+          "name": "Time Up Text",
+          "description": "Text to show after the timer runs out.",
+          "type": "text"
+        },
+        {
+          "key": "timeUpDuration",
+          "name": "Time Up Duration",
+          "description": "How long between ending the timer and switching to the post game view?",
+          "type": "range",
+          "typeOptions": {
+            "min": 0.1,
+            "max": 10,
+            "step": 0.1
+          }
+        },
+        {
+          "key": "textStroke",
+          "name": "Text Stroke",
+          "description": "Weight of the text stroke.",
+          "type": "range",
+          "typeOptions": {
+            "min": 0,
+            "max": 1,
+            "step": 0.01
+          }
+        }
+      ]
+    }
+  ]
+}
