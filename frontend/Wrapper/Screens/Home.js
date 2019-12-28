@@ -23,7 +23,7 @@ if (Koji.config.template.config.homeScreenReveal === 'zoomBottom') Reveal = ({ c
 const PlayButton = styled.button`
   border: 0;
   outline: 0;
-  font-size: ${({ fontSize }) => `${fontSize}px`};
+  font-size: ${({ homeScreenPlayButtonFontSize }) => `${homeScreenPlayButtonFontSize}px`};
   background: ${({ primaryColor }) => primaryColor};
   color: ${({ primaryColor }) => isDarkColor(primaryColor) ? '#f1f1f1' : '#111111' };
   cursor: pointer;
@@ -173,7 +173,7 @@ class HomeScreen extends PureComponent {
               }
               <PlayButton
                 onClick={() => this.props.setAppView('game')}
-                fontSize={parseInt(Koji.config.template.config.homeScreenPlayButtonFontSize, 10)}
+                homeScreenPlayButtonFontSize={parseInt(Koji.config.template.config.homeScreenPlayButtonFontSize, 10)}
                 primaryColor={Koji.config.template.config.primaryColor}
                 >
                     {Koji.config.template.config.homeScreenPlayButtonText}
