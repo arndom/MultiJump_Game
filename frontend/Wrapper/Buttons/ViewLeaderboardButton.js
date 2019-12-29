@@ -2,13 +2,14 @@ import React, { PureComponent } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import Koji from '@withkoji/vcc';
+import isDarkColor from 'is-dark-color';
 
 const Button = styled.button`
   border: 0;
   outline: 0;
-  font-size: ${({ playButtonTextFontSize }) => `${parseInt(playButtonTextFontSize)}px`};
+  font-size: ${({ playButtonTextFontSize }) => `${playButtonTextFontSize}px`};
   background: ${({ secondaryColor }) => secondaryColor};
-  color: ${({ textColor }) => textColor};
+  color: ${({ secondaryColor }) => isDarkColor(secondaryColor) ? '#f1f1f1' : '#111111' };
   cursor: pointer;
   padding: 16px;
   border-radius: 4px;
@@ -37,11 +38,10 @@ class ViewLeaderboardButton extends PureComponent {
     return (
       <Button
         onClick={this.props.onClick}
-        playButtonTextFontSize={Koji.config.postGameScreen.playButtonTextFontSize}
-        secondaryColor={Koji.config.general.secondaryColor}
-        textColor={Koji.config.general.textColor}
+        playButtonTextFontSize={parseInt(Koji.config.template.config.playButtonTextFontSize, 10)}
+        secondaryColor={Koji.config.template.config.secondaryColor}
       >
-        {Koji.config.postGameScreen.viewLeaderboardButtonText}
+        {Koji.config.template.config.viewLeaderboardButtonText}
       </Button>
     );
   }

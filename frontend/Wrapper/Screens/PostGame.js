@@ -7,8 +7,9 @@ import RubberBand from 'react-reveal/RubberBand';
 import Zoom from 'react-reveal/Zoom';
 import PropTypes from 'prop-types';
 import isDarkColor from 'is-dark-color';
-import PostGameForm from '../Forms/PostGame';
+import LeaderboardSubmitForm from '../Forms/LeaderboardSubmit';
 import ViewLeaderboardButton from '../Buttons/ViewLeaderboardButton';
+import CTAButton from '../Buttons/CTAButton';
 
 let Reveal = ({ children }) => (
   <div>{children}</div>
@@ -52,26 +53,6 @@ const ButtonLinkWrapper = styled.a`
   text-decoration: none;
 `;
 
-const CTAButton = styled.button`
-  border: 0;
-  outline: 0;
-  font-size: 16px;
-  background: ${({ primaryColor }) => primaryColor};
-  color: ${({ primaryColor }) => isDarkColor(primaryColor) ? '#f1f1f1' : '#111111' };
-  cursor: pointer;
-  padding: 16px;
-  border-radius: 4px;
-  transition: transform 0.1s;
-
-  &:hover {
-    transform: scale(1.1);
-  }
-
-  &:active {
-    transform: scale(0.95);
-  }
-`;
-
 const SubmitButton = styled.button`
   border: 0;
   outline: 0;
@@ -106,45 +87,6 @@ const ContentWrapper = styled.div`
   align-items: center;
   justify-content: center;
   text-align: center;
-`;
-
-const CheckboxField = styled.div`
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    margin-bottom: 16px;
-
-    label {
-        text-align: left;
-        font-size: 13px;
-    }
-
-    input[type="checkbox"] {
-        width: auto;
-    }
-`;
-
-const InputField = styled.div`
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    margin-bottom: 16px;
-
-    label {
-        margin-bottom: 4px;
-        text-align: left;
-    }
-
-    input {
-        padding: 4px;
-        width: 100%;
-    }
-
-    input[type="checkbox"] {
-        width: auto;
-    }
 `;
 
 const CardWrapper = styled.div`
@@ -186,6 +128,10 @@ class PostGameScreen extends PureComponent {
 
   state = {
     formSubmitted: false,
+    name: '',
+    email: '',
+    phone: '',
+    optIn: true,
   };
 
   componentDidMount() {
@@ -196,9 +142,33 @@ class PostGameScreen extends PureComponent {
   }
 
   handleScoreSubmit = e => {
-      e.preventDefault();
+    e.preventDefault();
 
-      console.log('t', this.state);
+    const body = {
+        name: this.state.name,
+        score: this.props.score,
+        email: this.state.email,
+        optIn: this.state.optIn,
+        phone: this.state.phone,
+    };
+    
+    const hash = md5(JSON.stringify(body));
+
+    fetch(`${Koji.config.serviceMap.backend}/leaderboard/save`, {
+        method: 'post',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': hash,
+        },
+        body: JSON.stringify(body),
+    })
+        .then((response) => response.json())
+        .then((jsonResponse) => {
+            this.setState({ formSubmitted: true })
+        })
+        .catch(err => {
+            console.log(err);
+        });
   };
 
   render() {
@@ -276,63 +246,20 @@ class PostGameScreen extends PureComponent {
                 <Reveal>
                     <ContentWrapper id={'content-wrapper'}>
                         <CardWrapper>
-                            <form onSubmit={this.handleScoreSubmit}>
-                                <h1>{Koji.config.template.config.postGameScreenTitle}</h1>
+                            <h1>{Koji.config.template.config.postGameScreenTitle}</h1>
+                            {
+                                !this.state.formSubmitted &&
+                                <LeaderboardSubmitForm
+                                    onSubmitSuccess={() => this.setState({ formSubmitted: true })}
+                                    score={this.props.score}
+                                />
+                            }
+                            {
+                                this.state.formSubmitted &&
                                 <div>
-                                    <p>{`Your Score: ${this.props.score}`}</p>
+                                    <ViewLeaderboardButton onClick={() => this.props.showLeaderboard()} />
                                 </div>
-                                <InputField>
-                                    <label>{'Your Name'}</label>
-                                    <input
-                                        onChange={e => this.setState({ name: e.currentTarget.value })}
-                                        required
-                                        type={'text'}
-                                        value={this.state.name}
-                                    />
-                                </InputField>
-                                {
-                                    ['yes', 'required'].includes(Koji.config.template.config.emailCollection) &&
-                                    <InputField>
-                                        <label>{'Your Email'}</label>
-                                        <input
-                                            onChange={e => this.setState({ email: e.currentTarget.value })}
-                                            required={Koji.config.template.config.emailCollection === 'required'}
-                                            type={'email'}
-                                            value={this.state.email}
-                                        />
-                                    </InputField>
-                                }
-                                {
-                                    ['yes', 'required'].includes(Koji.config.template.config.phoneCollection) &&
-                                    <InputField>
-                                        <label>{'Your Phone Number'}</label>
-                                        <input
-                                            onChange={e => this.setState({ phone: e.currentTarget.value })}
-                                            required={Koji.config.template.config.phoneCollection === 'required'}
-                                            type={'tel'}
-                                            value={this.state.phone}
-                                        />
-                                    </InputField>
-                                }
-                                {
-                                    (['yes', 'required'].includes(Koji.config.template.config.emailCollection) || ['yes', 'required'].includes(Koji.config.template.config.phoneCollection)) &&
-                                    <CheckboxField inline>
-                                        <input
-                                            checked={this.state.optIn}
-                                            onChange={e => this.setState({ optIn: e.currentTarget.checked })}
-                                            type={'checkbox'}
-                                        />
-                                        <label dangerouslySetInnerHTML={{ __html: Koji.config.template.config.optInText }} />
-                                    </CheckboxField>
-                                }
-                                <CTAButton
-                                    type={'submit'}
-                                    onClick={this.handleScoreSubmit}
-                                    primaryColor={Koji.config.template.config.primaryColor}
-                                >
-                                    {Koji.config.template.config.postGameScreenSubmitButtonText}
-                                </CTAButton>
-                            </form>
+                            }
                         </CardWrapper>
                         {
                           Koji.config.template.config.postGameScreenShowPlayAgainButton &&
@@ -347,60 +274,21 @@ class PostGameScreen extends PureComponent {
     }
 
     return (
-        <div>{'Engage'}</div>
-    );
-
-    return (
-      <Fragment>
-        <FlexWrapper>
-          <Reveal>
-            <ContentWrapper id={'content-wrapper'}>
-              <CardWrapper>
-                {
-                  Koji.config.postGameScreen.enableCTA &&
-                  <Fragment>
-                    <h1>{Koji.config.postGameScreen.ctaText}</h1>
-                    <a
-                      href={Koji.config.postGameScreen.ctaLink}
-                      ref={'nofollow noreferrer'}
-                      target={'_blank'}
-                    >
-                      <CTAButton />
-                    </a>
-                  </Fragment>
-                }
-                {
-                  Koji.config.postGameScreen.enableCTA && Koji.config.postGameScreen.enableLeaderboard &&
-                  <Spacer />
-                }
-                {
-                  Koji.config.postGameScreen.enableLeaderboard &&
-                  <Fragment>
+         <FlexWrapper>
+            <Reveal>
+                <ContentWrapper id={'content-wrapper'}>
+                    <CardWrapper>
+                        <h1>{Koji.config.template.config.postGameScreenTitle}</h1>
+                    </CardWrapper>
                     {
-                      this.state.formSubmitted &&
-                      <div>
-                        <h1>{'Thanks for playing!'}</h1>
-                        <ViewLeaderboardButton onClick={() => this.props.showLeaderboard()} />
-                      </div>
+                        Koji.config.template.config.postGameScreenShowPlayAgainButton &&
+                        <PlayAgainButton onClick={() => this.props.setAppView('game')}>
+                        {Koji.config.template.config.postGameScreenPlayAgainButtonText}
+                        </PlayAgainButton>
                     }
-                    {
-                      !this.state.formSubmitted &&
-                      <PostGameForm
-                        onSubmitSuccess={() => this.setState({ formSubmitted: true })}
-                        score={this.props.score}
-                      />
-                    }
-                  </Fragment>
-                }
-              </CardWrapper>
-              {
-                Koji.config.postGameScreen.showPlayAgainButton &&
-                <PlayAgainButton onClick={() => this.props.setAppView('game')} />
-              }
-            </ContentWrapper>
-          </Reveal>
+                </ContentWrapper>
+            </Reveal>
         </FlexWrapper>
-      </Fragment>
     );
   }
 }

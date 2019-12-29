@@ -33,7 +33,8 @@
       "soundOnIcon": "https://images.koji-cdn.com/b4acde8c-96d4-4b1e-9e6e-4cca208833fe/dqabb-bbb8d67c83064aedb2fc9428ab6c3d8a.png",
       "soundOffIcon": "https://images.koji-cdn.com/b4acde8c-96d4-4b1e-9e6e-4cca208833fe/hqr5b-caf83cefc49348cb8a46c9e5647abcbb.png",
       "postGameWinText": "You Win!",
-      "postGameLoseText": "<a href=\"\">You Lose</a>"
+      "postGameLoseText": "<a href=\"\">You Lose</a>",
+      "viewLeaderboardButtonText": "View Leaderboard"
     }
   },
   "@@editor": [

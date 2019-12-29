@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import Koji from '@withkoji/vcc';
 import styled from 'styled-components';
+import isDarkColor from 'is-dark-color';
 
 const LeaderboardContainer = styled.div`
   display: flex;
@@ -9,8 +10,8 @@ const LeaderboardContainer = styled.div`
   max-width: 480px;
   margin: 0 auto;
   background: ${({ primaryColor }) => primaryColor};
-  color: ${({ textColor }) => textColor};
   margin-top: 16px;
+  color: ${({ primaryColor }) => isDarkColor(primaryColor) ? '#f1f1f1' : '#111111' };
 
   h1 {
     font-size: 24px !important;
@@ -21,6 +22,7 @@ const LeaderboardContainer = styled.div`
 const ScoreContainer = styled.div`
   height: calc(100vh - 212px);
   overflow: auto;
+  margin-top: 80px;
 `;
 
 const Score = styled.div`
@@ -30,7 +32,7 @@ const Score = styled.div`
   align-items: center;
   justify-content: center;
   background: ${({ secondaryColor }) => secondaryColor};
-  color: ${({ textColor }) => textColor};
+  color: ${({ secondaryColor }) => isDarkColor(secondaryColor) ? '#f1f1f1' : '#111111' };
   padding: 8px;
   margin-bottom: 4px;
 `;
@@ -77,28 +79,25 @@ class Leaderboard extends PureComponent {
 
     if (!this.state.dataIsLoaded) {
       return (
-        <div>{'Loading...'}</div>
+        <div />
       );
     }
 
     return (
       <LeaderboardContainer
-        primaryColor={Koji.config.general.primaryColor}
-        secondaryColor={Koji.config.general.secondaryColor}
-        textColor={Koji.config.homeScreen.textColor}
+        primaryColor={Koji.config.template.config.primaryColor}
+        secondaryColor={Koji.config.template.config.secondaryColor}
       >
-        <h1>{Koji.config.postGameScreen.leaderboardTitleText}</h1>
         <ScoreContainer>
           {
             this.state.scores.slice(0, 100).map((score, index) => (
               <Score
-                primaryColor={Koji.config.general.primaryColor}
-                secondaryColor={Koji.config.general.secondaryColor}
-                textColor={Koji.config.homeScreen.textColor}
+                primaryColor={Koji.config.template.config.primaryColor}
+                secondaryColor={Koji.config.template.config.secondaryColor}
               >
                 <ScoreIndex>{`${index + 1}`}</ScoreIndex>
                 <ScoreName>{score.name}</ScoreName>
-                <ScorePoints>{`${score.score.toLocaleString()} ${Koji.config.postGameScreen.leaderboardPointsText}`}</ScorePoints>
+                <ScorePoints>{`${score.score.toLocaleString()}`}</ScorePoints>
               </Score>
             ))
           }

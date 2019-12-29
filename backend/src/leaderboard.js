@@ -36,11 +36,12 @@ export default function(app) {
 
     const { privateAttributes = {} } = req.body;
     const recordBody = {
-      name: req.body.name,
-      score: req.body.score,
-      dateCreated: Math.round(Date.now() / 1000),
-			email: req.body.email,
-			emailOptIn: req.body.emailOptIn,
+        name: req.body.name,
+        score: req.body.score,
+        dateCreated: Math.round(Date.now() / 1000),
+        email: req.body.email,
+        emailOptIn: req.body.emailOptIn,
+        phone: req.body.phone,
     };
 
     const recordId = uuid.v4();
