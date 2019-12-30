@@ -1,63 +1,53 @@
 {
   "images": {
-    "player": "https://i.imgur.com/yt3eDcX.png",
-    "shootButton": "https://i.imgur.com/Fr9Hbyz.png",
-    "bullet1": "https://i.imgur.com/MGOkEQN.png",
-    "ball": "https://images.koji-cdn.com/6f2d3c96-6041-4e68-87c0-b29069a32e65/lbmax-bde82ee40734449da8259f168268a69e.png",
-    "board": "https://images.koji-cdn.com/6f2d3c96-6041-4e68-87c0-b29069a32e65/awhsd-03367bb6afff4837aa4f1bba4ced34bf.png",
-    "hoop": "https://images.koji-cdn.com/6f2d3c96-6041-4e68-87c0-b29069a32e65/aiqy3-67b11c5d286a435ea9c4b264447a41cb.png",
-    "platform": "https://images.koji-cdn.com/6f2d3c96-6041-4e68-87c0-b29069a32e65/45u7e-0ee617cb2d0f450eab1aac7c6d187aea.png",
-    "background": "https://images.koji-cdn.com/6f2d3c96-6041-4e68-87c0-b29069a32e65/wdoan-bg.png",
-    "boardSquare": "https://images.koji-cdn.com/6f2d3c96-6041-4e68-87c0-b29069a32e65/0syi0-afabb78e8eaf460da6e09d2ca57437eb.png",
-    "guide": "https://images.koji-cdn.com/92c42fba-e5f0-4293-9860-9796430ecc7e/6tx6f-pointcopy.png"
+    "soundImage": "https://images.koji-cdn.com/b4acde8c-96d4-4b1e-9e6e-4cca208833fe/dqabb-bbb8d67c83064aedb2fc9428ab6c3d8a.png",
+    "muteImage": "https://images.koji-cdn.com/b4acde8c-96d4-4b1e-9e6e-4cca208833fe/hqr5b-caf83cefc49348cb8a46c9e5647abcbb.png",
+    "lifeIcon": "https://i.imgur.com/SKksWaw.png",
+    "background": "",
+    "particle": "https://images.koji-cdn.com/b4acde8c-96d4-4b1e-9e6e-4cca208833fe/ba7yp-dd5a031e99704d1da9a55529096b7abb.png",
+    "explosion": "https://images.koji-cdn.com/b4acde8c-96d4-4b1e-9e6e-4cca208833fe/0swbr-f34ab333f65046c6bcce7e81fe99050d.png"
   },
   "@@editor": [
     {
       "key": "images",
       "name": "Images",
-      "icon": "🏀",
+      "icon": "🍄",
       "source": "images.json",
       "fields": [
         {
+          "key": "soundImage",
+          "name": "Sound Icon",
+          "description": "Ideal size: 32x32",
+          "type": "image"
+        },
+        {
+          "key": "muteImage",
+          "name": "Mute Icon",
+          "description": "Ideal size: 32x32",
+          "type": "image"
+        },
+        {
+          "key": "lifeIcon",
+          "name": "Life Icon",
+          "description": "Ideal size: 96x96",
+          "type": "image"
+        },
+        {
+          "key": "particle",
+          "name": "Particle",
+          "description": "Ideal size: 96x96",
+          "type": "image"
+        },
+        {
+          "key": "explosion",
+          "name": "Explosion",
+          "description": "Ideal size: 128x128",
+          "type": "image"
+        },
+        {
           "key": "background",
           "name": "Background",
-          "description": "Leave empty if you want a solid color. Ideal size: 1280x1080px, could get distorted because of different aspect ratios",
-          "type": "image"
-        },
-        {
-          "key": "ball",
-          "name": "Ball",
-          "description": "Ideal size: 120x120",
-          "type": "image"
-        },
-        {
-          "key": "board",
-          "name": "Board",
-          "description": "Ideal canvas size: 400x400",
-          "type": "image"
-        },
-        {
-          "key": "boardSquare",
-          "name": "Board Square",
-          "description": "Optional. Leave empty if desired. Ideal canvas size: 160x160",
-          "type": "image"
-        },
-        {
-          "key": "platform",
-          "name": "Platform",
-          "description": "Where the ball will be standing on. Ideal canvas size: 300x300",
-          "type": "image"
-        },
-        {
-          "key": "hoop",
-          "name": "Hoop",
-          "description": "Ideal size: 100x100",
-          "type": "image"
-        },
-        {
-          "key": "guide",
-          "name": "Guide Icon",
-          "description": "Ideal size: 100x100",
+          "description": "Optional. Will stretch to fill screen.",
           "type": "image"
         }
       ]

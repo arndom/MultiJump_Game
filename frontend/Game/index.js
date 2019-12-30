@@ -23,25 +23,34 @@ class Game extends PureComponent {
     window.preload = require('../Game/preload').default;
     window.setup = require('../Game/setup').default;
     window.draw = require('../Game/draw').default;
-    window.init = require('../Game/setup').init;
     window.touchStarted = require('../Game/draw').touchStarted;
     window.touchEnded = require('../Game/draw').touchEnded;
+    window.keyPressed = require('../Game/draw').keyPressed;
+    window.keyReleased = require('../Game/draw').keyReleased;
+    window.windowResized = require('../Game/draw').windowResized;
     window.detectMobile = require('../Game/utilities.js').detectMobile;
     window.submitScore = require('../Game/utilities.js').submitScore;
     window.playMusic = require('../Game/utilities.js').playMusic;
     window.Entity = require('../Game/entities.js').Entity;
-    window.Ball = require('../Game/entities.js').Ball;
+    window.Particle = require('../Game/entities.js').Particle;
+    window.Explosion = require('../Game/entities.js').Particle;
     window.addScore = require('../Game/entities.js').addScore;
     window.loseLife = require('../Game/draw.js').loseLife;
-    window.Hoop = require('../Game/entities.js').Hoop;
-    window.HoopSide = require('../Game/entities.js').HoopSide;
+    
+   
     window.FloatingText = require('../Game/entities.js').FloatingText;
     window.init = require('../Game/draw.js').init;
-    window.Smooth = require('../Game/functions.js').Smooth;
-    window.Ease = require('../Game/functions.js').Ease;
-    window.SineWave = require('../Game/functions.js').SineWave;
-    window.CosineWave = require('../Game/functions.js').CosineWave;
+    window.Smooth = require('../Game/helpers/functions.js').Smooth;
+    window.Ease = require('../Game/helpers/functions.js').Ease;
+    window.SineWave = require('../Game/helpers/functions.js').SineWave;
+    window.CosineWave = require('../Game/helpers/functions.js').CosineWave;
     window.Guide = require('../Game/entities.js').Guide;
+    window.spawnParticles = require('../Game/entities.js').spawnParticles;
+    window.spawnExplosion = require('../Game/entities.js').spawnExplosion;
+
+
+    //Example
+    window.Node = require('../Game/entities.js').Node;
 
     // Create the game
     this.p5Game = new window.p5(null, document.getElementById('game-container'));

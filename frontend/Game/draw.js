@@ -5,172 +5,73 @@ export default function draw() {
     }
 
     background(Koji.config.colors.backgroundColor);
-    // set the background color from the configuration options
+
     if (imgBackground) {
         background(imgBackground);
     }
 
-    //===Draw UI
+    //Update and render all game objects here
 
+    //===EXAMPLE
+    for (let i = 0; i < nodes.length; i++) {
+        nodes[i].update();
+        nodes[i].render();
+    }
+    //===
 
-    board.pos.x = boardPos;
-    board.render();
-
-    if (boardSquare) {
-        boardSquare.render();
-        boardSquare.pos.x = boardPos;
+    for (let i = 0; i < particles.length; i++) {
+        particles[i].update();
+        particles[i].render();
     }
 
-
-    boardPos = Smooth(boardPos, desiredBoardPos, 8); //Move board pos towards desired position
-
-    //===Score modifier draw
-    let x = boardPos;
-    let y = hoopSides[0].pos.y - objSize * hoopWidthModifier / 100 / 3;
-    textSize(objSize * 0.5);
-    fill(Koji.config.colors.scoreModifierColor);
-    textAlign(CENTER, BOTTOM);
-    text("x" + scoreGainModifier, x, y);
-
-    //Update left and right side of the hoop (the ones used for collision)
-    for (let i = 0; i < hoopSides.length; i++) {
-        hoopSides[i].update();
-        hoopSides[i].render();
+    for (let i = 0; i < explosions.length; i++) {
+        explosions[i].update();
+        explosions[i].render();
     }
 
-    // if the ball has been created, update it and render
-    if (ball) {
-        ball.update();
-        hoop.update();
-
-        //Determine draw order of ball, hoop and platform depending on what the ball is currently doing
-        //If the ball is falling, draw it behind hoop and platform, otherwise in front
-        if (ball.falling) {
-
-            ball.render();
-            hoop.render();
-            platform.render();
-
-        } else {
-            platform.render();
-            hoop.render();
-            ball.render();
-
-        }
-
-        //if the ball fell offscreen, create a new one
-        if (ball.pos.y > height) {
-            spawnBall();
-        }
-    }
-
-    //===Update all floating text objects
     for (let i = 0; i < floatingTexts.length; i++) {
         floatingTexts[i].update();
         floatingTexts[i].render();
     }
 
-    if(guide){
-      guide.update();
-      guide.render();
-    }
-
     //===Ingame UI
 
-    // Game Timer
-  
-    if (startCountdown <= -1) {
-        if (gameTimer > 0) {
-
-
-            let timerX = objSize / 2;
-            let timerY = objSize / 2;
-            textSize(objSize);
-            fill(Koji.config.colors.gameCountdownTimer);
-            textAlign(LEFT, TOP);
-            text(gameTimer.toFixed(1), timerX, timerY);
-
-            gameTimer -= 1 / frameRate();
-        }
-
-    }else{
-        countdownInterval -= 1/frameRate();
-
-        if(countdownInterval <= 0){
-            doCountdown();
-            countdownInterval = 1;
-        }
+    //===Score draw
+    if (scoreAnimTimer < 1) {
+        scoreAnimTimer += 1 / frameRate() * 4;
     }
 
-
-
-
-    //===Score draw
     let scoreX = width - objSize / 2;
     let scoreY = objSize / 3;
-    textSize(objSize * 2);
+    let txtSize = Ease(EasingFunctions.outBack, scoreAnimTimer, objSize * 2.5, -objSize * 0.5);
+
+    push();
+    textSize(txtSize);
     fill(Koji.config.colors.scoreColor);
     textAlign(RIGHT, TOP);
-    text(score, scoreX, scoreY);
+    text(score.toLocaleString(), scoreX, scoreY);
+    pop();
+    //===
 
-
-    //===Countdown draw
-    if (startCountdown > -1) {
-        if (countdownAnimTimer < 1) {
-            countdownAnimTimer += 1 / frameRate() * 5;
-        }
-
-        let countdownX = width / 2;
-        let countdownY = height / 2 - objSize * 4;
-        let countdownSize = Ease(EasingFunctions.outBounce, countdownAnimTimer, 3, -1);
-        textSize(objSize * countdownSize);
-        fill(Koji.config.colors.countdownTimer);
-        textAlign(CENTER, CENTER);
-
-        let countdownText = startCountdown;
-        if (startCountdown <= 0) {
-            countdownText = "GO!";
-        }
-        text(countdownText, countdownX, countdownY);
+    //===Lives draw
+    let lifeSize = objSize;
+    for (let i = 0; i < lives; i++) {
+        image(imgLife, lifeSize / 2 + lifeSize * i, lifeSize / 2, lifeSize, lifeSize);
     }
     //===
 
-
-    //===Endgame countdown draw
-    if (gameTimer <= 0) {
-        timeUpTimer -= 1 / frameRate();
-
-        if (timeUpTimer <= 0) {
-            loseLife();
-        }
-
-        if (countdownAnimTimer < 1) {
-            countdownAnimTimer += 1 / frameRate() * 5;
-        }
-
-        try {
-            fill("rgba(0,0,0," + (1 - timeUpTimer / timeUpDuration) + ")");
-            rect(0, 0, width, height);
-        } catch{
-
-        }
-
-
-        let countdownX = width / 2;
-        let countdownY = height / 2;
-        let countdownSize = Ease(EasingFunctions.outBounce, countdownAnimTimer, 2, -1);
-        textSize(objSize * countdownSize);
-        fill(Koji.config.colors.countdownTimer);
-        textAlign(CENTER, CENTER);
-
-        text(Koji.config.settings.timeUpText, countdownX, countdownY);
-
-
-    }
+    //===EXAMPLE
+    push();
+    fill(Koji.config.colors.scoreColor);
+    textAlign(LEFT, TOP);
+    textSize(objSize * 0.75);
+    text("Click - Score Points\nE - Spawn Explosion\nP - Submit Score to leaderboard", lifeSize / 2, lifeSize * 2);
+    pop();
     //===
-
 
     cleanup();
+
+
 
     updateSound();
 }
@@ -180,15 +81,16 @@ export function touchStarted() {
         //Do Ingame stuff
         isTouching = true;
 
-        if (ball) {
-            if (ball.checkClick()) {
-                ball.canThrow = true;
-            }
-        }
+        //EXAMPLE
+        if (sndTap) sndTap.play();
+        addScore(scoreGain);
+        floatingTexts.push(new FloatingText(mouseX, mouseY, scoreGain, Koji.config.colors.scoreColor, objSize));
+        spawnParticles(mouseX, mouseY, random(10, 15));
+        //===
+
     } catch (error) {
         console.log(error);
     }
-
 }
 
 
@@ -201,13 +103,49 @@ export function touchEnded() {
 
         isTouching = false;
 
-        if (ball) {
-            ball.canThrow = false;
-        }
     } catch (error) {
         console.log(error);
     }
+}
 
+
+//Keyboard input
+/*
+You can check if the keyCode equals:
+
+BACKSPACE, DELETE, ENTER, RETURN, TAB, ESCAPE, SHIFT, CONTROL, OPTION, ALT, UP_ARROW, DOWN_ARROW, LEFT_ARROW, RIGHT_ARROW
+*/
+
+export function keyPressed() {
+
+    //Ingame
+    if (keyCode == UP_ARROW) {
+        console.log("up")
+    }
+    if (keyCode == DOWN_ARROW) {
+        console.log("down")
+    }
+    if (keyCode == LEFT_ARROW) {
+        console.log("left")
+    }
+    if (keyCode == RIGHT_ARROW) {
+        console.log("right")
+    }
+
+    if (key == 'p') {
+        console.log("Pressed P key")
+        submitScore();
+    }
+
+    if (key == 'e') {
+        console.log("Pressed E key")
+
+        spawnExplosion(mouseX, mouseY, 3);
+    }
+}
+
+//Same usage as keyPressed
+export function keyReleased() {
 
 }
 
@@ -220,8 +158,26 @@ function cleanup() {
         }
     }
 
-    if(guide && guide.removable){
-      guide = null;
+    for (let i = 0; i < particles.length; i++) {
+        if (particles[i].removable) {
+            particles.splice(i, 1);
+        }
+    }
+
+    let maxParticles = Koji.config.settings.maxParticles;
+    if (isMobile) {
+        maxParticles = Koji.config.settings.maxParticlesMobile;
+    }
+
+    if (particles.length > maxParticles) {
+        particles.splice(maxParticles - 1);
+    }
+
+
+    for (let i = 0; i < explosions.length; i++) {
+        if (explosions[i].removable) {
+            explosions.splice(i, 1);
+        }
     }
 }
 
@@ -230,48 +186,17 @@ function cleanup() {
 export function init() {
 
     score = 0;
-    lives = 1;
+    lives = startingLives;
 
-    //Clear all arrays
+    //Clear out all arrays
     floatingTexts = [];
-    hoopSides = [];
-    scoreGainModifier = 1;
-
-    gameTimer = gameLength;
-    timeUpTimer = timeUpDuration;
-
-    countdownInterval = 1;
-    startCountdown = 3;
-
-    //reset desired position
-    desiredBoardPos = width / 2;
-
-    //spawn all objects fresh
-    spawnBall();
-
-    board = new Entity(boardPos, height / 2 - objSize * 4);
-    board.sizeMod = 7;
-    board.img = imgBoard;
-
-    hoopSides.push(new HoopSide(boardPos - objSize * hoopWidthModifier / 100, board.pos.y + objSize * board.sizeMod * hoopHeightOnBoard / 100 - objSize * board.sizeMod * 0.5 - objSize * hoopWidthModifier / 100 / 2));
-    hoopSides.push(new HoopSide(boardPos + objSize * hoopWidthModifier / 100, board.pos.y + objSize * board.sizeMod * hoopHeightOnBoard / 100 - objSize * board.sizeMod * 0.5 - objSize * hoopWidthModifier / 100 / 2));
-
-    hoop = new Hoop((hoopSides[0].pos.x + hoopSides[1].pos.x) / 2, hoopSides[0].pos.y + objSize * hoopWidthModifier / 100);
-    hoop.sizeMod = hoopWidthModifier / 100 * 2;
-
-    if (imgBoardSquare) {
-        boardSquare = new Entity(boardPos, hoop.pos.y - objSize * hoop.sizeMod + objSize * hoop.sizeMod * 0.1);
-        boardSquare.img = imgBoardSquare;
-        boardSquare.sizeMod = hoopWidthModifier / 100 * 2;
-
-    }
+    particles = [];
+    explosions = [];
 
 
-    platform = new Entity(ball.pos.x, ball.pos.y + objSize * 2.5);
-    platform.img = imgPlatform;
-    platform.sizeMod = 5;
-
-    guide = new Guide(ball.pos.x + objSize, ball.pos.y);
+    //EXAMPLE
+    spawnNodes();
+    //===
 
 }
 
@@ -283,42 +208,46 @@ function doCountdown() {
 
 }
 
-function spawnBall() {
-    ball = null;
-    ball = new Ball(width / 2, height / 2 + objSize * 2);
+
+
+//EXAMPLE
+function spawnNodes() {
+    nodes = [];
+
+    let nodeCount = floor(random(80, 100));
+    if (isMobile) {
+        nodeCount = 30;
+    }
+    for (let i = 0; i < nodeCount; i++) {
+        let x = random(0, width);
+        let y = random(0, height);
+        let node = new Node(x, y);
+        nodes.push(node);
+        node.changeVelocity();
+    }
+}
+//===
+
+//Use this to add score and trigger animation
+function addScore(amount) {
+    score += amount;
+    scoreAnimTimer = 0;
 }
 
-
-
 //===Call this when a lose life event should trigger
-export function loseLife() {
+function loseLife() {
 
     lives--;
 
     if (lives <= 0) {
+
+        // Go to leaderboard submission
         submitScore();
 
-        lives = 1;
-
-        if (backgroundMusic) {
-            backgroundMusic.stop();
+        if (sndMusic) {
+            sndMusic.stop();
         }
-
-        try {
-            if (sndLoseGame) sndLoseGame.play();
-        } catch (error) {
-            console.log(error);
-        }
-
-    } else {
-        //===Choose a random loseLifeText from the array
-        let textID = floor(random() * loseLifeText.length);
-        let text = loseLifeText[textID];
-        floatingTexts.push(new FloatingText(boardPos, height / 2 - objSize * 4, text, Koji.config.colors.loseLifeColor, objSize * 1));
-        if (sndMiss) sndMiss.play();
     }
-
-
 }
 
 function updateSound() {
@@ -331,7 +260,21 @@ function updateSound() {
             getAudioContext().suspend();
         }
     }
+}
 
 
+export function windowResized() {
+    resizeCanvas(windowWidth, windowHeight);
 
+    width = window.innerWidth;
+    height = window.innerHeight;
+
+    //===How much of the screen should the game take, this should usually be left as it is
+    let sizeModifier = 0.75;
+    if (height > width) {
+        sizeModifier = 1;
+    }
+
+    //Determine basic object size depending on size of the screen
+    objSize = floor(min(floor(width / gameSize), floor(height / gameSize)) * sizeModifier);
 }

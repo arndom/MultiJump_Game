@@ -1,18 +1,14 @@
 {
   "sounds": {
     "backgroundMusic": "https://objects.koji-cdn.com/63bc2fb0-0c42-4acb-bee8-a060e9286a95/backgroundMusicSpace.mp3",
-    "throwSound": "https://objects.koji-cdn.com/6f2d3c96-6041-4e68-87c0-b29069a32e65/o8zfa-throw.mp3",
-    "collisionSound": "https://objects.koji-cdn.com/6f2d3c96-6041-4e68-87c0-b29069a32e65/iqbl4-collisoin.mp3",
-    "loseLifeSound": "https://objects.koji-cdn.com/6f2d3c96-6041-4e68-87c0-b29069a32e65/epj5o-loseLife.mp3",
-    "loseGameSound": "https://objects.koji-cdn.com/6f2d3c96-6041-4e68-87c0-b29069a32e65/4r5ag-loseGame.mp3",
-    "scoreSound": "https://objects.koji-cdn.com/6f2d3c96-6041-4e68-87c0-b29069a32e65/e93l7-score.mp3",
-    "scoreIncrementSound": "https://objects.koji-cdn.com/6f2d3c96-6041-4e68-87c0-b29069a32e65/lzm99-increment.mp3"
+    "tap": "https://objects.koji-cdn.com/b4acde8c-96d4-4b1e-9e6e-4cca208833fe/laser1.mp3",
+    "musicVolume": 0.4
   },
   "@@editor": [
     {
       "key": "sounds",
       "name": "Sounds",
-      "icon": "🔊️",
+      "icon": "🎵",
       "source": "sounds.json",
       "fields": [
         {
@@ -22,39 +18,20 @@
           "type": "sound"
         },
         {
-          "key": "throwSound",
-          "name": "Ball Throw",
-          "description": "When you throw the ball",
-          "type": "sound"
+          "key": "musicVolume",
+          "name": "Music Volume",
+          "description": "Modifier for music volume.",
+          "type": "range",
+          "typeOptions": {
+            "min": 0,
+            "max": 1.5,
+            "step": 0.05
+          }
         },
         {
-          "key": "collisionSound",
-          "name": "Collision",
-          "description": "When the ball collides with the hoop",
-          "type": "sound"
-        },
-        {
-          "key": "scoreSound",
-          "name": "Score",
-          "description": "When you score!",
-          "type": "sound"
-        },
-        {
-          "key": "scoreIncrementSound",
-          "name": "Score Increment",
-          "description": "When your score increment increases!",
-          "type": "sound"
-        },
-        {
-          "key": "loseLifeSound",
-          "name": "Miss",
-          "description": "When your miss.",
-          "type": "sound"
-        },
-        {
-          "key": "loseGameSound",
-          "name": "Lose Game",
-          "description": "When your lose a game.",
+          "key": "tap",
+          "name": "Tap",
+          "description": "Played on tap/click",
           "type": "sound"
         }
       ]

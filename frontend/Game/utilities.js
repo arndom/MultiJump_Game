@@ -7,13 +7,13 @@ export function detectMobile() {
     return check;
 };
 
-//use this to play music if your music is assigned to backgroundMusic variable
+//use this to play music if your music is loaded
 export function playMusic() {
 
-    if (backgroundMusic) {
-        backgroundMusic.setVolume(0.4);
-        backgroundMusic.setLoop(true);
-        backgroundMusic.play();
+    if (sndMusic) {
+        sndMusic.setVolume(0.4);
+        sndMusic.setLoop(true);
+        sndMusic.play();
     }
 
 }
