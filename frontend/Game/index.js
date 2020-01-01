@@ -3,18 +3,22 @@ import PropTypes from 'prop-types';
 
 class Game extends PureComponent {
   static propTypes = {
+    getAppView: PropTypes.func,
     setAppView: PropTypes.func,
     setOutcome: PropTypes.func,
     setScore: PropTypes.func,
   };
 
   static defaultProps = {
-    setAppView() { },
-    setOutcome() { },
-    setScore() { },
+
+    getAppView() {},
+    setAppView() {},
+    setOutcome() {},
+    setScore() {},
   };
 
   initGame = () => {
+    window.getAppView = this.props.getAppView;
     window.setAppView = this.props.setAppView;
     window.setScore = this.props.setScore;
     window.setOutcome = this.props.setOutcome;

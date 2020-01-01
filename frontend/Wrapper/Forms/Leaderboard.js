@@ -92,6 +92,7 @@ class Leaderboard extends PureComponent {
           {
             this.state.scores.slice(0, 100).map((score, index) => (
               <Score
+                key={index}
                 primaryColor={Koji.config.template.config.primaryColor}
                 secondaryColor={Koji.config.template.config.secondaryColor}
               >

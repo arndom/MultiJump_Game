@@ -41,6 +41,12 @@ class Leaderboard extends PureComponent {
             minWidth: '280px',
             maxWidth: '480px',
             margin: '0 auto',
+            top: '50%',
+            left: '50%',
+            right: 'auto',
+            bottom: 'auto',
+            marginRight: '-50%',
+            transform: 'translate(-50%, -50%)',
           },
           overlay: {
             padding: 0,

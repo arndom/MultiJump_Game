@@ -15,12 +15,14 @@ const GameContainer = styled.div`
 
 class GameScreen extends PureComponent {
   static propTypes = {
+    getAppView: PropTypes.func,
     setAppView: PropTypes.func,
     setOutcome: PropTypes.func,
     setScore: PropTypes.func,
   };
 
   static defaultProps = {
+    getAppView() {},
     setAppView() {},
     setOutcome() {},
     setScore() {},
@@ -34,6 +36,7 @@ class GameScreen extends PureComponent {
         id={'game-container'}
       >
         <Game
+          getAppView={this.props.getAppView}
           setAppView={this.props.setAppView}
           setScore={this.props.setScore}
           setOutcome={this.props.setOutcome}

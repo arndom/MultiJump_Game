@@ -8,8 +8,8 @@ import Zoom from 'react-reveal/Zoom';
 import PropTypes from 'prop-types';
 import isDarkColor from 'is-dark-color';
 import LeaderboardSubmitForm from '../Forms/LeaderboardSubmit';
-import ViewLeaderboardButton from '../Buttons/ViewLeaderboardButton';
-import CTAButton from '../Buttons/CTAButton';
+import PrimaryButton from '../Buttons/Primary';
+import SecondaryButton from '../Buttons/Secondary';
 
 let Reveal = ({ children }) => (
   <div>{children}</div>
@@ -23,26 +23,6 @@ if (Koji.config.template.config.postGameScreenReveal === 'fadeBottom') Reveal = 
 if (Koji.config.template.config.postGameScreenReveal === 'zoomTop') Reveal = ({ children }) => (<Zoom top>{children}</Zoom>);
 if (Koji.config.template.config.postGameScreenReveal === 'zoomBottom') Reveal = ({ children }) => (<Zoom bottom>{children}</Zoom>);
 
-const PlayAgainButton = styled.button`
-  border: 2px solid ${({ primaryColor }) => primaryColor};
-  outline: 0;
-  font-size: ${({ playButtonTextFontSize }) => `${parseInt(playButtonTextFontSize)}px`};
-  background: rgba(255, 255, 255, 0.9);
-  color: ${({ textColor }) => textColor};
-  cursor: pointer;
-  padding: 16px;
-  border-radius: 4px;
-  transition: transform 0.1s;
-
-  &:hover {
-    transform: scale(1.1);
-  }
-
-  &:active {
-    transform: scale(0.95);
-  }
-`;
-
 const ButtonLinkWrapper = styled.a`
   margin: 24px 0 0 0;
   border: 0;
@@ -51,25 +31,6 @@ const ButtonLinkWrapper = styled.a`
   display: flex;
   justify-content: center;
   text-decoration: none;
-`;
-
-const SubmitButton = styled.button`
-  border: 0;
-  outline: 0;
-  font-size: 16px;
-  color: ${({ primaryColor }) => primaryColor};
-  cursor: pointer;
-  padding: 16px;
-  border-radius: 4px;
-  transition: transform 0.1s;
-
-  &:hover {
-    transform: scale(1.1);
-  }
-
-  &:active {
-    transform: scale(0.95);
-  }
 `;
 
 const FlexWrapper = styled.div`
@@ -187,21 +148,17 @@ class PostGameScreen extends PureComponent {
                               rel={'nofollow noreferrer'}
                               target={'_blank'}
                             >
-                              <CTAButton
-                                primaryColor={Koji.config.template.config.primaryColor}
-                              >
-                                {Koji.config.template.config.postGameScreenButtonText}
-                              </CTAButton>
+                              <PrimaryButton
+                                text={Koji.config.template.config.postGameScreenButtonText}
+                              />
                             </ButtonLinkWrapper>
                         </CardWrapper>
                         {
                           Koji.config.template.config.postGameScreenShowPlayAgainButton &&
-                          <PlayAgainButton
+                          <SecondaryButton
                             onClick={() => this.props.setAppView('game')}
-                            primaryColor={Koji.config.template.config.primaryColor}
-                        >
-                            {Koji.config.template.config.postGameScreenPlayAgainButtonText}
-                          </PlayAgainButton>
+                            text={Koji.config.template.config.postGameScreenPlayAgainButtonText}
+                          />
                         }
                     </ContentWrapper>
                 </Reveal>
@@ -227,12 +184,10 @@ class PostGameScreen extends PureComponent {
                         </CardWrapper>
                         {
                           Koji.config.template.config.postGameScreenShowPlayAgainButton &&
-                          <PlayAgainButton
+                          <SecondaryButton
                             onClick={() => this.props.setAppView('game')}
-                            primaryColor={Koji.config.template.config.primaryColor}
-                        >
-                            {Koji.config.template.config.postGameScreenPlayAgainButtonText}
-                          </PlayAgainButton>
+                            text={Koji.config.template.config.postGameScreenPlayAgainButtonText}
+                          />
                         }
                     </ContentWrapper>
                 </Reveal>
@@ -257,15 +212,19 @@ class PostGameScreen extends PureComponent {
                             {
                                 this.state.formSubmitted &&
                                 <div>
-                                    <ViewLeaderboardButton onClick={() => this.props.showLeaderboard()} />
+                                    <PrimaryButton
+                                        onClick={() => this.props.showLeaderboard()}
+                                        text={Koji.config.template.config.viewLeaderboardButtonText}
+                                    />
                                 </div>
                             }
                         </CardWrapper>
                         {
                           Koji.config.template.config.postGameScreenShowPlayAgainButton &&
-                          <PlayAgainButton onClick={() => this.props.setAppView('game')}>
-                            {Koji.config.template.config.postGameScreenPlayAgainButtonText}
-                          </PlayAgainButton>
+                          <SecondaryButton
+                            onClick={() => this.props.setAppView('game')}
+                            text={Koji.config.template.config.postGameScreenPlayAgainButtonText}
+                          />
                         }
                     </ContentWrapper>
                 </Reveal>
@@ -281,10 +240,11 @@ class PostGameScreen extends PureComponent {
                         <h1>{Koji.config.template.config.postGameScreenTitle}</h1>
                     </CardWrapper>
                     {
-                        Koji.config.template.config.postGameScreenShowPlayAgainButton &&
-                        <PlayAgainButton onClick={() => this.props.setAppView('game')}>
-                        {Koji.config.template.config.postGameScreenPlayAgainButtonText}
-                        </PlayAgainButton>
+                      Koji.config.template.config.postGameScreenShowPlayAgainButton &&
+                      <SecondaryButton
+                        onClick={() => this.props.setAppView('game')}
+                        text={Koji.config.template.config.postGameScreenPlayAgainButtonText}
+                      />
                     }
                 </ContentWrapper>
             </Reveal>
