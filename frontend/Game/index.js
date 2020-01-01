@@ -34,8 +34,9 @@ class Game extends PureComponent {
     window.Entity = require('../Game/entities.js').Entity;
     window.Particle = require('../Game/entities.js').Particle;
     window.Explosion = require('../Game/entities.js').Particle;
-    window.addScore = require('../Game/entities.js').addScore;
+    window.addScore = require('../Game/draw.js').addScore;
     window.loseLife = require('../Game/draw.js').loseLife;
+    window.TapObject = require('../Game/entities.js').TapObject;
     
    
     window.FloatingText = require('../Game/entities.js').FloatingText;
@@ -47,10 +48,6 @@ class Game extends PureComponent {
     window.Guide = require('../Game/entities.js').Guide;
     window.spawnParticles = require('../Game/entities.js').spawnParticles;
     window.spawnExplosion = require('../Game/entities.js').spawnExplosion;
-
-
-    //Example
-    window.Node = require('../Game/entities.js').Node;
 
     // Create the game
     this.p5Game = new window.p5(null, document.getElementById('game-container'));

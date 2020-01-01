@@ -1,8 +1,10 @@
 {
   "sounds": {
-    "backgroundMusic": "https://objects.koji-cdn.com/63bc2fb0-0c42-4acb-bee8-a060e9286a95/backgroundMusicSpace.mp3",
-    "tap": "https://objects.koji-cdn.com/b4acde8c-96d4-4b1e-9e6e-4cca208833fe/laser1.mp3",
-    "musicVolume": 0.4
+    "backgroundMusic": "https://objects.koji-cdn.com/f0bb4ea3-93ad-451f-86df-f3ca66072917/yt2up-music.mp3",
+    "tap": "",
+    "musicVolume": 0.4,
+    "tapGood": "https://objects.koji-cdn.com/f0bb4ea3-93ad-451f-86df-f3ca66072917/co8y8-goodTap.mp3",
+    "tapBad": "https://objects.koji-cdn.com/f0bb4ea3-93ad-451f-86df-f3ca66072917/ils52-badTap.mp3"
   },
   "@@editor": [
     {
@@ -29,9 +31,15 @@
           }
         },
         {
-          "key": "tap",
-          "name": "Tap",
-          "description": "Played on tap/click",
+          "key": "tapGood",
+          "name": "Tap Good",
+          "description": "Played on good tap",
+          "type": "sound"
+        },
+        {
+          "key": "tapBad",
+          "name": "Tap Bad",
+          "description": "Played on bad tap",
           "type": "sound"
         }
       ]

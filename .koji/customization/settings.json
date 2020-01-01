@@ -1,10 +1,17 @@
 {
   "settings": {
-    "fontFamily": "Russo One",
+    "fontFamily": "Baloo",
     "lives": 3,
     "scoreGain": 1,
     "maxParticles": 150,
-    "maxParticlesMobile": 50
+    "maxParticlesMobile": 50,
+    "timeUpText": "Time's up!",
+    "timeUpDuration": 3,
+    "gameLength": 20,
+    "averageSpawnPeriod": 0.25,
+    "speedMin": 0.1,
+    "speedMax": 0.225,
+    "timePenalty": 1
   },
   "@@editor": [
     {
@@ -57,6 +64,78 @@
           "typeOptions": {
             "min": 0,
             "max": 500
+          }
+        },
+        {
+          "key": "gameLength",
+          "name": "Game Length",
+          "description": "How long the game will last.",
+          "type": "range",
+          "typeOptions": {
+            "min": 10,
+            "max": 300,
+            "step": 1
+          }
+        },
+        {
+          "key": "timeUpText",
+          "name": "Time Up Text",
+          "description": "Text to show after the timer runs out.",
+          "type": "text"
+        },
+        {
+          "key": "timeUpDuration",
+          "name": "Time Up Duration",
+          "description": "How long between ending the timer and switching to the post game view?",
+          "type": "range",
+          "typeOptions": {
+            "min": 0.1,
+            "max": 10,
+            "step": 0.1
+          }
+        },
+        {
+          "key": "averageSpawnPeriod",
+          "name": "Average Target Spawn Period",
+          "description": "How long between spawning on average?",
+          "type": "range",
+          "typeOptions": {
+            "min": 0.05,
+            "max": 1,
+            "step": 0.01
+          }
+        },
+        {
+          "key": "speedMin",
+          "name": "Minimum Target Speed",
+          "description": "Minimum moving speed",
+          "type": "range",
+          "typeOptions": {
+            "min": 0.025,
+            "max": 0.4,
+            "step": 0.005
+          }
+        },
+        {
+          "key": "speedMax",
+          "name": "Maximum Target Speed",
+          "description": "Maximum moving speed",
+          "type": "range",
+          "typeOptions": {
+            "min": 0.025,
+            "max": 0.4,
+            "step": 0.005
+          }
+        },
+        {
+          "key": "timePenalty",
+          "name": "Time Penalty",
+          "description": "Seconds lost on bad tap",
+          "type": "range",
+          "typeOptions": {
+            "min": 0,
+            "max": 5,
+            "step": 0.1
           }
         }
       ]

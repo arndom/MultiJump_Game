@@ -6,30 +6,31 @@ window.myFont = null; //The font we'll use throughout the app
 //Declare game objects here like player, enemies etc
 window.floatingTexts = [];
 window.particles = [];
-window.explosions = [];
-
-//EXAMPLE
-window.nodes = [];
+window.tapObjects = [];
 
 
 //===Score data
 window.score = 0;
-window.scoreGain = null;
+window.scoreGain = 1;
 window.scoreAnimTimer = 1;
 
 //===Data taken from Game Settings
 window.startingLives = null;
-window.lives = null;
+window.lives = 1;
 
 //===Images
-window.imgLife = null;
 window.imgBackground = null;
 window.imgParticle = null;
-window.imgExplosion = null;
+window.imgParticleGood = null;
+window.imgParticleBad = null;
+window.imgGood = [];
+window.imgBad = [];
+window.imgGuide = null;
 
 //===Audio
 window.sndMusic = null;
-window.sndTap = null;
+window.sndTapGood = null;
+window.sndTapBad = null;
 
 //===Size stuff
 window.objSize = 30;
@@ -38,14 +39,43 @@ window.gameSize = 18;
 window.isMobile = false;
 window.isTouching = false;
 
+//Timers
+window.gameTimer = null;
+window.gameLength = null;
+window.startCountdown = null;
+window.countdownAnimTimer = 0;
+window.countdownInterval = 1;
+
+window.timeUpTimer = null;
+window.timeUpDuration = null;
+
+window.canLoop = false;
+
+window.TYPE_GOOD = 0;
+window.TYPE_BAD = 1;
+
+window.goodBadRatio = 75;
+window.averageSpawnPeriod = null;
+window.spawnTimer = 0.5;
 
 export default function preload() {
     loadGoogleFont();
 
     //===Load images
-    imgLife = loadImage(Koji.config.images.lifeIcon);
     imgParticle = loadImage(Koji.config.images.particle);
-    imgExplosion = loadImage(Koji.config.images.explosion);
+    imgParticleGood = loadImage(Koji.config.images.particleGood);
+    imgParticleBad = loadImage(Koji.config.images.particleBad);
+    imgGuide = loadImage(Koji.config.images.guide);
+
+    for (let i = 0; i < Koji.config.images.goodObject.length; i++) {
+        imgGood[i] = loadImage(Koji.config.images.goodObject[i]);
+    }
+
+
+    for (let i = 0; i < Koji.config.images.badObject.length; i++) {
+        imgBad[i] = loadImage(Koji.config.images.badObject[i]);
+    }
+
 
     //Load background if there's any
     if (Koji.config.images.background != "") {
@@ -57,7 +87,8 @@ export default function preload() {
 
     //===Load Sounds here
     //Include a simple IF check to make sure there is a sound in config, also include a check when you try to play the sound, so in case there isn't one, it will just be ignored instead of crashing the game
-    if (Koji.config.sounds.tap) sndTap = loadSound(Koji.config.sounds.tap);
+    if (Koji.config.sounds.tapGood) sndTapGood = loadSound(Koji.config.sounds.tapGood);
+    if (Koji.config.sounds.tapBad) sndTapBad = loadSound(Koji.config.sounds.tapBad);
 
     //Music is loaded in setup(), to make it asynchronous
 
@@ -65,6 +96,13 @@ export default function preload() {
     startingLives = Koji.config.settings.lives;
     lives = startingLives;
     scoreGain = Koji.config.settings.scoreGain;
+
+    gameLength = Koji.config.settings.gameLength;
+    gameTimer = gameLength;
+    timeUpDuration = Koji.config.settings.timeUpDuration;
+    timeUpTimer = timeUpDuration;
+
+    averageSpawnPeriod = Koji.config.settings.averageSpawnPeriod;
 }
 
 function loadGoogleFont() {

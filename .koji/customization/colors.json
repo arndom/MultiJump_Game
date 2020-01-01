@@ -1,7 +1,9 @@
 {
   "colors": {
     "backgroundColor": "#01131D",
-    "scoreColor": "#FFDA73"
+    "scoreColor": "#FFDA73",
+    "countdownTimer": "#ffffff",
+    "gameCountdownTimer": "#FFFFFF"
   },
   "@@editor": [
     {
@@ -18,6 +20,16 @@
         {
           "key": "scoreColor",
           "name": "Score color",
+          "type": "color"
+        },
+        {
+          "key": "countdownTimer",
+          "name": "Countdown Start Timer Color",
+          "type": "color"
+        },
+        {
+          "key": "gameCountdownTimer",
+          "name": "Game Countdown Timer Color",
           "type": "color"
         }
       ]

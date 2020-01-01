@@ -21,5 +21,9 @@ export default function setup() {
   //playMusic();
 
   if (Koji.config.sounds.backgroundMusic) sndMusic = loadSound(Koji.config.sounds.backgroundMusic, playMusic);
+
+
+  init();
+
 }
 

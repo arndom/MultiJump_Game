@@ -4,6 +4,10 @@ export default function draw() {
         return;
     }
 
+    if (!canLoop) {
+        return;
+    }
+
     background(Koji.config.colors.backgroundColor);
 
     if (imgBackground) {
@@ -12,22 +16,16 @@ export default function draw() {
 
     //Update and render all game objects here
 
-    //===EXAMPLE
-    for (let i = 0; i < nodes.length; i++) {
-        nodes[i].update();
-        nodes[i].render();
+    for (let i = 0; i < tapObjects.length; i++) {
+        tapObjects[i].update();
+        tapObjects[i].render();
     }
-    //===
 
     for (let i = 0; i < particles.length; i++) {
         particles[i].update();
         particles[i].render();
     }
 
-    for (let i = 0; i < explosions.length; i++) {
-        explosions[i].update();
-        explosions[i].render();
-    }
 
     for (let i = 0; i < floatingTexts.length; i++) {
         floatingTexts[i].update();
@@ -35,6 +33,33 @@ export default function draw() {
     }
 
     //===Ingame UI
+
+    // Game Timer
+
+    if (startCountdown <= -1) {
+        if (gameTimer > 0) {
+
+            let timerX = objSize / 2;
+            let timerY = objSize / 2;
+            textSize(objSize);
+            fill(Koji.config.colors.gameCountdownTimer);
+            textAlign(LEFT, TOP);
+            text(gameTimer.toFixed(1), timerX, timerY);
+
+            gameTimer -= 1 / frameRate();
+
+            manageSpawn();
+        }
+
+    } else {
+        countdownInterval -= 1 / frameRate();
+
+        if (countdownInterval <= 0) {
+            doCountdown();
+            countdownInterval = 1;
+        }
+    }
+
 
     //===Score draw
     if (scoreAnimTimer < 1) {
@@ -53,20 +78,60 @@ export default function draw() {
     pop();
     //===
 
-    //===Lives draw
-    let lifeSize = objSize;
-    for (let i = 0; i < lives; i++) {
-        image(imgLife, lifeSize / 2 + lifeSize * i, lifeSize / 2, lifeSize, lifeSize);
+
+    //===Countdown draw
+    if (startCountdown > -1) {
+        if (countdownAnimTimer < 1) {
+            countdownAnimTimer += 1 / frameRate() * 5;
+        }
+
+        let countdownX = width / 2;
+        let countdownY = height / 2 - objSize * 4;
+        let countdownSize = Ease(EasingFunctions.outBounce, countdownAnimTimer, 3, -1);
+        textSize(objSize * countdownSize);
+        fill(Koji.config.colors.countdownTimer);
+        textAlign(CENTER, CENTER);
+
+        let countdownText = startCountdown;
+        if (startCountdown <= 0) {
+            countdownText = "GO!";
+        }
+        text(countdownText, countdownX, countdownY);
+
+        drawTutorial();
     }
     //===
 
-    //===EXAMPLE
-    push();
-    fill(Koji.config.colors.scoreColor);
-    textAlign(LEFT, TOP);
-    textSize(objSize * 0.75);
-    text("Click - Score Points\nE - Spawn Explosion\nP - Submit Score to leaderboard", lifeSize / 2, lifeSize * 2);
-    pop();
+
+    //===Endgame countdown draw
+    if (gameTimer <= 0) {
+        timeUpTimer -= 1 / frameRate();
+
+        if (timeUpTimer <= 0) {
+            loseLife();
+        }
+
+        if (countdownAnimTimer < 1) {
+            countdownAnimTimer += 1 / frameRate() * 5;
+        }
+
+        try {
+            fill("rgba(0,0,0," + (1 - timeUpTimer / timeUpDuration) + ")");
+            rect(0, 0, width, height);
+        } catch{
+
+        }
+
+
+        let countdownX = width / 2;
+        let countdownY = height / 2;
+        let countdownSize = Ease(EasingFunctions.outBounce, countdownAnimTimer, 2, -1);
+        textSize(objSize * countdownSize);
+        fill(Koji.config.colors.countdownTimer);
+        textAlign(CENTER, CENTER);
+
+        text(Koji.config.settings.timeUpText, countdownX, countdownY);
+    }
     //===
 
     cleanup();
@@ -81,12 +146,14 @@ export function touchStarted() {
         //Do Ingame stuff
         isTouching = true;
 
-        //EXAMPLE
-        if (sndTap) sndTap.play();
-        addScore(scoreGain);
-        floatingTexts.push(new FloatingText(mouseX, mouseY, scoreGain, Koji.config.colors.scoreColor, objSize));
-        spawnParticles(mouseX, mouseY, random(10, 15));
-        //===
+
+        if (gameTimer > 0) {
+            spawnParticles(mouseX, mouseY, 2);
+            for (let i = 0; i < tapObjects.length; i++) {
+                tapObjects[i].handleTap();
+            }
+        }
+
 
     } catch (error) {
         console.log(error);
@@ -103,52 +170,13 @@ export function touchEnded() {
 
         isTouching = false;
 
+
+        canLoop = true;
+
     } catch (error) {
         console.log(error);
     }
 }
-
-
-//Keyboard input
-/*
-You can check if the keyCode equals:
-
-BACKSPACE, DELETE, ENTER, RETURN, TAB, ESCAPE, SHIFT, CONTROL, OPTION, ALT, UP_ARROW, DOWN_ARROW, LEFT_ARROW, RIGHT_ARROW
-*/
-
-export function keyPressed() {
-
-    //Ingame
-    if (keyCode == UP_ARROW) {
-        console.log("up")
-    }
-    if (keyCode == DOWN_ARROW) {
-        console.log("down")
-    }
-    if (keyCode == LEFT_ARROW) {
-        console.log("left")
-    }
-    if (keyCode == RIGHT_ARROW) {
-        console.log("right")
-    }
-
-    if (key == 'p') {
-        console.log("Pressed P key")
-        submitScore();
-    }
-
-    if (key == 'e') {
-        console.log("Pressed E key")
-
-        spawnExplosion(mouseX, mouseY, 3);
-    }
-}
-
-//Same usage as keyPressed
-export function keyReleased() {
-
-}
-
 
 //===Go through objects and see which ones need to be removed
 function cleanup() {
@@ -173,10 +201,9 @@ function cleanup() {
         particles.splice(maxParticles - 1);
     }
 
-
-    for (let i = 0; i < explosions.length; i++) {
-        if (explosions[i].removable) {
-            explosions.splice(i, 1);
+    for (let i = 0; i < tapObjects.length; i++) {
+        if (tapObjects[i].removable) {
+            tapObjects.splice(i, 1);
         }
     }
 }
@@ -188,15 +215,15 @@ export function init() {
     score = 0;
     lives = startingLives;
 
+    gameTimer = gameLength;
+    timeUpTimer = timeUpDuration;
+    countdownInterval = 1;
+    startCountdown = 3;
+    tapObjects = [];
+
     //Clear out all arrays
     floatingTexts = [];
     particles = [];
-    explosions = [];
-
-
-    //EXAMPLE
-    spawnNodes();
-    //===
 
 }
 
@@ -204,32 +231,32 @@ function doCountdown() {
     startCountdown--;
 
     countdownAnimTimer = 0;
-
-
 }
 
 
+function manageSpawn() {
+    spawnTimer -= 1 / frameRate();
 
-//EXAMPLE
-function spawnNodes() {
-    nodes = [];
-
-    let nodeCount = floor(random(80, 100));
-    if (isMobile) {
-        nodeCount = 30;
-    }
-    for (let i = 0; i < nodeCount; i++) {
-        let x = random(0, width);
-        let y = random(0, height);
-        let node = new Node(x, y);
-        nodes.push(node);
-        node.changeVelocity();
+    if (spawnTimer <= 0) {
+        spawnObject();
+        spawnTimer = averageSpawnPeriod * random(0.8, 1.2);
     }
 }
-//===
+
+function spawnObject() {
+    let side = 1;
+    if (random() < 0.5) {
+        side = -1;
+    }
+
+
+    const x = width / 2 + (width / 2 + objSize * 3) * side;
+    const y = random(objSize * 3, height - objSize * 3);
+    tapObjects.push(new TapObject(x, y));
+}
 
 //Use this to add score and trigger animation
-function addScore(amount) {
+export function addScore(amount) {
     score += amount;
     scoreAnimTimer = 0;
 }
@@ -277,4 +304,34 @@ export function windowResized() {
 
     //Determine basic object size depending on size of the screen
     objSize = floor(min(floor(width / gameSize), floor(height / gameSize)) * sizeModifier);
+}
+
+
+function drawTutorial() {
+    let goodX = width / 2 - objSize * 4;
+    let badX = width / 2 + objSize * 4;
+    let y = height / 2 + objSize * 4;
+
+    textSize(objSize * 1.25);
+    fill(Koji.config.colors.scoreColor);
+    textAlign(CENTER, BOTTOM);
+
+    text("TAP", goodX, y);
+
+    let imgSize = objSize * 3;
+    push();
+    translate(goodX, y + imgSize);
+    image(imgGood[0], -imgSize / 2, -imgSize / 2, imgSize, imgSize);
+    pop();
+
+    textSize(objSize * 1.25);
+    fill(Koji.config.colors.countdownTimer);
+    textAlign(CENTER, BOTTOM);
+
+    text("AVOID", badX, y);
+
+    push();
+    translate(badX, y + imgSize);
+    image(imgBad[0], -imgSize / 2, -imgSize / 2, imgSize, imgSize);
+    pop();
 }
