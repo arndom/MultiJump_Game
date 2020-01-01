@@ -4,7 +4,7 @@ export default function draw() {
         return;
     }
 
-    if (!canLoop) {
+    if (window.getAppView() != "game") {
         return;
     }
 
@@ -169,9 +169,6 @@ export function touchEnded() {
         }
 
         isTouching = false;
-
-
-        canLoop = true;
 
     } catch (error) {
         console.log(error);
