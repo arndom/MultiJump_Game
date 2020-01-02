@@ -25,6 +25,13 @@ export function submitScore() {
     //Pass the score which we'll use for leaderboard submission
     window.setScore(score);
 
+     if(score >= Koji.config.settings.minimumScoreForWin){
+        window.setOutcome('win');
+        
+    }else{
+        window.setOutcome('lose');
+    }
+
     //Change app view to postgame
     window.setAppView('postGame');
 

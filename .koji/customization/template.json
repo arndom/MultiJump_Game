@@ -1,10 +1,9 @@
 {
   "template": {
     "config": {
-      "primaryColor": "#3ad33a",
-      "secondaryColor": "#f98f39",
-      "textColor": "#2d2d37",
-      "fontFamily": "Noto Sans",
+      "primaryColor": "#000000",
+      "secondaryColor": "#96f1b0",
+      "fontFamily": "Source Sans Pro",
       "leaderboardEnabled": true,
       "homeScreenReveal": "bounceBottom",
       "postGameScreenReveal": "fadeBottom",
@@ -14,7 +13,7 @@
       "backgroundImageMode": "cover",
       "logoImage": "https://images.koji-cdn.com/6f2d3c96-6041-4e68-87c0-b29069a32e65/i43nk-kojilogo.png",
       "homeScreenLogoHeight": "49",
-      "homeScreenDisplayType": "default",
+      "homeScreenDisplayType": "borderedCard",
       "homeScreenTitle": "MONEY TAP",
       "homeScreenTitleFontSize": "54",
       "homeScreenPlayButtonText": "PLAY",
@@ -25,7 +24,6 @@
       "postGameScreenButtonLink": "https://google.com",
       "postGameScreenShowPlayAgainButton": true,
       "postGameScreenPlayAgainButtonText": "Play Again?",
-      "homeScreenCardBackgroundImage": "https://images.koji-cdn.com/92c42fba-e5f0-4293-9860-9796430ecc7e/aq9z0-05cab8ceac8045f4bd1431ec834f7341.png",
       "emailCollection": "yes",
       "phoneCollection": "no",
       "optInText": "I accept the <a href=\"https://google.com\">terms and conditions</a>.",

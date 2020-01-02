@@ -145,7 +145,10 @@ class HomeScreen extends PureComponent {
               {
                 Koji.config.template.config.homeScreenTitle && Koji.config.template.config.homeScreenTitle !== '' &&
                   <TextWrapper
-                    textColor={Koji.config.template.config.textColor}
+                    textColor={Koji.config.template.config.homeScreenCardBackgroundImage ?
+                        Koji.config.template.config.secondaryColor :
+                        isDarkColor(Koji.config.template.config.secondaryColor) ? '#f1f1f1' : '#111111'
+                    }
                     textFontSize={parseInt(Koji.config.template.config.homeScreenTitleFontSize, 10)}
                   >
                     {Koji.config.template.config.homeScreenTitle}
