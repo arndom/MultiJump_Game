@@ -1,7 +1,6 @@
 {
   "settings": {
     "fontFamily": "Baloo",
-    "lives": 3,
     "scoreGain": 1,
     "maxParticles": 150,
     "maxParticlesMobile": 50,
@@ -26,16 +25,6 @@
           "name": "Font Family",
           "description": "Google fonts link to font to use in the game",
           "type": "text"
-        },
-        {
-          "key": "lives",
-          "name": "Max Lives",
-          "description": "How many lives you initially have",
-          "type": "range",
-          "typeOptions": {
-            "min": 1,
-            "max": 15
-          }
         },
         {
           "key": "scoreGain",

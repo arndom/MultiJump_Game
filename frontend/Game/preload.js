@@ -15,7 +15,7 @@ window.scoreGain = 1;
 window.scoreAnimTimer = 1;
 
 //===Data taken from Game Settings
-window.startingLives = null;
+window.startingLives = 1;
 window.lives = 1;
 
 //===Images
@@ -93,7 +93,7 @@ export default function preload() {
     //Music is loaded in setup(), to make it asynchronous
 
     //===Load settings from Game Settings
-    startingLives = Koji.config.settings.lives;
+    startingLives = 1;
     lives = startingLives;
     scoreGain = Koji.config.settings.scoreGain;
 
