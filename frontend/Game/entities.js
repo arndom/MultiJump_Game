@@ -117,7 +117,7 @@ export class TapObject extends Entity {
         if (this.type == TYPE_GOOD) {
           spawnParticlesGood(this.pos.x, this.pos.y, 6);
           addScore(scoreGain);
-          floatingTexts.push(new FloatingText(this.pos.x, this.pos.y - objSize * this.sizeMod / 2, "+" + scoreGain, Koji.config.colors.scoreColor, objSize * 1.25));
+          floatingTexts.push(new FloatingText(this.pos.x, this.pos.y - objSize * this.sizeMod / 2, "+" + scoreGain, Koji.config.template.config.primaryColor, objSize * 1.25));
           if (sndTapGood) {
             sndTapGood.play();
           }
@@ -125,7 +125,7 @@ export class TapObject extends Entity {
           gameTimer -= Koji.config.settings.timePenalty;
           spawnParticlesBad(this.pos.x, this.pos.y, 4);
 
-          floatingTexts.push(new FloatingText(this.pos.x, this.pos.y - objSize * this.sizeMod / 2, "-" + Koji.config.settings.timePenalty + "s", Koji.config.colors.gameCountdownTimer, objSize));
+          floatingTexts.push(new FloatingText(this.pos.x, this.pos.y - objSize * this.sizeMod / 2, "-" + Koji.config.settings.timePenalty + "s", Koji.config.template.config.secondaryColor, objSize));
 
           if (sndTapBad) {
             sndTapBad.play();

@@ -8,7 +8,7 @@ export default function draw() {
         return;
     }
 
-    background(Koji.config.colors.backgroundColor);
+    background(Koji.config.template.config.primaryColor);
 
     if (imgBackground) {
         background(imgBackground);
@@ -42,7 +42,7 @@ export default function draw() {
             let timerX = objSize / 2;
             let timerY = objSize / 2;
             textSize(objSize);
-            fill(Koji.config.colors.gameCountdownTimer);
+            fill(Koji.config.template.config.secondaryColor);
             textAlign(LEFT, TOP);
             text(gameTimer.toFixed(1), timerX, timerY);
 
@@ -72,7 +72,7 @@ export default function draw() {
 
     push();
     textSize(txtSize);
-    fill(Koji.config.colors.scoreColor);
+    fill(Koji.config.template.config.secondaryColor);
     textAlign(RIGHT, TOP);
     text(score.toLocaleString(), scoreX, scoreY);
     pop();
@@ -89,7 +89,7 @@ export default function draw() {
         let countdownY = height / 2 - objSize * 4;
         let countdownSize = Ease(EasingFunctions.outBounce, countdownAnimTimer, 3, -1);
         textSize(objSize * countdownSize);
-        fill(Koji.config.colors.countdownTimer);
+        fill(Koji.config.template.config.primaryColor);
         textAlign(CENTER, CENTER);
 
         let countdownText = startCountdown;
@@ -127,7 +127,7 @@ export default function draw() {
         let countdownY = height / 2;
         let countdownSize = Ease(EasingFunctions.outBounce, countdownAnimTimer, 2, -1);
         textSize(objSize * countdownSize);
-        fill(Koji.config.colors.countdownTimer);
+        fill(Koji.config.template.config.primaryColor);
         textAlign(CENTER, CENTER);
 
         text(Koji.config.settings.timeUpText, countdownX, countdownY);
@@ -310,7 +310,7 @@ function drawTutorial() {
     let y = height / 2 + objSize * 4;
 
     textSize(objSize * 1.25);
-    fill(Koji.config.colors.scoreColor);
+    fill(Koji.config.template.config.primaryColor);
     textAlign(CENTER, BOTTOM);
 
     text("TAP", goodX, y);
@@ -322,7 +322,7 @@ function drawTutorial() {
     pop();
 
     textSize(objSize * 1.25);
-    fill(Koji.config.colors.countdownTimer);
+    fill(Koji.config.template.config.secondaryColor);
     textAlign(CENTER, BOTTOM);
 
     text("AVOID", badX, y);

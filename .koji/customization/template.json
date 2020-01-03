@@ -1,8 +1,8 @@
 {
   "template": {
     "config": {
-      "primaryColor": "#000000",
-      "secondaryColor": "#96f1b0",
+      "primaryColor": "#ffffff",
+      "secondaryColor": "#ffda73",
       "fontFamily": "Raleway",
       "leaderboardEnabled": true,
       "homeScreenReveal": "bounceBottom",
@@ -11,10 +11,10 @@
       "startScreen": "home",
       "backgroundImage": "https://images.koji-cdn.com/f0bb4ea3-93ad-451f-86df-f3ca66072917/nk87z-6d77f2b709a841d2a0318875fd6d21ba.png",
       "backgroundImageMode": "cover",
-      "logoImage": "https://images.koji-cdn.com/6f2d3c96-6041-4e68-87c0-b29069a32e65/i43nk-kojilogo.png",
+      "logoImage": "https://images.koji-cdn.com/f0bb4ea3-93ad-451f-86df-f3ca66072917/q9zg0-YOURLOGOHERE256.png",
       "homeScreenLogoHeight": "22",
       "homeScreenDisplayType": "borderedCard",
-      "homeScreenTitle": "MONEY TAP",
+      "homeScreenTitle": "LOGO TAP",
       "homeScreenTitleFontSize": "29",
       "homeScreenPlayButtonText": "PLAY",
       "homeScreenPlayButtonFontSize": "21",

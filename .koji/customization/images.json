@@ -6,14 +6,12 @@
     "particle": "https://images.koji-cdn.com/d4d2aab7-1847-481d-8aa6-6866d81d5e0f/sxtcu-cloud4.png",
     "explosion": "https://images.koji-cdn.com/b4acde8c-96d4-4b1e-9e6e-4cca208833fe/0swbr-f34ab333f65046c6bcce7e81fe99050d.png",
     "goodObject": [
-      "https://images.koji-cdn.com/f0bb4ea3-93ad-451f-86df-f3ca66072917/b1ao6-moneybag.png",
-      "https://images.koji-cdn.com/f0bb4ea3-93ad-451f-86df-f3ca66072917/o4ks9-coin.png",
-      "https://images.koji-cdn.com/f0bb4ea3-93ad-451f-86df-f3ca66072917/r8k78-money.png"
+      "https://images.koji-cdn.com/f0bb4ea3-93ad-451f-86df-f3ca66072917/l5y7o-YOURLOGOHEREsmaller.png"
     ],
     "badObject": [
       "https://images.koji-cdn.com/f0bb4ea3-93ad-451f-86df-f3ca66072917/fa3ze-tnt.png"
     ],
-    "particleGood": "https://images.koji-cdn.com/f0bb4ea3-93ad-451f-86df-f3ca66072917/vrw78-coin.png",
+    "particleGood": "https://images.koji-cdn.com/f0bb4ea3-93ad-451f-86df-f3ca66072917/hqii0-YOURLOGOHEREsmaller.png",
     "particleBad": "https://images.koji-cdn.com/d4d2aab7-1847-481d-8aa6-6866d81d5e0f/vkxiz-enemy2.png",
     "guide": "https://images.koji-cdn.com/92c42fba-e5f0-4293-9860-9796430ecc7e/6tx6f-pointcopy.png"
   },
