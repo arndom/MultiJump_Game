@@ -41,7 +41,9 @@ export default function draw() {
         if (score >= Koji.config.settings.minimumScoreForWin) {
           winGame();
         } else {
-          loseGame();
+          if (Koji.config.template.config.postGameAction != 'leads') {
+            loseGame();
+          }
         }
 
         if (endState == STATE_WIN) {
@@ -56,12 +58,7 @@ export default function draw() {
       }
     }
   } else {
-    countdownInterval -= 1 / frameRate();
-
-    if (countdownInterval <= 0) {
-      doCountdown();
-      countdownInterval = 1;
-    }
+    doCountdown();
   }
 
   //===Countdown draw
@@ -208,9 +205,13 @@ export function init() {
 }
 
 function doCountdown() {
-  startCountdown--;
+  countdownInterval -= 1 / frameRate();
 
-  countdownAnimTimer = 0;
+  if (countdownInterval <= 0) {
+    startCountdown--;
+    countdownAnimTimer = 0;
+    countdownInterval = 1;
+  }
 }
 
 
@@ -286,7 +287,7 @@ function drawTutorial() {
 
   const instructionsX = width / 2;
   const instructionsY = height * 0.12;
-  let instructionsSize = objSize * 1;
+  const instructionsSize = objSize * 1;
 
   const instructionsText = Koji.config.settings.instructionsText;
 
