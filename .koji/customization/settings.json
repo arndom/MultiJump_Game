@@ -6,7 +6,7 @@
     "maxParticlesMobile": 50,
     "timeUpText": "Time's up!",
     "timeUpDuration": 2,
-    "gameLength": 35,
+    "gameLength": 15,
     "averageSpawnPeriod": 0.25,
     "speedMin": 0.1,
     "speedMax": 0.225,

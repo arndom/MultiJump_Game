@@ -15,6 +15,7 @@ export default function draw() {
     }
 
 
+    updateSound();
 
     if (currentView == VIEW_TUTORIAL) {
         drawTutorial();
@@ -41,7 +42,6 @@ export default function draw() {
     }
 
     //===Ingame UI
-    //===Ingame UI
 
     // Game Timer
     if (startCountdown <= -1) {
@@ -58,7 +58,7 @@ export default function draw() {
 
                 if (score >= Koji.config.settings.minimumScoreForWin) {
                     winGame();
-                }else{
+                } else {
                     loseGame();
                 }
 
@@ -69,6 +69,8 @@ export default function draw() {
                 if (endState == STATE_LOSE) {
                     spawnLoseText();
                 }
+            } else {
+                timeUntilAbleToTransition -= 1 / frameRate();
             }
         }
     } else {
@@ -102,6 +104,7 @@ export default function draw() {
     }
 
     //===Endgame fadeout draw
+
     if (canTransition) {
         timeUpTimer -= 1 / frameRate();
 
@@ -139,7 +142,6 @@ export default function draw() {
 
     cleanup();
 
-    updateSound();
 }
 
 export function touchStarted() {
@@ -149,7 +151,7 @@ export function touchStarted() {
             isTouching = true;
 
             if (currentView == VIEW_GAME) {
-                if (hasGameEnded) {
+                if (hasGameEnded && timeUntilAbleToTransition <= 0) {
                     canTransition = true;
                 }
 
@@ -232,6 +234,7 @@ export function init() {
     canTransition = false;
     window.currentView = VIEW_TUTORIAL;
     window.endState = STATE_NONE;
+    timeUntilAbleToTransition = 0.5;
 
     tapObjects = [];
     floatingTexts = [];
@@ -321,16 +324,16 @@ export function windowResized() {
 function drawTutorial() {
 
     const instructionsX = width / 2;
-    const instructionsY = height * 0.1;
+    const instructionsY = height * 0.12;
     let instructionsSize = objSize * 1;
 
-    const instructionsText = Koji.config.settings.instructionsText;
+    const instructionsText = "Instructions:\n" + Koji.config.settings.instructionsText;
 
     textSize(instructionsSize);
 
-   // while (textWidth(instructionsText) > width * 0.9) {
-        //instructionsSize *= 0.9;
-        //textSize(instructionsSize);
+    // while (textWidth(instructionsText) > width * 0.9) {
+    //instructionsSize *= 0.9;
+    //textSize(instructionsSize);
     //}
 
     fill(textColor);

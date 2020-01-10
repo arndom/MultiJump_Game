@@ -79,6 +79,8 @@ window.goodBadRatio = 75;
 window.averageSpawnPeriod = null;
 window.spawnTimer = 0.5;
 
+window.timeUntilAbleToTransition = 0.5;
+
 export default function preload() {
   loadGoogleFont();
 
