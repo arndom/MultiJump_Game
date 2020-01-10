@@ -56,6 +56,12 @@ export default function draw() {
             if (!hasGameEnded) {
                 hasGameEnded = true;
 
+                if (score >= Koji.config.settings.minimumScoreForWin) {
+                    winGame();
+                }else{
+                    loseGame();
+                }
+
                 if (endState == STATE_WIN) {
                     spawnWinText();
                 }
@@ -207,12 +213,6 @@ function cleanup() {
     for (let i = 0; i < tapObjects.length; i++) {
         if (tapObjects[i].removable) {
             tapObjects.splice(i, 1);
-
-            if(Koji.config.template.config.postGameAction == 'reveal'){
-              if(score >= Koji.config.settings.minimumScoreForWin){
-                winGame();
-              }
-            }
         }
     }
 }
@@ -236,6 +236,10 @@ export function init() {
     tapObjects = [];
     floatingTexts = [];
     particles = [];
+
+    if (window.getAppView() == 'game') {
+        playMusic();
+    }
 
 }
 
@@ -315,6 +319,25 @@ export function windowResized() {
 
 
 function drawTutorial() {
+
+    const instructionsX = width / 2;
+    const instructionsY = height * 0.1;
+    let instructionsSize = objSize * 1;
+
+    const instructionsText = Koji.config.settings.instructionsText;
+
+    textSize(instructionsSize);
+
+   // while (textWidth(instructionsText) > width * 0.9) {
+        //instructionsSize *= 0.9;
+        //textSize(instructionsSize);
+    //}
+
+    fill(textColor);
+    textAlign(CENTER, TOP);
+
+    text(instructionsText, instructionsX, instructionsY);
+
     const goodX = width / 2 - objSize * 4;
     const badX = width / 2 + objSize * 4;
     const y = height / 2;

@@ -36,7 +36,8 @@
       "https://images.koji-cdn.com/d4d2aab7-1847-481d-8aa6-6866d81d5e0f/0pfca-start2.png",
       "https://images.koji-cdn.com/d4d2aab7-1847-481d-8aa6-6866d81d5e0f/mwf5o-star5.png"
     ],
-    "winAnimation": "confettiFireworks"
+    "winAnimation": "confettiFireworks",
+    "instructionsText": "1. Tap on the logos to get points\n2. Avoid the bombs\n3. Get 10 points to win!"
   },
   "@@editor": [
     {
@@ -47,8 +48,8 @@
       "fields": [
         {
           "key": "fontFamily",
-          "name": "Font Family",
-          "description": "Google fonts link to font to use in the game",
+          "name": "In-Game Font Family",
+          "description": "Google Font name to use in the game",
           "type": "text"
         },
         {
@@ -71,6 +72,12 @@
             "max": 300,
             "step": 1
           }
+        },
+        {
+          "key": "instructionsText",
+          "name": "Instructions Text",
+          "description": "Text to show during the instructions.",
+          "type": "textarea"
         },
         {
           "key": "winText",

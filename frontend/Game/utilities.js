@@ -16,8 +16,9 @@ export function playMusic() {
       sndMusic.setLoop(true);
       sndMusic.play();
     }
-  } catch{
+  } catch(error){
   }
+
 }
 
 
