@@ -62,7 +62,7 @@ window.countdownAnimTimer = 0;
 window.countdownInterval = 1;
 
 window.timeUpTimer = null;
-window.timeUpDuration = null;
+window.timeUpDuration = 0.5;
 
 window.fireworkInterval = 0.5;
 window.fireworkTimer = 0;
@@ -122,7 +122,6 @@ export default function preload() {
 
   gameLength = Koji.config.settings.gameLength;
   gameTimer = gameLength;
-  timeUpDuration = Koji.config.settings.timeUpDuration;
   timeUpTimer = timeUpDuration;
 
   averageSpawnPeriod = Koji.config.settings.averageSpawnPeriod;

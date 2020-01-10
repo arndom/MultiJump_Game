@@ -359,15 +359,24 @@ export class FloatingText {
         this.alpha = 1;
         this.animTimer = 0;
         this.easeFunction = EasingFunctions.easeOutElastic;
+        this.shouldPulse = false;
 
     }
 
     update() {
 
-        this.animTimer += 1 / frameRate() * 1 / 0.65;
+        if (this.animTimer < 1) {
+            this.animTimer += 1 / frameRate() * 1 / 0.65;
+            this.size = Ease(this.easeFunction, this.animTimer, 1, this.maxSize);
+        }else{
+            if(this.shouldPulse){
+                this.size += CosineWave(objSize * 0.015, 0.2, this.timer);
+            }
+        }
+
 
         //Get dat size bounce effect
-        this.size = Ease(this.easeFunction, this.animTimer, 1, this.maxSize);
+        
 
         if (this.timer < 0.3) {
             this.alpha = Smooth(this.alpha, 0, 4);
