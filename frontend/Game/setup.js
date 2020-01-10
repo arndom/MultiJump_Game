@@ -18,9 +18,6 @@ export default function setup() {
 
   isMobile = detectMobile();
 
-  //playMusic();
-
-  if (Koji.config.sounds.backgroundMusic) sndMusic = loadSound(Koji.config.sounds.backgroundMusic, playMusic);
 
 
   init();

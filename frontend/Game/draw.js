@@ -14,6 +14,14 @@ export default function draw() {
         background(imgBackground);
     }
 
+
+
+    if (currentView == VIEW_TUTORIAL) {
+        drawTutorial();
+
+        return;
+    }
+
     //Update and render all game objects here
 
     for (let i = 0; i < tapObjects.length; i++) {
@@ -33,24 +41,30 @@ export default function draw() {
     }
 
     //===Ingame UI
+    //===Ingame UI
 
     // Game Timer
-
     if (startCountdown <= -1) {
         if (gameTimer > 0) {
 
-            let timerX = objSize / 2;
-            let timerY = objSize / 2;
-            textSize(objSize);
-            fill(Koji.config.template.config.secondaryColor);
-            textAlign(LEFT, TOP);
-            text(gameTimer.toFixed(1), timerX, timerY);
+            drawGameTimer();
 
             gameTimer -= 1 / frameRate();
 
             manageSpawn();
-        }
+        } else {
+            if (!hasGameEnded) {
+                hasGameEnded = true;
 
+                if (endState == STATE_WIN) {
+                    spawnWinText();
+                }
+
+                if (endState == STATE_LOSE) {
+                    spawnLoseText();
+                }
+            }
+        }
     } else {
         countdownInterval -= 1 / frameRate();
 
@@ -59,6 +73,45 @@ export default function draw() {
             countdownInterval = 1;
         }
     }
+
+    //===Countdown draw
+    if (startCountdown > -1) {
+        if (countdownAnimTimer < 1) {
+            countdownAnimTimer += 1 / frameRate() * 5;
+        }
+
+        drawCountdown();
+    }
+
+    if (hasGameEnded) {
+        if (endState == STATE_WIN) {
+            handleWinAnimation();
+        }
+
+        if (endState == STATE_NONE) {
+            drawTimeUpText();
+        }
+
+        drawContinueText();
+    }
+
+    //===Endgame fadeout draw
+    if (canTransition) {
+        timeUpTimer -= 1 / frameRate();
+
+        if (timeUpTimer <= 0) {
+            endGame();
+        }
+
+        try {
+            //Draw black rectangle over the screen with increasing opacity
+            fill("rgba(0,0,0," + (1 - timeUpTimer / timeUpDuration) + ")");
+            rect(0, 0, width, height);
+        } catch{
+
+        }
+    }
+    //===
 
 
     //===Score draw
@@ -72,88 +125,41 @@ export default function draw() {
 
     push();
     textSize(txtSize);
-    fill(Koji.config.template.config.secondaryColor);
+    fill(textColor);
     textAlign(RIGHT, TOP);
     text(score.toLocaleString(), scoreX, scoreY);
     pop();
     //===
 
-
-    //===Countdown draw
-    if (startCountdown > -1) {
-        if (countdownAnimTimer < 1) {
-            countdownAnimTimer += 1 / frameRate() * 5;
-        }
-
-        let countdownX = width / 2;
-        let countdownY = height / 2 - objSize * 4;
-        let countdownSize = Ease(EasingFunctions.outBounce, countdownAnimTimer, 3, -1);
-        textSize(objSize * countdownSize);
-        fill(Koji.config.template.config.primaryColor);
-        textAlign(CENTER, CENTER);
-
-        let countdownText = startCountdown;
-        if (startCountdown <= 0) {
-            countdownText = "GO!";
-        }
-        text(countdownText, countdownX, countdownY);
-
-        drawTutorial();
-    }
-    //===
-
-
-    //===Endgame countdown draw
-    if (gameTimer <= 0) {
-        timeUpTimer -= 1 / frameRate();
-
-        if (timeUpTimer <= 0) {
-            loseLife();
-        }
-
-        if (countdownAnimTimer < 1) {
-            countdownAnimTimer += 1 / frameRate() * 5;
-        }
-
-        try {
-            fill("rgba(0,0,0," + (1 - timeUpTimer / timeUpDuration) + ")");
-            rect(0, 0, width, height);
-        } catch{
-
-        }
-
-
-        let countdownX = width / 2;
-        let countdownY = height / 2;
-        let countdownSize = Ease(EasingFunctions.outBounce, countdownAnimTimer, 2, -1);
-        textSize(objSize * countdownSize);
-        fill(Koji.config.template.config.primaryColor);
-        textAlign(CENTER, CENTER);
-
-        text(Koji.config.settings.timeUpText, countdownX, countdownY);
-    }
-    //===
-
     cleanup();
-
-
 
     updateSound();
 }
 
 export function touchStarted() {
     try {
-        //Do Ingame stuff
-        isTouching = true;
 
+        if (window.getAppView() == 'game') {
+            isTouching = true;
 
-        if (gameTimer > 0) {
-            spawnParticles(mouseX, mouseY, 2);
-            for (let i = 0; i < tapObjects.length; i++) {
-                tapObjects[i].handleTap();
+            if (currentView == VIEW_GAME) {
+                if (hasGameEnded) {
+                    canTransition = true;
+                }
+
+                if (gameTimer > 0) {
+                    spawnParticles(mouseX, mouseY, 2);
+                    for (let i = 0; i < tapObjects.length; i++) {
+                        tapObjects[i].handleTap();
+                    }
+                }
             }
-        }
 
+            if (currentView == VIEW_TUTORIAL) {
+                currentView = VIEW_GAME;
+            }
+
+        }
 
     } catch (error) {
         console.log(error);
@@ -201,6 +207,12 @@ function cleanup() {
     for (let i = 0; i < tapObjects.length; i++) {
         if (tapObjects[i].removable) {
             tapObjects.splice(i, 1);
+
+            if(Koji.config.template.config.postGameAction == 'reveal'){
+              if(score >= Koji.config.settings.minimumScoreForWin){
+                winGame();
+              }
+            }
         }
     }
 }
@@ -216,9 +228,12 @@ export function init() {
     timeUpTimer = timeUpDuration;
     countdownInterval = 1;
     startCountdown = 3;
-    tapObjects = [];
+    hasGameEnded = false;
+    canTransition = false;
+    window.currentView = VIEW_TUTORIAL;
+    window.endState = STATE_NONE;
 
-    //Clear out all arrays
+    tapObjects = [];
     floatingTexts = [];
     particles = [];
 
@@ -258,20 +273,15 @@ export function addScore(amount) {
     scoreAnimTimer = 0;
 }
 
-//===Call this when a lose life event should trigger
-function loseLife() {
 
-    lives--;
+export function endGame() {
 
-    if (lives <= 0) {
-
-        // Go to leaderboard submission
-        submitScore();
-
-        if (sndMusic) {
-            sndMusic.stop();
-        }
+    if (sndMusic) {
+        sndMusic.stop();
     }
+
+    submitScore();
+
 }
 
 function updateSound() {
@@ -305,24 +315,24 @@ export function windowResized() {
 
 
 function drawTutorial() {
-    let goodX = width / 2 - objSize * 4;
-    let badX = width / 2 + objSize * 4;
-    let y = height / 2 + objSize * 4;
+    const goodX = width / 2 - objSize * 4;
+    const badX = width / 2 + objSize * 4;
+    const y = height / 2;
 
     textSize(objSize * 1.25);
-    fill(Koji.config.template.config.primaryColor);
+    fill(textColor);
     textAlign(CENTER, BOTTOM);
 
     text("TAP", goodX, y);
 
-    let imgSize = objSize * 3;
+    const imgSize = objSize * 3;
     push();
     translate(goodX, y + imgSize);
     image(imgGood[0], -imgSize / 2, -imgSize / 2, imgSize, imgSize);
     pop();
 
     textSize(objSize * 1.25);
-    fill(Koji.config.template.config.secondaryColor);
+    fill(textColor);
     textAlign(CENTER, BOTTOM);
 
     text("AVOID", badX, y);
@@ -331,4 +341,107 @@ function drawTutorial() {
     translate(badX, y + imgSize);
     image(imgBad[0], -imgSize / 2, -imgSize / 2, imgSize, imgSize);
     pop();
+
+
+    drawContinueText();
+}
+
+
+function spawnWinText() {
+    const floatingText = new FloatingText(width / 2, height / 2, Koji.config.settings.winText, textColor, objSize * 2);
+    floatingText.timer = 1;
+    floatingText.maxVelocityY = 0;
+    floatingText.velocityY = 0;
+    floatingText.timer = 100;
+
+
+    floatingTexts.push(floatingText);
+}
+
+function spawnLoseText() {
+    const floatingText = new FloatingText(width / 2, height / 2, Koji.config.settings.loseText, textColor, objSize * 2);
+    floatingText.timer = 1;
+    floatingText.maxVelocityY = 0;
+    floatingText.velocityY = 0;
+    floatingText.timer = 100;
+    floatingText.easeFunction = EasingFunctions.easeInOutQuad;
+
+    floatingTexts.push(floatingText);
+}
+
+
+
+
+function handleWinAnimation() {
+    const animationSetting = Koji.config.settings.winAnimation;
+
+    if (animationSetting == 'fireworks' || animationSetting == 'confettiFireworks') {
+        fireworkTimer -= 1 / frameRate();
+
+        if (fireworkTimer <= 0) {
+            fireworkTimer = fireworkInterval * random(0.8, 1.2);
+
+            const margin = objSize * 3;
+            spawnFireworks(random(margin, width - margin), random(margin, height - margin), random(20, 30));
+        }
+    }
+    if (frameCount % 5 == 0) {
+        if (animationSetting == 'confetti' || animationSetting == 'confettiFireworks') {
+            spawnConfetti();
+        }
+
+        if (animationSetting == 'rising') {
+            spawnRisingParticle();
+        }
+    }
+
+}
+
+
+function drawTimeUpText() {
+    const textX = width / 2;
+    const textY = height / 2;
+    const txtSize = objSize * 1.25;
+
+    textAlign(CENTER, CENTER);
+    textSize(txtSize);
+    fill(textColor);
+
+    text(Koji.config.settings.timeUpText, textX, textY);
+}
+
+function drawContinueText() {
+    const textX = width / 2;
+    const textY = height - objSize * 3;
+    const txtSize = objSize * 0.75;
+
+    textAlign(CENTER, BOTTOM);
+    textSize(txtSize);
+    fill(textColor);
+
+    text("Tap to continue...", textX, textY);
+}
+
+function drawGameTimer() {
+    const timerX = objSize / 2;
+    const timerY = objSize / 2;
+    textSize(objSize);
+    fill(textColor);
+    textAlign(LEFT, TOP);
+    text(gameTimer.toFixed(1), timerX, timerY);
+}
+
+function drawCountdown() {
+    const countdownX = width / 2;
+    const countdownY = height / 2 - objSize * 4;
+    const countdownSize = Ease(EasingFunctions.outBounce, countdownAnimTimer, 3, -1);
+    textSize(objSize * countdownSize);
+    fill(textColor);
+    textAlign(CENTER, CENTER);
+
+    let countdownText = startCountdown;
+    if (startCountdown <= 0) {
+        countdownText = "GO!";
+    }
+    text(countdownText, countdownX, countdownY);
 }

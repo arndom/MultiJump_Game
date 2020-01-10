@@ -5,13 +5,38 @@
     "maxParticles": 150,
     "maxParticlesMobile": 50,
     "timeUpText": "Time's up!",
-    "timeUpDuration": 3,
+    "timeUpDuration": 2,
     "gameLength": 35,
     "averageSpawnPeriod": 0.25,
     "speedMin": 0.1,
     "speedMax": 0.225,
     "timePenalty": 1,
-    "minimumScoreForWin": 15
+    "minimumScoreForWin": 10,
+    "background": "https://images.koji-cdn.com/d4d2aab7-1847-481d-8aa6-6866d81d5e0f/hweb2-bg2.png",
+    "particle": "https://images.koji-cdn.com/d4d2aab7-1847-481d-8aa6-6866d81d5e0f/sxtcu-cloud4.png",
+    "explosion": "https://images.koji-cdn.com/b4acde8c-96d4-4b1e-9e6e-4cca208833fe/0swbr-f34ab333f65046c6bcce7e81fe99050d.png",
+    "goodObject": [
+      "https://images.koji-cdn.com/f0bb4ea3-93ad-451f-86df-f3ca66072917/l5y7o-YOURLOGOHEREsmaller.png"
+    ],
+    "badObject": [
+      "https://images.koji-cdn.com/f0bb4ea3-93ad-451f-86df-f3ca66072917/fa3ze-tnt.png"
+    ],
+    "particleGood": "https://images.koji-cdn.com/f0bb4ea3-93ad-451f-86df-f3ca66072917/hqii0-YOURLOGOHEREsmaller.png",
+    "particleBad": "https://images.koji-cdn.com/d4d2aab7-1847-481d-8aa6-6866d81d5e0f/vkxiz-enemy2.png",
+    "backgroundMusic": "https://objects.koji-cdn.com/f0bb4ea3-93ad-451f-86df-f3ca66072917/yt2up-music.mp3",
+    "tap": "",
+    "musicVolume": 0.4,
+    "tapGood": "https://objects.koji-cdn.com/f0bb4ea3-93ad-451f-86df-f3ca66072917/co8y8-goodTap.mp3",
+    "tapBad": "https://objects.koji-cdn.com/f0bb4ea3-93ad-451f-86df-f3ca66072917/ils52-badTap.mp3",
+    "winText": "YOU WIN!",
+    "loseText": "YOU LOSE",
+    "winParticles": [
+      "https://images.koji-cdn.com/d4d2aab7-1847-481d-8aa6-6866d81d5e0f/6ik7b-star1.png",
+      "https://images.koji-cdn.com/d4d2aab7-1847-481d-8aa6-6866d81d5e0f/xvpr0-star3.png",
+      "https://images.koji-cdn.com/d4d2aab7-1847-481d-8aa6-6866d81d5e0f/0pfca-start2.png",
+      "https://images.koji-cdn.com/d4d2aab7-1847-481d-8aa6-6866d81d5e0f/mwf5o-star5.png"
+    ],
+    "winAnimation": "confettiFireworks"
   },
   "@@editor": [
     {
@@ -37,26 +62,6 @@
           }
         },
         {
-          "key": "maxParticles",
-          "name": "Maximum Particles",
-          "description": "Maximum allowed particles on desktop. Larger numbers may negatively impact performance.",
-          "type": "range",
-          "typeOptions": {
-            "min": 0,
-            "max": 500
-          }
-        },
-        {
-          "key": "maxParticlesMobile",
-          "name": "Maximum Particles - Mobile",
-          "description": "Maximum allowed particles on mobile. This is usually lower than for desktop.",
-          "type": "range",
-          "typeOptions": {
-            "min": 0,
-            "max": 500
-          }
-        },
-        {
           "key": "gameLength",
           "name": "Game Length",
           "description": "How long the game will last.",
@@ -66,6 +71,18 @@
             "max": 300,
             "step": 1
           }
+        },
+        {
+          "key": "winText",
+          "name": "In-Game Win Text",
+          "description": "Text to show when the player wins.",
+          "type": "text"
+        },
+        {
+          "key": "loseText",
+          "name": "In-Game Lose Text",
+          "description": "Text to show when the playe loses.",
+          "type": "text"
         },
         {
           "key": "timeUpText",
@@ -138,6 +155,110 @@
             "max": 1000,
             "step": 1
           }
+        },
+        {
+          "key": "winAnimation",
+          "name": "Win Animation Type",
+          "description": "Type of animation to play upon winning",
+          "type": "select",
+          "typeOptions": {
+            "placeholder": "Choose an option...",
+            "options": [
+              {
+                "value": "confetti",
+                "label": "Confetti"
+              },
+              {
+                "value": "fireworks",
+                "label": "Fireworks"
+              },
+              {
+                "value": "confettiFireworks",
+                "label": "Confetti + Fireworks"
+              },
+              {
+                "value": "rising",
+                "label": "Rising Particles"
+              }
+            ]
+          }
+        },
+        {
+          "key": "winParticles",
+          "name": "Win Particles",
+          "description": "Ideal size: 64x64",
+          "type": "image[]"
+        },
+        {
+          "key": "particle",
+          "name": "Tap Particle",
+          "description": "Ideal size: 96x96",
+          "type": "image"
+        },
+        {
+          "key": "particleGood",
+          "name": "Particle Good",
+          "description": "Ideal size: 128x128",
+          "type": "image"
+        },
+        {
+          "key": "particleBad",
+          "name": "Particle Bad",
+          "description": "Ideal size: 128x128",
+          "type": "image"
+        },
+        {
+          "key": "background",
+          "name": "In-Game Background",
+          "description": "Optional. Will stretch to fill screen.",
+          "type": "image"
+        },
+        {
+          "key": "goodObject",
+          "name": "Good Objects",
+          "description": "Ideal size: 128x128",
+          "type": "image[]",
+          "arrayOptions": {
+            "min": 1
+          }
+        },
+        {
+          "key": "badObject",
+          "name": "Bad Objects",
+          "description": "Ideal size: 128x128",
+          "type": "image[]",
+          "arrayOptions": {
+            "min": 1
+          }
+        },
+        {
+          "key": "backgroundMusic",
+          "name": "Background Music",
+          "description": "Music to loop in background",
+          "type": "sound"
+        },
+        {
+          "key": "musicVolume",
+          "name": "Music Volume",
+          "description": "Modifier for music volume.",
+          "type": "range",
+          "typeOptions": {
+            "min": 0,
+            "max": 1.5,
+            "step": 0.05
+          }
+        },
+        {
+          "key": "tapGood",
+          "name": "Tap Good",
+          "description": "Played on good tap",
+          "type": "sound"
+        },
+        {
+          "key": "tapBad",
+          "name": "Tap Bad",
+          "description": "Played on bad tap",
+          "type": "sound"
         }
       ]
     }

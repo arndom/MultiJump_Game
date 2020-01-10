@@ -117,7 +117,7 @@ export class TapObject extends Entity {
         if (this.type == TYPE_GOOD) {
           spawnParticlesGood(this.pos.x, this.pos.y, 6);
           addScore(scoreGain);
-          floatingTexts.push(new FloatingText(this.pos.x, this.pos.y - objSize * this.sizeMod / 2, "+" + scoreGain, Koji.config.template.config.primaryColor, objSize * 1.25));
+          floatingTexts.push(new FloatingText(this.pos.x, this.pos.y - objSize * this.sizeMod / 2, "+" + scoreGain, textColor, objSize * 1.25));
           if (sndTapGood) {
             sndTapGood.play();
           }
@@ -125,7 +125,7 @@ export class TapObject extends Entity {
           gameTimer -= Koji.config.settings.timePenalty;
           spawnParticlesBad(this.pos.x, this.pos.y, 4);
 
-          floatingTexts.push(new FloatingText(this.pos.x, this.pos.y - objSize * this.sizeMod / 2, "-" + Koji.config.settings.timePenalty + "s", Koji.config.template.config.secondaryColor, objSize));
+          floatingTexts.push(new FloatingText(this.pos.x, this.pos.y - objSize * this.sizeMod / 2, "-" + Koji.config.settings.timePenalty + "s", textColor, objSize));
 
           if (sndTapBad) {
             sndTapBad.play();
@@ -247,99 +247,147 @@ export function spawnParticles(x, y, amount) {
   }
 }
 
+
+
+export class FireworkParticle extends Particle {
+    constructor(x, y) {
+        super(x, y);
+
+        let maxVelocity = objSize * 0.5;
+        this.velocity = createVector(random(-maxVelocity, maxVelocity), random(-maxVelocity, maxVelocity));
+        this.defaultVelocity = createVector(this.velocity.x, this.velocity.y);
+        this.lifetime = 0.75;
+
+
+        this.img = imgWinParticle[floor(random() * imgWinParticle.length)];
+    }
+}
+
+export class Confetti extends Entity {
+    constructor(x, y) {
+        super(x, y);
+        this.speed = random(objSize * 0.05, objSize * 0.085);
+        this.time = random(0, 100);
+        this.amp = random(2, 30);
+        this.phase = random(0.5, 2);
+        this.size = random(objSize * 0.5, objSize);
+
+        this.img = imgWinParticle[floor(random() * imgWinParticle.length)];
+
+    }
+
+    update() {
+        this.time = this.time + 1 / frameRate() * 5;
+
+        this.pos.y += this.speed;
+
+        if (this.pos.y > height + this.size * 2) {
+            this.removable = true;
+        }
+    }
+
+    render() {
+        push();
+        translate(this.pos.x, this.pos.y);
+        translate(this.amp * sin(this.time * this.phase), this.speed * cos(2 * this.time * this.phase));
+        rotate(this.time);
+        scale(cos(this.time / 4), sin(this.time / 4));
+
+        image(this.img, -this.size / 2, -this.size / 2, this.size, this.size);
+        pop();
+
+
+    }
+}
+
+
+export class RisingParticle extends Entity {
+    constructor(x, y) {
+        super(x, y);
+        this.speed = random(objSize * 0.2, objSize * 0.3);
+        this.sizeMod = random(0.5, 1);
+
+        this.img = imgWinParticle[floor(random() * imgWinParticle.length)];
+
+        this.animTimer = random(0, 1);
+    }
+
+    update() {
+
+        this.animTimer += 1 / frameRate();
+
+        this.pos.y -= this.speed;
+        this.pos.x += CosineWave(objSize * 0.2, 0.5, this.animTimer);
+
+        if (this.pos.y < - this.sizeMod * objSize) {
+            this.removable = true;
+        }
+    }
+}
+
+export function spawnRisingParticle() {
+    const x = random(0, width);
+    const y = height + objSize * 2;
+    particles.push(new RisingParticle(x, y));
+}
+
+export function spawnConfetti() {
+    const x = random(0, width);
+    const y = -objSize * 2;
+    particles.push(new Confetti(x, y));
+}
+
+export function spawnFireworks(x, y, amount) {
+    for (let i = 0; i < amount; i++) {
+        particles.push(new FireworkParticle(x, y));
+    }
+}
+
 //===The way to use Floating Text:
 //floatingTexts.push(new FloatingText(...));
 //Everything else like drawing, removing it after it's done etc, will be done automatically
 export class FloatingText {
-  constructor(x, y, txt, color, size) {
-    this.pos = createVector(x, y);
-    this.size = 1;
-    this.maxSize = size;
-    this.timer = 0.65;
-    this.txt = txt;
-    this.color = color;
-    this.maxVelocityY = -objSize * 0.075;
-    this.velocityY = objSize * 0.3;
-    this.alpha = 1;
-    this.animTimer = 0;
-  }
+    constructor(x, y, txt, color, size) {
+        this.pos = createVector(x, y);
+        this.size = 1;
+        this.maxSize = size;
+        this.timer = 0.65;
+        this.txt = txt;
+        this.color = color;
+        this.maxVelocityY = -objSize * 0.075;
+        this.velocityY = objSize * 0.3;
+        this.alpha = 1;
+        this.animTimer = 0;
+        this.easeFunction = EasingFunctions.easeOutElastic;
 
-  update() {
-
-    this.animTimer += 1 / frameRate() * 1 / 0.65;
-
-    //Get dat size bounce effect
-    this.size = Ease(EasingFunctions.easeOutElastic, this.animTimer, 1, this.maxSize);
-
-    if (this.timer < 0.3) {
-      this.alpha = Smooth(this.alpha, 0, 4);
     }
 
-    this.velocityY = Smooth(this.velocityY, this.maxVelocityY, 4);
-    this.pos.y += this.velocityY;
-    this.timer -= 1 / frameRate();
-  }
+    update() {
 
-  render() {
-    push();
-    textSize(this.size);
-    fill('rgba(' + red(this.color) + ',' + green(this.color) + ',' + blue(this.color) + ',' + this.alpha + ')');
-    textAlign(CENTER, BOTTOM);
-    text(this.txt, this.pos.x, this.pos.y);
-    pop();
-  }
+        this.animTimer += 1 / frameRate() * 1 / 0.65;
+
+        //Get dat size bounce effect
+        this.size = Ease(this.easeFunction, this.animTimer, 1, this.maxSize);
+
+        if (this.timer < 0.3) {
+            this.alpha = Smooth(this.alpha, 0, 4);
+        }
+
+        this.velocityY = Smooth(this.velocityY, this.maxVelocityY, 4);
+        this.pos.y += this.velocityY;
+
+
+        this.timer -= 1 / frameRate();
+
+
+    }
+
+    render() {
+        push();
+        textSize(this.size);
+        fill('rgba(' + red(this.color) + ',' + green(this.color) + ',' + blue(this.color) + ',' + this.alpha + ')');
+        textAlign(CENTER, BOTTOM);
+        text(this.txt, this.pos.x, this.pos.y);
+        pop();
+    }
 }
-
-//===EXAMPLE
-export class Node {
-  constructor(x, y) {
-    this.pos = createVector(x, y);
-    this.sizeMod = random(0.06, 0.1);
-    this.velocity = createVector(0, 0);
-    this.maxSpeed = 0.0002 * objSize;
-    this.velocityChangeTimer = random(3, 5);
-    this.drawLine = false;
-    this.mouseDist = 0;
-    this.maxDist = objSize * 8;
-  }
-
-  update() {
-    this.velocityChangeTimer -= 1 / frameRate();
-    this.maxDist = objSize * 7;
-    if (this.velocityChangeTimer <= 0) {
-      this.velocityChangeTimer = random(3, 5);
-      this.changeVelocity();
-    }
-
-    this.pos.add(this.velocity);
-    this.mouseDist = dist(this.pos.x, this.pos.y, mouseX, mouseY);
-  }
-
-  changeVelocity() {
-    this.velocity = createVector(random(-this.maxSpeed, this.maxSpeed) * objSize, random(-this.maxSpeed, this.maxSpeed) * objSize);
-  }
-
-  render() {
-    let distanceFactor = (1 - (this.mouseDist / this.maxDist));
-
-    //Draw line towards cursor with opacity depending on distance to cursor
-    if (this.mouseDist <= this.maxDist) {
-      push();
-      strokeWeight(objSize * 0.05);
-      strokeCap(ROUND);
-      let lineColor = color(10, 113, 174, distanceFactor * 200);
-      stroke(lineColor);
-      line(this.pos.x, this.pos.y, mouseX, mouseY);
-      pop();
-    }
-
-    //Draw circle with size and opacity depending on distance to cursor
-    push();
-    let size = objSize * this.sizeMod * (distanceFactor + 1);
-    let ballColor = color(10, 113, 174, distanceFactor * 155 + 255);
-    fill(ballColor);
-    circle(this.pos.x, this.pos.y, size);
-    pop();
-  }
-}
-//===
