@@ -42,7 +42,7 @@ export class Entity {
       return;
     }
 
-    let size = objSize * this.sizeMod;
+    const size = objSize * this.sizeMod;
 
     push();
     translate(this.pos.x, this.pos.y);
@@ -54,7 +54,7 @@ export class Entity {
 
   //Basic circle collision
   collisionWith(other) {
-    let distCheck = (objSize * this.sizeMod + objSize * other.sizeMod) / 2;
+    const distCheck = (objSize * this.sizeMod + objSize * other.sizeMod) / 2;
 
     if (dist(this.pos.x, this.pos.y, other.pos.x, other.pos.y) < distCheck) {
       return true;
@@ -148,7 +148,6 @@ export class TapObject extends Entity {
 }
 
 
-
 export class Particle extends Entity {
   constructor(x, y) {
     super(x, y);
@@ -209,16 +208,149 @@ class ParticleHit extends Particle {
 
     this.pos.add(this.velocity);
 
-
     if (this.pos.y > height + this.sizeMod * objSize) {
       this.removable = true;
     }
   }
-
-
-
-
 }
+
+
+
+export class FireworkParticle extends Particle {
+  constructor(x, y) {
+    super(x, y);
+
+    let maxVelocity = objSize * 0.5;
+    this.velocity = createVector(random(-maxVelocity, maxVelocity), random(-maxVelocity, maxVelocity));
+    this.defaultVelocity = createVector(this.velocity.x, this.velocity.y);
+    this.lifetime = 0.75;
+
+
+    this.img = imgWinParticle[floor(random() * imgWinParticle.length)];
+  }
+}
+
+export class Confetti extends Entity {
+  constructor(x, y) {
+    super(x, y);
+    this.speed = random(objSize * 0.05, objSize * 0.085);
+    this.time = random(0, 100);
+    this.amp = random(2, 30);
+    this.phase = random(0.5, 2);
+    this.size = random(objSize * 0.5, objSize);
+
+    this.img = imgWinParticle[floor(random() * imgWinParticle.length)];
+
+  }
+
+  update() {
+    this.time = this.time + 1 / frameRate() * 5;
+
+    this.pos.y += this.speed;
+
+    if (this.pos.y > height + this.size * 2) {
+      this.removable = true;
+    }
+  }
+
+  render() {
+    push();
+    translate(this.pos.x, this.pos.y);
+    translate(this.amp * sin(this.time * this.phase), this.speed * cos(2 * this.time * this.phase));
+    rotate(this.time);
+    scale(cos(this.time / 4), sin(this.time / 4));
+
+    image(this.img, -this.size / 2, -this.size / 2, this.size, this.size);
+    pop();
+
+
+  }
+}
+
+
+export class RisingParticle extends Entity {
+  constructor(x, y) {
+    super(x, y);
+    this.speed = random(objSize * 0.2, objSize * 0.3);
+    this.sizeMod = random(0.5, 1);
+
+    this.img = imgWinParticle[floor(random() * imgWinParticle.length)];
+
+    this.animTimer = random(0, 1);
+  }
+
+  update() {
+
+    this.animTimer += 1 / frameRate();
+
+    this.pos.y -= this.speed;
+    this.pos.x += CosineWave(objSize * 0.2, 0.5, this.animTimer);
+
+    if (this.pos.y < - this.sizeMod * objSize) {
+      this.removable = true;
+    }
+  }
+}
+
+
+//===The way to use Floating Text:
+//floatingTexts.push(new FloatingText(...));
+//Everything else like drawing, removing it after it's done etc, will be done automatically
+export class FloatingText {
+  constructor(x, y, txt, color, size) {
+    this.pos = createVector(x, y);
+    this.size = 1;
+    this.maxSize = size;
+    this.timer = 0.65;
+    this.txt = txt;
+    this.color = color;
+    this.maxVelocityY = -objSize * 0.075;
+    this.velocityY = objSize * 0.3;
+    this.alpha = 1;
+    this.animTimer = 0;
+    this.easeFunction = EasingFunctions.easeOutElastic;
+    this.shouldPulse = false;
+
+  }
+
+  update() {
+
+    if (this.animTimer < 1) {
+      this.animTimer += 1 / frameRate() * 1 / 0.65;
+      this.size = Ease(this.easeFunction, this.animTimer, 1, this.maxSize);
+    } else {
+      if (this.shouldPulse) {
+        this.size += CosineWave(objSize * 0.015, 0.2, this.timer);
+      }
+    }
+
+
+    //Get dat size bounce effect
+
+
+    if (this.timer < 0.3) {
+      this.alpha = Smooth(this.alpha, 0, 4);
+    }
+
+    this.velocityY = Smooth(this.velocityY, this.maxVelocityY, 4);
+    this.pos.y += this.velocityY;
+
+
+    this.timer -= 1 / frameRate();
+
+
+  }
+
+  render() {
+    push();
+    textSize(this.size);
+    fill('rgba(' + red(this.color) + ',' + green(this.color) + ',' + blue(this.color) + ',' + this.alpha + ')');
+    textAlign(CENTER, BOTTOM);
+    text(this.txt, this.pos.x, this.pos.y);
+    pop();
+  }
+}
+
 
 
 function spawnParticlesGood(x, y, amount) {
@@ -239,8 +371,6 @@ function spawnParticlesBad(x, y, amount) {
   }
 }
 
-
-
 export function spawnParticles(x, y, amount) {
   for (let i = 0; i < amount; i++) {
     particles.push(new Particle(x, y));
@@ -248,155 +378,20 @@ export function spawnParticles(x, y, amount) {
 }
 
 
-
-export class FireworkParticle extends Particle {
-    constructor(x, y) {
-        super(x, y);
-
-        let maxVelocity = objSize * 0.5;
-        this.velocity = createVector(random(-maxVelocity, maxVelocity), random(-maxVelocity, maxVelocity));
-        this.defaultVelocity = createVector(this.velocity.x, this.velocity.y);
-        this.lifetime = 0.75;
-
-
-        this.img = imgWinParticle[floor(random() * imgWinParticle.length)];
-    }
-}
-
-export class Confetti extends Entity {
-    constructor(x, y) {
-        super(x, y);
-        this.speed = random(objSize * 0.05, objSize * 0.085);
-        this.time = random(0, 100);
-        this.amp = random(2, 30);
-        this.phase = random(0.5, 2);
-        this.size = random(objSize * 0.5, objSize);
-
-        this.img = imgWinParticle[floor(random() * imgWinParticle.length)];
-
-    }
-
-    update() {
-        this.time = this.time + 1 / frameRate() * 5;
-
-        this.pos.y += this.speed;
-
-        if (this.pos.y > height + this.size * 2) {
-            this.removable = true;
-        }
-    }
-
-    render() {
-        push();
-        translate(this.pos.x, this.pos.y);
-        translate(this.amp * sin(this.time * this.phase), this.speed * cos(2 * this.time * this.phase));
-        rotate(this.time);
-        scale(cos(this.time / 4), sin(this.time / 4));
-
-        image(this.img, -this.size / 2, -this.size / 2, this.size, this.size);
-        pop();
-
-
-    }
-}
-
-
-export class RisingParticle extends Entity {
-    constructor(x, y) {
-        super(x, y);
-        this.speed = random(objSize * 0.2, objSize * 0.3);
-        this.sizeMod = random(0.5, 1);
-
-        this.img = imgWinParticle[floor(random() * imgWinParticle.length)];
-
-        this.animTimer = random(0, 1);
-    }
-
-    update() {
-
-        this.animTimer += 1 / frameRate();
-
-        this.pos.y -= this.speed;
-        this.pos.x += CosineWave(objSize * 0.2, 0.5, this.animTimer);
-
-        if (this.pos.y < - this.sizeMod * objSize) {
-            this.removable = true;
-        }
-    }
-}
-
 export function spawnRisingParticle() {
-    const x = random(0, width);
-    const y = height + objSize * 2;
-    particles.push(new RisingParticle(x, y));
+  const x = random(0, width);
+  const y = height + objSize * 2;
+  particles.push(new RisingParticle(x, y));
 }
 
 export function spawnConfetti() {
-    const x = random(0, width);
-    const y = -objSize * 2;
-    particles.push(new Confetti(x, y));
+  const x = random(0, width);
+  const y = -objSize * 2;
+  particles.push(new Confetti(x, y));
 }
 
 export function spawnFireworks(x, y, amount) {
-    for (let i = 0; i < amount; i++) {
-        particles.push(new FireworkParticle(x, y));
-    }
-}
-
-//===The way to use Floating Text:
-//floatingTexts.push(new FloatingText(...));
-//Everything else like drawing, removing it after it's done etc, will be done automatically
-export class FloatingText {
-    constructor(x, y, txt, color, size) {
-        this.pos = createVector(x, y);
-        this.size = 1;
-        this.maxSize = size;
-        this.timer = 0.65;
-        this.txt = txt;
-        this.color = color;
-        this.maxVelocityY = -objSize * 0.075;
-        this.velocityY = objSize * 0.3;
-        this.alpha = 1;
-        this.animTimer = 0;
-        this.easeFunction = EasingFunctions.easeOutElastic;
-        this.shouldPulse = false;
-
-    }
-
-    update() {
-
-        if (this.animTimer < 1) {
-            this.animTimer += 1 / frameRate() * 1 / 0.65;
-            this.size = Ease(this.easeFunction, this.animTimer, 1, this.maxSize);
-        }else{
-            if(this.shouldPulse){
-                this.size += CosineWave(objSize * 0.015, 0.2, this.timer);
-            }
-        }
-
-
-        //Get dat size bounce effect
-        
-
-        if (this.timer < 0.3) {
-            this.alpha = Smooth(this.alpha, 0, 4);
-        }
-
-        this.velocityY = Smooth(this.velocityY, this.maxVelocityY, 4);
-        this.pos.y += this.velocityY;
-
-
-        this.timer -= 1 / frameRate();
-
-
-    }
-
-    render() {
-        push();
-        textSize(this.size);
-        fill('rgba(' + red(this.color) + ',' + green(this.color) + ',' + blue(this.color) + ',' + this.alpha + ')');
-        textAlign(CENTER, BOTTOM);
-        text(this.txt, this.pos.x, this.pos.y);
-        pop();
-    }
+  for (let i = 0; i < amount; i++) {
+    particles.push(new FireworkParticle(x, y));
+  }
 }
