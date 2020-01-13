@@ -22,16 +22,12 @@ window.textColor = Koji.config.settings.textColor;
 window.floatingTexts = [];
 window.particles = [];
 window.tapObjects = [];
-window.imgWinParticle = [];
 
 
 //===Score data
 window.score = 0;
 window.scoreGain = 1;
 window.scoreAnimTimer = 1;
-
-window.startingLives = 1;
-window.lives = 1;
 
 //===Images
 window.imgBackground = null;
@@ -110,8 +106,6 @@ function loadSounds() {
 }
 
 function loadSettings() {
-  startingLives = 1;
-  lives = startingLives;
   scoreGain = Koji.config.settings.scoreGain;
   gameLength = Koji.config.settings.gameLength;
   gameTimer = gameLength;

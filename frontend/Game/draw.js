@@ -119,7 +119,6 @@ export function init() {
     updateSound();
 
     score = 0;
-    lives = startingLives;
 
     gameTimer = gameLength;
     timeUpTimer = timeUpDuration;
@@ -359,20 +358,24 @@ function drawScore() {
 
 function updateEntities() {
 
-    for (let i = 0; i < tapObjects.length; i++) {
-        tapObjects[i].update();
-        tapObjects[i].render();
+    for (let i = 0; i < fallingObjects.length; i++) {
+      fallingObjects[i].update();
+      fallingObjects[i].render();
     }
-
+  
+    if (collector) {
+      collector.update();
+      collector.render();
+    }
+  
     for (let i = 0; i < particles.length; i++) {
-        particles[i].update();
-        particles[i].render();
+      particles[i].update();
+      particles[i].render();
     }
-
-
+  
     for (let i = 0; i < floatingTexts.length; i++) {
-        floatingTexts[i].update();
-        floatingTexts[i].render();
+      floatingTexts[i].update();
+      floatingTexts[i].render();
     }
 }
 
@@ -407,7 +410,6 @@ function updateGameTimer() {
 }
 
 function handleGame() {
-    
     drawGameTimer();
     updateGameTimer();
     manageSpawn();

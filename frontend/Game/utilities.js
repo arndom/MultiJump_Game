@@ -12,7 +12,7 @@ export function playMusic() {
 
   try {
     if (sndMusic) {
-      sndMusic.setVolume(0.4);
+      sndMusic.setVolume(Koji.config.settings.musicVolume);
       sndMusic.setLoop(true);
       sndMusic.play();
     }

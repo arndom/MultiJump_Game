@@ -87,7 +87,7 @@
         {
           "key": "loseText",
           "name": "In-Game Lose Text",
-          "description": "Text to show when the playe loses.",
+          "description": "Text to show when the player loses.",
           "type": "text"
         },
         {

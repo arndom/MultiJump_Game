@@ -293,9 +293,7 @@ export class RisingParticle extends Entity {
 }
 
 
-//===The way to use Floating Text:
-//floatingTexts.push(new FloatingText(...));
-//Everything else like drawing, removing it after it's done etc, will be done automatically
+
 export class FloatingText {
   constructor(x, y, txt) {
     this.pos = createVector(x, y);
@@ -324,10 +322,6 @@ export class FloatingText {
       }
     }
 
-
-    //Get dat size bounce effect
-
-
     if (this.timer < 0.3) {
       this.alpha = Smooth(this.alpha, 0, 4);
     }
@@ -335,10 +329,7 @@ export class FloatingText {
     this.velocityY = Smooth(this.velocityY, this.maxVelocityY, 4);
     this.pos.y += this.velocityY;
 
-
     this.timer -= 1 / frameRate();
-
-
   }
 
   render() {
