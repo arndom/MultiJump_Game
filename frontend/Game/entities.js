@@ -297,13 +297,13 @@ export class RisingParticle extends Entity {
 //floatingTexts.push(new FloatingText(...));
 //Everything else like drawing, removing it after it's done etc, will be done automatically
 export class FloatingText {
-  constructor(x, y, txt, color, size) {
+  constructor(x, y, txt) {
     this.pos = createVector(x, y);
     this.size = 1;
-    this.maxSize = size;
+    this.maxSize = objSize * 0.75;
     this.timer = 0.65;
     this.txt = txt;
-    this.color = color;
+    this.color = textColor;
     this.maxVelocityY = -objSize * 0.075;
     this.velocityY = objSize * 0.3;
     this.alpha = 1;

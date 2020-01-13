@@ -3,7 +3,7 @@
     "showPlayAgainButton": true,
     "playAgainButtonText": "Play Again",
     "playAgainButtonFontSize": 20,
-    "playAgainButtonColor": "#c31919",
+    "playAgainButtonColor": "#000000",
     "title": "Thanks for Playing!",
     "actions": {
       "action": "leads",

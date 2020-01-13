@@ -15,7 +15,7 @@ window.TYPE_BAD = 1;
 window.currentView = VIEW_TUTORIAL;
 window.endState = STATE_NONE;
 
-window.textColor = Koji.config.template.config.secondaryColor;
+window.textColor = Koji.config.settings.textColor;
 
 
 //===Game objects
@@ -121,8 +121,8 @@ function loadSettings() {
 
 function loadGoogleFont() {
   let link = document.createElement('link');
-  link.href = "https://fonts.googleapis.com/css?family=" + Koji.config.settings.fontFamily.replace(" ", "+");
+  link.href = "https://fonts.googleapis.com/css?family=" + Koji.config.general.fontFamily.replace(" ", "+");
   link.rel = 'stylesheet';
   document.head.appendChild(link);
-  myFont = Koji.config.settings.fontFamily;
+  myFont = Koji.config.general.fontFamily;
 }

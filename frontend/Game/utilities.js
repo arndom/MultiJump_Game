@@ -23,12 +23,10 @@ export function playMusic() {
 
 
 export function winGame() {
-  gameTimer = 0;
   endState = STATE_WIN;
 }
 
 export function loseGame() {
-  gameTimer = 0;
   endState = STATE_LOSE;
 }
 
