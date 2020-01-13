@@ -62,10 +62,13 @@ class LeaderboardSubmit extends PureComponent {
         name: '',
         optIn: true,
         phone: '',
+        submitting: false,
     };
 
     handleSubmit = e => {
         e.preventDefault();
+
+        this.setState({ submitting: true });
 
         const body = {
             name: this.state.name,
@@ -87,6 +90,7 @@ class LeaderboardSubmit extends PureComponent {
         })
             .then(response => response.json())
             .then(jsonResponse => {
+                this.setState({ submitting: false });
                 this.props.onSubmitSuccess();
             })
             .catch(err => {
@@ -97,9 +101,6 @@ class LeaderboardSubmit extends PureComponent {
     render() {
         return (
             <form onSubmit={this.handleSubmit}>
-                <div>
-                    <p>{`Your Score: ${this.props.score}`}</p>
-                </div>
                 <InputField>
                     <label>{'Your Name'}</label>
                     <input
@@ -110,43 +111,45 @@ class LeaderboardSubmit extends PureComponent {
                     />
                 </InputField>
                 {
-                    ['yes', 'required'].includes(Koji.config.template.config.emailCollection) &&
+                    ['yes', 'required'].includes(Koji.config.postGameScreen.actions.emailCollection) &&
                     <InputField>
                         <label>{'Your Email'}</label>
                         <input
                             onChange={e => this.setState({ email: e.currentTarget.value })}
-                            required={Koji.config.template.config.emailCollection === 'required'}
+                            required={Koji.config.postGameScreen.emailCollection === 'required'}
                             type={'email'}
                             value={this.state.email}
                         />
                     </InputField>
                 }
                 {
-                    ['yes', 'required'].includes(Koji.config.template.config.phoneCollection) &&
+                    ['yes', 'required'].includes(Koji.config.postGameScreen.actions.phoneCollection) &&
                     <InputField>
                         <label>{'Your Phone Number'}</label>
                         <input
                             onChange={e => this.setState({ phone: e.currentTarget.value })}
-                            required={Koji.config.template.config.phoneCollection === 'required'}
+                            required={Koji.config.postGameScreen.phoneCollection === 'required'}
                             type={'tel'}
                             value={this.state.phone}
                         />
                     </InputField>
                 }
                 {
-                    (['yes', 'required'].includes(Koji.config.template.config.emailCollection) || ['yes', 'required'].includes(Koji.config.template.config.phoneCollection)) &&
+                    (['yes', 'required'].includes(Koji.config.postGameScreen.actions.emailCollection) || ['yes', 'required'].includes(Koji.config.postGameScreen.phoneCollection)) &&
                     <CheckboxField inline>
                         <input
                             checked={this.state.optIn}
                             onChange={e => this.setState({ optIn: e.currentTarget.checked })}
                             type={'checkbox'}
                         />
-                        <label dangerouslySetInnerHTML={{ __html: Koji.config.template.config.optInText }} />
+                        <label dangerouslySetInnerHTML={{ __html: Koji.config.postGameScreen.actions.optInText }} />
                     </CheckboxField>
                 }
                 <PrimaryButton
+                    loading={this.state.submitting}
+                    primaryColor={Koji.config.postGameScreen.actions.submitButtonColor}
                     type={'submit'}
-                    text={Koji.config.template.config.postGameScreenSubmitButtonText}
+                    text={Koji.config.postGameScreen.actions.submitButtonText}
                 />
             </form>
         );

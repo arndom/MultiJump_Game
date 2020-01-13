@@ -1,7 +1,6 @@
 import React, { PureComponent } from 'react';
 import styled from 'styled-components';
 import isDarkColor from 'is-dark-color';
-import Koji from '@withkoji/vcc';
 import PropTypes from 'prop-types';
 
 const StyledButton = styled.button`
@@ -27,23 +26,40 @@ const StyledButton = styled.button`
 class PrimaryButton extends PureComponent {
     static propTypes = {
         fontSize: PropTypes.string,
+        loading: PropTypes.bool,
         onClick: PropTypes.func,
+        primaryColor: PropTypes.string,
         text: PropTypes.string.isRequired,
         type: PropTypes.string,
     };
 
     static defaultProps = {
         fontSize: '16px',
+        loading: false,
         onClick() {},
+        primaryColor: '#000000',
         type: 'button',
     };
 
     render() {
+        if (this.props.loading) {
+            return (
+                <StyledButton
+                    fontSize={this.props.fontSize}
+                    onClick={this.props.onClick}
+                    primaryColor={this.props.primaryColor}
+                    type={this.props.type}
+                >
+                    <div className={'lds-ring'}><div></div><div></div><div></div><div></div></div>
+                </StyledButton>
+            );
+        }
+
         return (
             <StyledButton
                 fontSize={this.props.fontSize}
                 onClick={this.props.onClick}
-                primaryColor={Koji.config.template.config.primaryColor}
+                primaryColor={this.props.primaryColor}
                 type={this.props.type}
             >
                 {this.props.text}

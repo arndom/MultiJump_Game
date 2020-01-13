@@ -1,6 +1,5 @@
 {
   "settings": {
-    "fontFamily": "Baloo",
     "scoreGain": 1,
     "maxParticles": 150,
     "maxParticlesMobile": 50,
@@ -36,20 +35,21 @@
     ],
     "winAnimation": "confettiFireworks",
     "instructionsText": "Instructions:\n1. Tap on the logos to get points\n2. Avoid the bombs\n3. Get 10 points to win!",
-    "timeUpText": "Time's up!"
+    "timeUpText": "Time's up!",
+    "textColor": "#ffda73"
   },
   "@@editor": [
     {
       "key": "settings",
-      "name": "Game Settings",
-      "icon": "💡",
+      "name": "3. Game Settings",
+      "icon": "🎮",
       "source": "settings.json",
       "fields": [
         {
-          "key": "fontFamily",
-          "name": "In-Game Font Family",
-          "description": "Google Font name to use in the game",
-          "type": "text"
+          "key": "textColor",
+          "name": "In-Game Text Color",
+          "description": "Color of all text in-game",
+          "type": "color"
         },
         {
           "key": "scoreGain",

@@ -1,0 +1,105 @@
+{
+  "general": {
+    "fontFamily": "Raleway",
+    "backgroundImage": "https://images.koji-cdn.com/d4d2aab7-1847-481d-8aa6-6866d81d5e0f/hweb2-bg2.png",
+    "backgroundImageMode": "cover",
+    "backgroundColor": "",
+    "soundOnIcon": "https://images.koji-cdn.com/4fba5aca-3a39-409c-8db0-c660207a39ee/fmvax-5b0754d85f5f44339e01e5ac6d6e5c6c.png",
+    "soundOffIcon": "https://images.koji-cdn.com/b4acde8c-96d4-4b1e-9e6e-4cca208833fe/hqr5b-caf83cefc49348cb8a46c9e5647abcbb.png",
+    "debug": {
+      "startScreen": "home"
+    }
+  },
+  "@@editor": [
+    {
+      "key": "general",
+      "name": "1. General Settings",
+      "icon": "⚙️",
+      "source": "general.json",
+      "fields": [
+        {
+          "key": "fontFamily",
+          "name": "Google Font Family",
+          "description": "Visit https://fonts.google.com, and copy and paste the name only (e.g., Roboto)",
+          "type": "text"
+        },
+        {
+          "key": "backgroundImage",
+          "name": "Background Image",
+          "description": "Background Image for all screens. If none is selected, will fall back to Background Color",
+          "type": "image"
+        },
+        {
+          "key": "backgroundImageMode",
+          "name": "Background Image Display Mode",
+          "type": "select",
+          "typeOptions": {
+            "placeholder": "Choose an option...",
+            "options": [
+              {
+                "label": "Cover",
+                "value": "cover"
+              },
+              {
+                "label": "Fit to Window",
+                "value": "contain"
+              },
+              {
+                "label": "Auto (No Resizing)",
+                "value": "auto"
+              }
+            ]
+          }
+        },
+        {
+          "key": "backgroundColor",
+          "name": "Background Color",
+          "description": "Background Color for all screens.",
+          "type": "color"
+        },
+        {
+          "key": "soundOnIcon",
+          "name": "Sound On Icon",
+          "type": "image"
+        },
+        {
+          "key": "soundOffIcon",
+          "name": "Sound Off Icon",
+          "type": "image"
+        },
+        {
+          "key": "debug",
+          "name": "Testing/Debug Options",
+          "description": "You can use these to quickly test your game",
+          "type": "object<Debug>",
+          "typeOptions": {
+            "Debug": {
+              "startScreen": {
+                "name": "Start Screen",
+                "description": "Note: Helpful for testing your updates, make sure to set back to \"Home Screen\" before publishing!",
+                "type": "select",
+                "typeOptions": {
+                  "placeholder": "Choose an option...",
+                  "options": [
+                    {
+                      "label": "Home Screen",
+                      "value": "home"
+                    },
+                    {
+                      "label": "Game Screen",
+                      "value": "game"
+                    },
+                    {
+                      "label": "Post Game Screen",
+                      "value": "postGame"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

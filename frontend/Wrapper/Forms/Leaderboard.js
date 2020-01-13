@@ -6,11 +6,9 @@ import isDarkColor from 'is-dark-color';
 const LeaderboardContainer = styled.div`
   display: flex;
   flex-direction: column;
-  width: 90%;
-  max-width: 480px;
+  width: 100%;
   margin: 0 auto;
   background: ${({ primaryColor }) => primaryColor};
-  margin-top: 16px;
   color: ${({ primaryColor }) => isDarkColor(primaryColor) ? '#f1f1f1' : '#111111' };
 
   h1 {
@@ -19,10 +17,22 @@ const LeaderboardContainer = styled.div`
   }
 `;
 
-const ScoreContainer = styled.div`
-  height: calc(100vh - 212px);
+const RingContainer = styled.div`
+  height: calc(100vh - 128px);
   overflow: auto;
-  margin-top: 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`;
+
+const ScoreContainer = styled.div`
+  height: calc(100vh - 128px);
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 8px;
 `;
 
 const Score = styled.div`
@@ -34,7 +44,8 @@ const Score = styled.div`
   background: ${({ secondaryColor }) => secondaryColor};
   color: ${({ secondaryColor }) => isDarkColor(secondaryColor) ? '#f1f1f1' : '#111111' };
   padding: 8px;
-  margin-bottom: 4px;
+  width: calc(100% - 16px);
+  margin-bottom: 8px;
 `;
 
 const ScoreIndex = styled.span`
@@ -70,39 +81,42 @@ class Leaderboard extends PureComponent {
   }
 
   render() {
-    console.log('K', Koji.config);
     if (this.state.error) {
       return (
         <div>{'Error!'}</div>
       );
     }
 
-    if (!this.state.dataIsLoaded) {
-      return (
-        <div />
-      );
-    }
-
     return (
       <LeaderboardContainer
-        primaryColor={Koji.config.template.config.primaryColor}
-        secondaryColor={Koji.config.template.config.secondaryColor}
+        primaryColor={Koji.config.postGameScreen.actions.leaderboardColor}
+        secondaryColor={Koji.config.postGameScreen.actions.leaderboardBackgroundColor}
       >
-        <ScoreContainer>
+        
           {
-            this.state.scores.slice(0, 100).map((score, index) => (
-              <Score
-                key={index}
-                primaryColor={Koji.config.template.config.primaryColor}
-                secondaryColor={Koji.config.template.config.secondaryColor}
-              >
-                <ScoreIndex>{`${index + 1}`}</ScoreIndex>
-                <ScoreName>{score.name}</ScoreName>
-                <ScorePoints>{`${score.score.toLocaleString()}`}</ScorePoints>
-              </Score>
-            ))
+            !this.state.dataIsLoaded &&
+            <RingContainer>
+              <div className={'lds-ring'}><div></div><div></div><div></div><div></div></div>
+            </RingContainer>
           }
-        </ScoreContainer>
+          {
+            this.state.dataIsLoaded && 
+            <ScoreContainer>
+              { 
+                this.state.scores.slice(0, 100).map((score, index) => (
+                  <Score
+                    key={index}
+                    primaryColor={Koji.config.postGameScreen.actions.leaderboardColor}
+                    secondaryColor={Koji.config.postGameScreen.actions.leaderboardBackgroundColor}
+                  >
+                    <ScoreIndex>{`${index + 1}`}</ScoreIndex>
+                    <ScoreName>{score.name}</ScoreName>
+                    <ScorePoints>{`${score.score.toLocaleString()}`}</ScorePoints>
+                  </Score>
+                ))
+              }
+            </ScoreContainer>
+          }
       </LeaderboardContainer>
     );
   }

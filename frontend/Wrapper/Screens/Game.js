@@ -31,8 +31,8 @@ class GameScreen extends PureComponent {
   render() {
     return (
       <GameContainer
-        gameBackgroundImage={Koji.config.template.config.backgroundImage}
-        gameBackgroundImageMode={Koji.config.template.config.backgroundImageMode}
+        gameBackgroundImage={Koji.config.general.backgroundImage}
+        gameBackgroundImageMode={Koji.config.general.backgroundImageMode}
         id={'game-container'}
       >
         <Game
