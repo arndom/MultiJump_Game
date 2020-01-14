@@ -22,6 +22,7 @@ window.textColor = Koji.config.settings.textColor;
 window.floatingTexts = [];
 window.particles = [];
 window.tapObjects = [];
+window.collector = null;
 
 
 //===Score data

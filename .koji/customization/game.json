@@ -9,16 +9,16 @@
     "speedMax": 0.225,
     "timePenalty": 1,
     "minimumScoreForWin": 10,
-    "background": "https://images.koji-cdn.com/d4d2aab7-1847-481d-8aa6-6866d81d5e0f/hweb2-bg2.png",
+    "background": "https://images.koji-cdn.com/f0bb4ea3-93ad-451f-86df-f3ca66072917/q4yaf-BG.png",
     "particle": "https://images.koji-cdn.com/d4d2aab7-1847-481d-8aa6-6866d81d5e0f/sxtcu-cloud4.png",
     "explosion": "https://images.koji-cdn.com/b4acde8c-96d4-4b1e-9e6e-4cca208833fe/0swbr-f34ab333f65046c6bcce7e81fe99050d.png",
     "goodObject": [
-      "https://images.koji-cdn.com/f0bb4ea3-93ad-451f-86df-f3ca66072917/l5y7o-YOURLOGOHEREsmaller.png"
+      "https://images.koji-cdn.com/f0bb4ea3-93ad-451f-86df-f3ca66072917/kvt08-goodcoincopy.png"
     ],
     "badObject": [
-      "https://images.koji-cdn.com/f0bb4ea3-93ad-451f-86df-f3ca66072917/fa3ze-tnt.png"
+      "https://images.koji-cdn.com/f0bb4ea3-93ad-451f-86df-f3ca66072917/v2pcx-badorccopy.png"
     ],
-    "particleGood": "https://images.koji-cdn.com/d4d2aab7-1847-481d-8aa6-6866d81d5e0f/jnn48-particle2.png",
+    "particleGood": "https://images.koji-cdn.com/d4d2aab7-1847-481d-8aa6-6866d81d5e0f/ulgo0-particle.png",
     "particleBad": "https://images.koji-cdn.com/d4d2aab7-1847-481d-8aa6-6866d81d5e0f/vkxiz-enemy2.png",
     "backgroundMusic": "https://objects.koji-cdn.com/f0bb4ea3-93ad-451f-86df-f3ca66072917/yt2up-music.mp3",
     "tap": "",
@@ -34,7 +34,7 @@
       "https://images.koji-cdn.com/d4d2aab7-1847-481d-8aa6-6866d81d5e0f/mwf5o-star5.png"
     ],
     "winAnimation": "confettiFireworks",
-    "instructionsText": "Instructions:\n1. Tap on the logos to get points\n2. Avoid the bombs\n3. Get 10 points to win!",
+    "instructionsText": "Instructions:\n1. Tap on coins to get points\n2. Avoid the bombs\n3. Get 10 points to win!",
     "timeUpText": "Time's up!",
     "textColor": "#ffda73"
   },

@@ -358,14 +358,9 @@ function drawScore() {
 
 function updateEntities() {
 
-    for (let i = 0; i < fallingObjects.length; i++) {
-      fallingObjects[i].update();
-      fallingObjects[i].render();
-    }
-  
-    if (collector) {
-      collector.update();
-      collector.render();
+    for (let i = 0; i < tapObjects.length; i++) {
+      tapObjects[i].update();
+      tapObjects[i].render();
     }
   
     for (let i = 0; i < particles.length; i++) {

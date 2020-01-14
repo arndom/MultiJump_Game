@@ -6,7 +6,7 @@
     "playAgainButtonColor": "#000000",
     "title": "Thanks for Playing!",
     "actions": {
-      "action": "leads",
+      "action": "traffic",
       "emailCollection": "yes",
       "phoneCollection": "no",
       "optInText": "I agree to be contacted",
