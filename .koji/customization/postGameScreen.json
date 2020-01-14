@@ -23,7 +23,8 @@
       "winText": "You win!",
       "loseText": "You lose!",
       "message": "Visit <a href=\"https://withkoji.com\">our site</a> to learn more."
-    }
+    },
+    "reveal": "fadeTop"
   },
   "@@editor": [
     {

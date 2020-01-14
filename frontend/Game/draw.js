@@ -14,7 +14,7 @@ export default function draw() {
         handleCountdown();
     } else {
         updateEntities();
-        
+
         if (gameTimer > 0) {
             handleGame();
         } else {
@@ -200,6 +200,33 @@ function drawTutorial() {
 
     text(instructionsText, instructionsX, instructionsY);
 
+    const goodX = width / 2 - objSize * 4;
+    const badX = width / 2 + objSize * 4;
+    const y = height / 2 + objSize * 2;
+
+    textSize(objSize * 1.25);
+    fill(textColor);
+    textAlign(CENTER, BOTTOM);
+
+    text("TAP", goodX, y);
+
+    const imgSize = objSize * 3;
+    push();
+    translate(goodX, y + imgSize);
+    image(imgGood[0], -imgSize / 2, -imgSize / 2, imgSize, imgSize);
+    pop();
+
+    textSize(objSize * 1.25);
+    
+    textAlign(CENTER, BOTTOM);
+
+    text("AVOID", badX, y);
+
+    push();
+    translate(badX, y + imgSize);
+    image(imgBad[0], -imgSize / 2, -imgSize / 2, imgSize, imgSize);
+    pop();
+
 
     drawContinueText();
 }
@@ -359,18 +386,18 @@ function drawScore() {
 function updateEntities() {
 
     for (let i = 0; i < tapObjects.length; i++) {
-      tapObjects[i].update();
-      tapObjects[i].render();
+        tapObjects[i].update();
+        tapObjects[i].render();
     }
-  
+
     for (let i = 0; i < particles.length; i++) {
-      particles[i].update();
-      particles[i].render();
+        particles[i].update();
+        particles[i].render();
     }
-  
+
     for (let i = 0; i < floatingTexts.length; i++) {
-      floatingTexts[i].update();
-      floatingTexts[i].render();
+        floatingTexts[i].update();
+        floatingTexts[i].render();
     }
 }
 
@@ -379,7 +406,7 @@ function endGame() {
 
     determineGameOutcome();
 
-    
+
 
     if (endState == STATE_WIN) {
         spawnWinText();

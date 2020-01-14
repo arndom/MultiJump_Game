@@ -36,7 +36,8 @@
     "winAnimation": "confettiFireworks",
     "instructionsText": "Instructions:\n1. Tap on coins to get points\n2. Avoid the orcs!\n3. Get 10 points to win!",
     "timeUpText": "Time's up!",
-    "textColor": "#ffda73"
+    "textColor": "#ffda73",
+    "guide": "https://images.koji-cdn.com/e232022c-85a1-4297-b2c9-bc0701507cbf/yrhca-pointup.png"
   },
   "@@editor": [
     {
