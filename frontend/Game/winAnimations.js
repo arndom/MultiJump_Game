@@ -123,6 +123,17 @@ function spawnFireworks(x, y, amount) {
 }
 
 
+function manageFireworks() {
+    fireworkTimer -= 1 / frameRate();
+
+    if (fireworkTimer <= 0) {
+        fireworkTimer = fireworkInterval * random(0.8, 1.2);
+        spawnFireworks(random(0, width), random(0, height), random(20, 30));
+    }
+}
+
+
+
 export function handleWinAnimation() {
     const animationSetting = Koji.config.settings.winAnimation;
 

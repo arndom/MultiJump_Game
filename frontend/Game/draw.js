@@ -260,15 +260,6 @@ function spawnLoseText() {
     floatingTexts.push(floatingText);
 }
 
-function manageFireworks() {
-    fireworkTimer -= 1 / frameRate();
-
-    if (fireworkTimer <= 0) {
-        fireworkTimer = fireworkInterval * random(0.8, 1.2);
-        spawnFireworks(random(0, width), random(0, height), random(20, 30));
-    }
-}
-
 
 function drawContinueText() {
     const textX = width / 2;

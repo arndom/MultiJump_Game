@@ -32,7 +32,7 @@
       "https://images.koji-cdn.com/d4d2aab7-1847-481d-8aa6-6866d81d5e0f/0pfca-start2.png",
       "https://images.koji-cdn.com/d4d2aab7-1847-481d-8aa6-6866d81d5e0f/mwf5o-star5.png"
     ],
-    "winAnimation": "rising",
+    "winAnimation": "falling",
     "instructionsText": "Instructions:\n1. Tap to fly\n2. Avoid obstacles\n3. Get 15 points to win!",
     "timeUpText": "Time's up!",
     "textColor": "#ffffff",
