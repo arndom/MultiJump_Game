@@ -15,17 +15,12 @@ export default function draw() {
     } else {
         updateEntities();
 
-        if (gameTimer > 0) {
+        if (!hasGameEnded) {
             handleGame();
-        } else {
-            if (!hasGameEnded) {
-                endGame();
-            }
         }
     }
 
     if (hasGameEnded) {
-
         handleGameEnd();
     }
 
@@ -47,20 +42,23 @@ export function touchStarted() {
 
 function handleTouchStart() {
     if (window.getAppView() == 'game') {
-        isTouching = true;
+
 
         if (currentView == VIEW_GAME) {
             if (hasGameEnded && timeUntilAbleToTransition <= 0) {
                 canTransition = true;
             }
-        }
 
-        if (gameTimer > 0) {
-            spawnParticles(mouseX, mouseY, 2);
-            for (let i = 0; i < tapObjects.length; i++) {
-                tapObjects[i].handleTap();
+            if (!hasGameEnded && startCountdown <= -1 && !isTouching) {
+                if (sndTap) {
+                    sndTap.play();
+                }
+                player.handleTap();
             }
         }
+
+        isTouching = true;
+
 
         if (currentView == VIEW_TUTORIAL) {
             currentView = VIEW_GAME;
@@ -71,6 +69,11 @@ function handleTouchStart() {
 export function touchEnded() {
     try {
         handleTouchEnd();
+
+        if (currentView == VIEW_GAME) {
+
+            return false;
+        }
     } catch (error) {
         console.log(error);
     }
@@ -107,13 +110,15 @@ function cleanup() {
         particles.splice(maxParticles - 1);
     }
 
-    for (let i = 0; i < tapObjects.length; i++) {
-        if (tapObjects[i].removable) {
-            tapObjects.splice(i, 1);
+    for (let i = 0; i < obstacles.length; i++) {
+        if (obstacles[i].removable) {
+            obstacles.splice(i, 1);
         }
     }
+    if (guide && guide.removable) {
+        guide = null;
+    }
 }
-
 
 export function init() {
     updateSound();
@@ -132,13 +137,18 @@ export function init() {
 
     clearArrays();
 
+    spawnBackground();
+
+    guide = new Guide(width / 2, height / 2);
+    player = new Player(width * 0.2, height / 2);
+
     if (window.getAppView() == 'game') {
         playMusic();
     }
 }
 
 function clearArrays() {
-    tapObjects = [];
+    obstacles = [];
     floatingTexts = [];
     particles = [];
 }
@@ -180,8 +190,9 @@ export function windowResized() {
 function drawBackground() {
     background(Koji.config.general.backgroundColor);
 
-    if (imgBackground) {
-        background(imgBackground);
+    for (let i = 0; i < backgroundLayers.length; i++) {
+        backgroundLayers[i].update();
+        backgroundLayers[i].render();
     }
 }
 
@@ -200,33 +211,10 @@ function drawTutorial() {
 
     text(instructionsText, instructionsX, instructionsY);
 
-    const goodX = width / 2 - objSize * 4;
-    const badX = width / 2 + objSize * 4;
-    const y = height / 2 + objSize * 2;
-
-    textSize(objSize * 1.25);
-    fill(textColor);
-    textAlign(CENTER, BOTTOM);
-
-    text("TAP", goodX, y);
-
-    const imgSize = objSize * 3;
-    push();
-    translate(goodX, y + imgSize);
-    image(imgGood[0], -imgSize / 2, -imgSize / 2, imgSize, imgSize);
-    pop();
-
-    textSize(objSize * 1.25);
-    
-    textAlign(CENTER, BOTTOM);
-
-    text("AVOID", badX, y);
-
-    push();
-    translate(badX, y + imgSize);
-    image(imgBad[0], -imgSize / 2, -imgSize / 2, imgSize, imgSize);
-    pop();
-
+    if (guide) {
+        guide.update();
+        guide.render();
+    }
 
     drawContinueText();
 }
@@ -272,24 +260,6 @@ function spawnLoseText() {
     floatingTexts.push(floatingText);
 }
 
-function handleWinAnimation() {
-    const animationSetting = Koji.config.settings.winAnimation;
-
-    if (animationSetting == 'fireworks' || animationSetting == 'confettiFireworks') {
-        manageFireworks();
-    }
-
-    if (frameCount % 5 == 0) {
-        if (animationSetting == 'confetti' || animationSetting == 'confettiFireworks') {
-            spawnConfetti();
-        }
-
-        if (animationSetting == 'rising') {
-            spawnRisingParticle();
-        }
-    }
-}
-
 function manageFireworks() {
     fireworkTimer -= 1 / frameRate();
 
@@ -299,18 +269,6 @@ function manageFireworks() {
     }
 }
 
-
-function drawTimeUpText() {
-    const textX = width / 2;
-    const textY = height / 2;
-    const txtSize = objSize * 1.25;
-
-    textAlign(CENTER, CENTER);
-    textSize(txtSize);
-    fill(textColor);
-
-    text(Koji.config.settings.timeUpText, textX, textY);
-}
 
 function drawContinueText() {
     const textX = width / 2;
@@ -385,9 +343,16 @@ function drawScore() {
 
 function updateEntities() {
 
-    for (let i = 0; i < tapObjects.length; i++) {
-        tapObjects[i].update();
-        tapObjects[i].render();
+
+
+    if (player) {
+        player.update();
+        player.render();
+    }
+
+    for (let i = 0; i < obstacles.length; i++) {
+        obstacles[i].update();
+        obstacles[i].render();
     }
 
     for (let i = 0; i < particles.length; i++) {
@@ -401,12 +366,10 @@ function updateEntities() {
     }
 }
 
-function endGame() {
+export function endGame() {
     hasGameEnded = true;
 
     determineGameOutcome();
-
-
 
     if (endState == STATE_WIN) {
         spawnWinText();
@@ -415,25 +378,23 @@ function endGame() {
     if (endState == STATE_LOSE) {
         spawnLoseText();
     }
+
+    if (sndGameOver) {
+        sndGameOver.play();
+    }
 }
 
 function determineGameOutcome() {
     if (score >= Koji.config.settings.minimumScoreForWin) {
         winGame();
     } else {
-        if (!isLeaderboardEnabled()) {
-            loseGame();
-        }
+        loseGame();
     }
 }
 
-function updateGameTimer() {
-    gameTimer -= 1 / frameRate();
-}
+
 
 function handleGame() {
-    drawGameTimer();
-    updateGameTimer();
     manageSpawn();
 }
 
@@ -441,10 +402,6 @@ function handleGame() {
 function handleGameEnd() {
     if (endState == STATE_WIN) {
         handleWinAnimation();
-    }
-
-    if (endState == STATE_NONE) {
-        drawTimeUpText();
     }
 
     drawContinueText();
@@ -464,19 +421,27 @@ function manageSpawn() {
     spawnTimer -= 1 / frameRate();
 
     if (spawnTimer <= 0) {
-        spawnObject();
+        spawnObstacles();
         spawnTimer = averageSpawnPeriod * random(0.8, 1.2);
     }
 }
 
-function spawnObject() {
-    let side = 1;
-    if (random() < 0.5) {
-        side = -1;
+function spawnObstacles() {
+
+    const x = width + objSize * 5;
+    const y1 = random(objSize * 3, height / 2 - objSize * 6);
+    const y2 = random(height / 2 + objSize * 6, height - objSize * 3);
+    const firstObstacle = new Obstacle(x, y1);
+    firstObstacle.doesGiveScore = true;
+
+    const secondObstacle = new Obstacle(x, y2);
+
+    obstacles.push(firstObstacle);
+    obstacles.push(secondObstacle);
+}
+
+function spawnBackground() {
+    for (let i = 0; i < imgBackground.length; i++) {
+        backgroundLayers.push(new BackgroundLayer(i));
     }
-
-
-    const x = width / 2 + (width / 2 + objSize * 3) * side;
-    const y = random(objSize * 3, height - objSize * 3);
-    tapObjects.push(new TapObject(x, y));
 }

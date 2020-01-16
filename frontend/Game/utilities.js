@@ -16,7 +16,7 @@ export function playMusic() {
       sndMusic.setLoop(true);
       sndMusic.play();
     }
-  } catch(error){
+  } catch (error) {
   }
 
 }
@@ -48,4 +48,15 @@ export function submitScore() {
   //Change app view to postgame
   window.setAppView('postGame');
 
+}
+
+export function calculateObjSize() {
+
+  let sizeModifier = 0.65;
+  if (height > width) {
+    sizeModifier = 1;
+  }
+
+
+  objSize = floor(min(floor(width / gameSize), floor(height / gameSize)) * sizeModifier);
 }

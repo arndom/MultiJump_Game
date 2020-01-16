@@ -8,22 +8,18 @@ window.STATE_NONE = 0;
 window.STATE_WIN = 1;
 window.STATE_LOSE = 2;
 
-//Tap object types
-window.TYPE_GOOD = 0;
-window.TYPE_BAD = 1;
-
 window.currentView = VIEW_TUTORIAL;
 window.endState = STATE_NONE;
 
 window.textColor = Koji.config.settings.textColor;
 
-
 //===Game objects
 window.floatingTexts = [];
 window.particles = [];
-window.tapObjects = [];
-window.collector = null;
-
+window.obstacles = [];
+window.player = null;
+window.guide = null;
+window.backgroundLayers = [];
 
 //===Score data
 window.score = 0;
@@ -31,18 +27,17 @@ window.scoreGain = 1;
 window.scoreAnimTimer = 1;
 
 //===Images
-window.imgBackground = null;
+window.imgBackground = [];
 window.imgParticle = null;
-window.imgParticleGood = null;
-window.imgParticleBad = null;
-window.imgGood = [];
-window.imgBad = [];
 window.imgWinParticle = [];
+window.imgGuide = null;
+window.imgObstacle = null;
+window.imgPlayer = null;
 
 //===Audio
 window.sndMusic = null;
-window.sndTapGood = null;
-window.sndTapBad = null;
+window.sndTap = null;
+window.sndGameOver = null;
 
 //===Size stuff
 window.objSize = 30;
@@ -70,54 +65,48 @@ window.averageSpawnPeriod = null;
 window.spawnTimer = 0.5;
 
 window.timeUntilAbleToTransition = 0.5;
+window.backgroundSpeedFactorMax = 0.25;
 
 export default function preload() {
-  loadGoogleFont();
-  loadImages();
-  loadSounds();
-  loadSettings();
+    loadGoogleFont();
+    loadImages();
+    loadSounds();
+    loadSettings();
 }
 
 function loadImages() {
-  imgParticle = loadImage(Koji.config.settings.particle);
-  imgParticleGood = loadImage(Koji.config.settings.particleGood);
-  imgParticleBad = loadImage(Koji.config.settings.particleBad);
+    imgParticle = loadImage(Koji.config.settings.particle);
+    imgGuide = loadImage(Koji.config.settings.guide);
+    imgPlayer = loadImage(Koji.config.settings.player);
+    imgObstacle = loadImage(Koji.config.settings.obstacle);
 
-  for (let i = 0; i < Koji.config.settings.goodObject.length; i++) {
-    imgGood[i] = loadImage(Koji.config.settings.goodObject[i]);
-  }
+    for (let i = 0; i < Koji.config.settings.winParticles.length; i++) {
+        imgWinParticle[i] = loadImage(Koji.config.settings.winParticles[i]);
+    }
 
-  for (let i = 0; i < Koji.config.settings.badObject.length; i++) {
-    imgBad[i] = loadImage(Koji.config.settings.badObject[i]);
-  }
-
-  for (let i = 0; i < Koji.config.settings.winParticles.length; i++) {
-    imgWinParticle[i] = loadImage(Koji.config.settings.winParticles[i]);
-  }
-
-  if (Koji.config.settings.background != "") {
-    imgBackground = loadImage(Koji.config.settings.background);
-  }
+    for (let i = 0; i < Koji.config.settings.background.length; i++) {
+        imgBackground[i] = loadImage(Koji.config.settings.background[i]);
+    }
 }
 
 function loadSounds() {
-  if (Koji.config.settings.tapGood) sndTapGood = loadSound(Koji.config.settings.tapGood);
-  if (Koji.config.settings.tapBad) sndTapBad = loadSound(Koji.config.settings.tapBad);
-  if (Koji.config.settings.backgroundMusic) sndMusic = loadSound(Koji.config.settings.backgroundMusic);
+    if (Koji.config.settings.tap) sndTap = loadSound(Koji.config.settings.tap);
+    if (Koji.config.settings.gameOver) sndGameOver = loadSound(Koji.config.settings.gameOver);
+    if (Koji.config.settings.backgroundMusic) sndMusic = loadSound(Koji.config.settings.backgroundMusic);
 }
 
 function loadSettings() {
-  scoreGain = Koji.config.settings.scoreGain;
-  gameLength = Koji.config.settings.gameLength;
-  gameTimer = gameLength;
-  timeUpTimer = timeUpDuration;
-  averageSpawnPeriod = Koji.config.settings.averageSpawnPeriod;
+    scoreGain = Koji.config.settings.scoreGain;
+    gameLength = Koji.config.settings.gameLength;
+    gameTimer = gameLength;
+    timeUpTimer = timeUpDuration;
+    averageSpawnPeriod = Koji.config.settings.averageSpawnPeriod;
 }
 
 function loadGoogleFont() {
-  let link = document.createElement('link');
-  link.href = "https://fonts.googleapis.com/css?family=" + Koji.config.general.fontFamily.replace(" ", "+");
-  link.rel = 'stylesheet';
-  document.head.appendChild(link);
-  myFont = Koji.config.general.fontFamily;
+    let link = document.createElement('link');
+    link.href = "https://fonts.googleapis.com/css?family=" + Koji.config.general.fontFamily.replace(" ", "+");
+    link.rel = 'stylesheet';
+    document.head.appendChild(link);
+    myFont = Koji.config.general.fontFamily;
 }

@@ -100,10 +100,15 @@
 <footer>
 	<!-- Prevent mobile scrolling/refreshing -->
 	<script>
-		document.addEventListener('touchmove', function(e) {
-      e.preventDefault();
+        function hasSomeParentWithId(element, id) {
+            if (element.id === id) return true;
+            return element.parentNode && hasSomeParentWithId(element.parentNode, id);
+        }
+
+        document.addEventListener('touchmove', function(e) {
+            if (hasSomeParentWithId(e.target, 'game-container')) e.preventDefault();
     }, { passive: false });
-	</script>
+    </script>
 </footer>
 
 

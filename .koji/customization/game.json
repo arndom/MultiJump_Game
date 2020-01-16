@@ -4,12 +4,11 @@
     "maxParticles": 150,
     "maxParticlesMobile": 50,
     "gameLength": 15,
-    "averageSpawnPeriod": 0.25,
+    "averageSpawnPeriod": 1,
     "speedMin": 0.1,
     "speedMax": 0.225,
     "timePenalty": 1,
-    "minimumScoreForWin": 10,
-    "background": "https://images.koji-cdn.com/f0bb4ea3-93ad-451f-86df-f3ca66072917/q4yaf-BG.png",
+    "minimumScoreForWin": 15,
     "particle": "https://images.koji-cdn.com/d4d2aab7-1847-481d-8aa6-6866d81d5e0f/sxtcu-cloud4.png",
     "explosion": "https://images.koji-cdn.com/b4acde8c-96d4-4b1e-9e6e-4cca208833fe/0swbr-f34ab333f65046c6bcce7e81fe99050d.png",
     "goodObject": [
@@ -21,23 +20,32 @@
     "particleGood": "https://images.koji-cdn.com/d4d2aab7-1847-481d-8aa6-6866d81d5e0f/ulgo0-particle.png",
     "particleBad": "https://images.koji-cdn.com/d4d2aab7-1847-481d-8aa6-6866d81d5e0f/vkxiz-enemy2.png",
     "backgroundMusic": "https://objects.koji-cdn.com/f0bb4ea3-93ad-451f-86df-f3ca66072917/yt2up-music.mp3",
-    "tap": "",
+    "tap": "https://objects.koji-cdn.com/eb880e52-1249-4535-aef1-7b0f19f57a50/6xqd3-tap.mp3",
     "musicVolume": 0.4,
     "tapGood": "https://objects.koji-cdn.com/f0bb4ea3-93ad-451f-86df-f3ca66072917/co8y8-goodTap.mp3",
     "tapBad": "https://objects.koji-cdn.com/f0bb4ea3-93ad-451f-86df-f3ca66072917/ils52-badTap.mp3",
     "winText": "YOU WIN!",
-    "loseText": "YOU LOSE",
+    "loseText": "Game Over",
     "winParticles": [
       "https://images.koji-cdn.com/d4d2aab7-1847-481d-8aa6-6866d81d5e0f/6ik7b-star1.png",
       "https://images.koji-cdn.com/d4d2aab7-1847-481d-8aa6-6866d81d5e0f/xvpr0-star3.png",
       "https://images.koji-cdn.com/d4d2aab7-1847-481d-8aa6-6866d81d5e0f/0pfca-start2.png",
       "https://images.koji-cdn.com/d4d2aab7-1847-481d-8aa6-6866d81d5e0f/mwf5o-star5.png"
     ],
-    "winAnimation": "confettiFireworks",
-    "instructionsText": "Instructions:\n1. Tap on coins to get points\n2. Avoid the orcs!\n3. Get 10 points to win!",
+    "winAnimation": "rising",
+    "instructionsText": "Instructions:\n1. Tap to fly\n2. Avoid obstacles\n3. Get 15 points to win!",
     "timeUpText": "Time's up!",
-    "textColor": "#ffda73",
-    "guide": "https://images.koji-cdn.com/e232022c-85a1-4297-b2c9-bc0701507cbf/yrhca-pointup.png"
+    "textColor": "#ffffff",
+    "guide": "https://images.koji-cdn.com/eb880e52-1249-4535-aef1-7b0f19f57a50/mk6ga-6tx6fpointcopy.png",
+    "player": "https://images.koji-cdn.com/d4d2aab7-1847-481d-8aa6-6866d81d5e0f/0vrub-bird.png",
+    "obstacle": "https://images.koji-cdn.com/d4d2aab7-1847-481d-8aa6-6866d81d5e0f/ix0aa-blockweak.png",
+    "gameOver": "https://objects.koji-cdn.com/eb880e52-1249-4535-aef1-7b0f19f57a50/oxgoe-lose.mp3",
+    "background": [
+      "https://images.koji-cdn.com/b0720d03-3380-47ce-9b47-97dff00fe491/5i9l8-bb10c69f6e6d4e15a290a8e5f559e35c.png",
+      "https://images.koji-cdn.com/b0720d03-3380-47ce-9b47-97dff00fe491/bdt0y-8e8388627858416390d1c5eb5dcbf8d1.png",
+      "https://images.koji-cdn.com/b0720d03-3380-47ce-9b47-97dff00fe491/2kqy0-d5c1ce1253c54049862a15386d76c9a5.png",
+      "https://images.koji-cdn.com/b0720d03-3380-47ce-9b47-97dff00fe491/y9gis-7c246e075b8f4161ae8533230bbfd8e6.png"
+    ]
   },
   "@@editor": [
     {
@@ -63,17 +71,6 @@
           }
         },
         {
-          "key": "gameLength",
-          "name": "Game Length",
-          "description": "How long the game will last.",
-          "type": "range",
-          "typeOptions": {
-            "min": 10,
-            "max": 300,
-            "step": 1
-          }
-        },
-        {
           "key": "instructionsText",
           "name": "Instructions Text",
           "description": "Text to show during the instructions.",
@@ -92,53 +89,14 @@
           "type": "text"
         },
         {
-          "key": "timeUpText",
-          "name": "Time Up Text",
-          "description": "Text to show after the time runs out, if the leaderboard is selected as a post-game option.",
-          "type": "text"
-        },
-        {
           "key": "averageSpawnPeriod",
           "name": "Average Target Spawn Period",
           "description": "How long between spawning on average?",
           "type": "range",
           "typeOptions": {
-            "min": 0.05,
-            "max": 1,
+            "min": 0.5,
+            "max": 3,
             "step": 0.01
-          }
-        },
-        {
-          "key": "speedMin",
-          "name": "Minimum Target Speed",
-          "description": "Minimum moving speed",
-          "type": "range",
-          "typeOptions": {
-            "min": 0.025,
-            "max": 0.4,
-            "step": 0.005
-          }
-        },
-        {
-          "key": "speedMax",
-          "name": "Maximum Target Speed",
-          "description": "Maximum moving speed",
-          "type": "range",
-          "typeOptions": {
-            "min": 0.025,
-            "max": 0.4,
-            "step": 0.005
-          }
-        },
-        {
-          "key": "timePenalty",
-          "name": "Time Penalty",
-          "description": "Seconds lost on bad tap",
-          "type": "range",
-          "typeOptions": {
-            "min": 0,
-            "max": 5,
-            "step": 0.1
           }
         },
         {
@@ -175,6 +133,10 @@
               {
                 "value": "rising",
                 "label": "Rising Particles"
+              },
+              {
+                "value": "falling",
+                "label": "Falling Particles"
               }
             ]
           }
@@ -187,44 +149,36 @@
         },
         {
           "key": "particle",
-          "name": "Tap Particle",
+          "name": "Particle",
           "description": "Ideal size: 96x96",
           "type": "image"
         },
         {
           "key": "background",
           "name": "In-Game Background",
-          "description": "Optional. Will stretch to fill screen.",
-          "type": "image"
-        },
-        {
-          "key": "goodObject",
-          "name": "Good Objects",
-          "description": "Ideal size: 128x128",
+          "description": "Layers for a parallax background.",
           "type": "image[]",
           "arrayOptions": {
-            "min": 1
+            "min": 1,
+            "addItemLabel": "Add Layer"
           }
         },
         {
-          "key": "particleGood",
-          "name": "Good Object Particle",
+          "key": "player",
+          "name": "Player",
           "description": "Ideal size: 128x128",
           "type": "image"
         },
         {
-          "key": "badObject",
-          "name": "Bad Objects",
+          "key": "obstacle",
+          "name": "Obstacle",
           "description": "Ideal size: 128x128",
-          "type": "image[]",
-          "arrayOptions": {
-            "min": 1
-          }
+          "type": "image"
         },
         {
-          "key": "particleBad",
-          "name": "Bad Object Particle",
-          "description": "Ideal size: 128x128",
+          "key": "guide",
+          "name": "Guide Icon",
+          "description": "Ideal size: 100x100",
           "type": "image"
         },
         {
@@ -245,15 +199,15 @@
           }
         },
         {
-          "key": "tapGood",
-          "name": "Tap Good",
-          "description": "Played on good tap",
+          "key": "tap",
+          "name": "Tap Sound",
+          "description": "Played on tap",
           "type": "sound"
         },
         {
-          "key": "tapBad",
-          "name": "Tap Bad",
-          "description": "Played on bad tap",
+          "key": "gameOver",
+          "name": "Game Over Sound",
+          "description": "Played on game over",
           "type": "sound"
         }
       ]

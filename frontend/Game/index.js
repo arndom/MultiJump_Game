@@ -37,19 +37,20 @@ class Game extends PureComponent {
         window.playMusic = require('../Game/utilities.js').playMusic;
         window.Entity = require('../Game/entities.js').Entity;
         window.Particle = require('../Game/entities.js').Particle;
-        window.Explosion = require('../Game/entities.js').Particle;
+        window.BackgroundLayer = require('../Game/entities.js').BackgroundLayer;
         window.addScore = require('../Game/draw.js').addScore;
-        window.loseLife = require('../Game/draw.js').loseLife;
-        window.TapObject = require('../Game/entities.js').TapObject;
         window.winGame = require('../Game/utilities.js').winGame;
         window.loseGame = require('../Game/utilities.js').loseGame;
+        window.endGame = require('../Game/draw.js').endGame;
+        window.calculateObjSize = require('../Game/utilities.js').calculateObjSize;
 
-        window.spawnFireworks = require('../Game/entities.js').spawnFireworks;
-        window.spawnConfetti = require('../Game/entities.js').spawnConfetti;
-        window.spawnRisingParticle = require('../Game/entities.js').spawnRisingParticle;
+        window.handleWinAnimation = require('../Game/winAnimations.js').handleWinAnimation;
 
 
         window.FloatingText = require('../Game/entities.js').FloatingText;
+        window.Player = require('../Game/entities.js').Player;
+        window.Obstacle = require('../Game/entities.js').Obstacle;
+
         window.init = require('../Game/draw.js').init;
         window.Smooth = require('../Game/helpers/functions.js').Smooth;
         window.Ease = require('../Game/helpers/functions.js').Ease;
