@@ -1,115 +1,115 @@
 {
-  "postGameScreen": {
-    "showPlayAgainButton": true,
-    "playAgainButtonText": "Play Again",
-    "playAgainButtonFontSize": 20,
-    "playAgainButtonColor": "#000000",
-    "title": "Thanks for Playing!",
-    "actions": {
-      "action": "traffic",
-      "emailCollection": "yes",
-      "phoneCollection": "no",
-      "optInText": "I agree to be contacted",
-      "submitButtonText": "Submit",
-      "submitButtonColor": "#2d179b",
-      "viewLeaderboardButtonText": "View Leaderboard",
-      "viewLeaderboardButtonColor": "#2f1f7d",
-      "text": "Create a game on Koji in 5 minutes!",
-      "buttonText": "Get Started",
-      "buttonLink": "https://withkoji.com",
-      "leaderboardColor": "#361db3",
-      "leaderboardBackgroundColor": "#5a4d9c",
-      "buttonColor": "#88ea6c",
-      "winText": "You win!",
-      "loseText": "You lose!",
-      "message": "Visit <a href=\"https://withkoji.com\">our site</a> to learn more."
+    "postGameScreen": {
+        "showPlayAgainButton": true,
+        "playAgainButtonText": "Play Again",
+        "playAgainButtonFontSize": 20,
+        "playAgainButtonColor": "#000000",
+        "title": "Thanks for Playing!",
+        "actions": {
+            "action": "traffic",
+            "emailCollection": "yes",
+            "phoneCollection": "no",
+            "optInText": "I agree to be contacted",
+            "submitButtonText": "Submit",
+            "submitButtonColor": "#2d179b",
+            "viewLeaderboardButtonText": "View Leaderboard",
+            "viewLeaderboardButtonColor": "#2f1f7d",
+            "text": "Create a game on Koji in 5 minutes!",
+            "buttonText": "Get Started",
+            "buttonLink": "https://withkoji.com",
+            "leaderboardColor": "#361db3",
+            "leaderboardBackgroundColor": "#5a4d9c",
+            "buttonColor": "#88ea6c",
+            "winText": "Congratulations, you won!",
+            "loseText": "Good try, better luck next time!",
+            "message": "Visit <a href=\"https://withkoji.com\">our site</a> to learn more."
+        },
+        "reveal": "fadeTop"
     },
-    "reveal": "fadeTop"
-  },
-  "@@editor": [
-    {
-      "key": "postGameScreen",
-      "name": "4. Post Game Screen",
-      "icon": "🎴",
-      "source": "postGameScreen.json",
-      "fields": [
+    "@@editor": [
         {
-          "key": "reveal",
-          "name": "Reveal Animation",
-          "description": "How the home screen reveal is animated",
-          "type": "select",
-          "typeOptions": {
-            "placeholder": "Choose an option...",
-            "options": [
-              {
-                "label": "Bounce Bottom",
-                "value": "bounceBottom"
-              },
-              {
-                "label": "Bounce Top",
-                "value": "bounceTop"
-              },
-              {
-                "label": "Fade Bottom",
-                "value": "fadeBottom"
-              },
-              {
-                "label": "Fade Top",
-                "value": "fadeTop"
-              },
-              {
-                "label": "Zoom Bottom",
-                "value": "zoomBottom"
-              },
-              {
-                "label": "Zoom Top",
-                "value": "zoomTop"
-              },
-              {
-                "label": "Rubber Band",
-                "value": "rubberBand"
-              }
+            "key": "postGameScreen",
+            "name": "4. Post Game Screen",
+            "icon": "🎴",
+            "source": "postGameScreen.json",
+            "fields": [
+                {
+                    "key": "reveal",
+                    "name": "Reveal Animation",
+                    "description": "How the home screen reveal is animated",
+                    "type": "select",
+                    "typeOptions": {
+                        "placeholder": "Choose an option...",
+                        "options": [
+                            {
+                                "label": "Bounce Bottom",
+                                "value": "bounceBottom"
+                            },
+                            {
+                                "label": "Bounce Top",
+                                "value": "bounceTop"
+                            },
+                            {
+                                "label": "Fade Bottom",
+                                "value": "fadeBottom"
+                            },
+                            {
+                                "label": "Fade Top",
+                                "value": "fadeTop"
+                            },
+                            {
+                                "label": "Zoom Bottom",
+                                "value": "zoomBottom"
+                            },
+                            {
+                                "label": "Zoom Top",
+                                "value": "zoomTop"
+                            },
+                            {
+                                "label": "Rubber Band",
+                                "value": "rubberBand"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "key": "title",
+                    "name": "Title Text",
+                    "description": "The title for the post game card (e.g., Thanks for playing!)",
+                    "type": "text"
+                },
+                {
+                    "key": "showPlayAgainButton",
+                    "name": "Show Play Again Button",
+                    "type": "boolean"
+                },
+                {
+                    "key": "playAgainButtonText",
+                    "name": "Play Again Button Text",
+                    "type": "text"
+                },
+                {
+                    "key": "playAgainButtonColor",
+                    "name": "Play Again Button Color",
+                    "type": "color"
+                },
+                {
+                    "key": "playAgainButtonFontSize",
+                    "name": "Play Again Button Font Size",
+                    "description": "Note: Values are capped automatically to make sure the content stays on screen",
+                    "type": "range",
+                    "typeOptions": {
+                        "min": 8,
+                        "max": 32,
+                        "step": 1
+                    }
+                },
+                {
+                    "key": "actions",
+                    "name": "Actions",
+                    "type": "custom<post-game-actions>"
+                }
             ]
-          }
-        },
-        {
-          "key": "title",
-          "name": "Title Text",
-          "description": "The title for the post game card (e.g., Thanks for playing!)",
-          "type": "text"
-        },
-        {
-          "key": "showPlayAgainButton",
-          "name": "Show Play Again Button",
-          "type": "boolean"
-        },
-        {
-          "key": "playAgainButtonText",
-          "name": "Play Again Button Text",
-          "type": "text"
-        },
-        {
-          "key": "playAgainButtonColor",
-          "name": "Play Again Button Color",
-          "type": "color"
-        },
-        {
-          "key": "playAgainButtonFontSize",
-          "name": "Play Again Button Font Size",
-          "description": "Note: Values are capped automatically to make sure the content stays on screen",
-          "type": "range",
-          "typeOptions": {
-            "min": 8,
-            "max": 32,
-            "step": 1
-          }
-        },
-        {
-          "key": "actions",
-          "name": "Actions",
-          "type": "custom<post-game-actions>"
         }
-      ]
-    }
-  ]
+    ]
 }
