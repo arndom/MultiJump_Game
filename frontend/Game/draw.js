@@ -162,6 +162,7 @@ function clearArrays() {
     obstacles = [];
     floatingTexts = [];
     particles = [];
+    collectibles = [];
 }
 
 export function addScore(amount) {
