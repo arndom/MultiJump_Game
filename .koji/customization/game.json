@@ -19,9 +19,9 @@
     ],
     "particleGood": "https://images.koji-cdn.com/d4d2aab7-1847-481d-8aa6-6866d81d5e0f/ulgo0-particle.png",
     "particleBad": "https://images.koji-cdn.com/d4d2aab7-1847-481d-8aa6-6866d81d5e0f/vkxiz-enemy2.png",
-    "backgroundMusic": "https://objects.koji-cdn.com/f0bb4ea3-93ad-451f-86df-f3ca66072917/yt2up-music.mp3",
+    "backgroundMusic": "https://objects.koji-cdn.com/531ccf36-2cf2-46a2-82ef-685e8786578a/gzngp-music.mp3",
     "tap": "https://objects.koji-cdn.com/eb880e52-1249-4535-aef1-7b0f19f57a50/6xqd3-tap.mp3",
-    "musicVolume": 0.4,
+    "musicVolume": 0.3,
     "tapGood": "https://objects.koji-cdn.com/f0bb4ea3-93ad-451f-86df-f3ca66072917/co8y8-goodTap.mp3",
     "tapBad": "https://objects.koji-cdn.com/f0bb4ea3-93ad-451f-86df-f3ca66072917/ils52-badTap.mp3",
     "winText": "YOU WIN!",
@@ -41,7 +41,7 @@
     "obstacle": [
       "https://images.koji-cdn.com/d4d2aab7-1847-481d-8aa6-6866d81d5e0f/ix0aa-blockweak.png"
     ],
-    "gameOver": "https://objects.koji-cdn.com/eb880e52-1249-4535-aef1-7b0f19f57a50/oxgoe-lose.mp3",
+    "gameOver": "https://objects.koji-cdn.com/531ccf36-2cf2-46a2-82ef-685e8786578a/5sbjd-gameover.mp3",
     "background": [
       "https://images.koji-cdn.com/b0720d03-3380-47ce-9b47-97dff00fe491/5i9l8-bb10c69f6e6d4e15a290a8e5f559e35c.png",
       "https://images.koji-cdn.com/b0720d03-3380-47ce-9b47-97dff00fe491/bdt0y-8e8388627858416390d1c5eb5dcbf8d1.png",
@@ -60,7 +60,10 @@
     "playerPowerup": "https://images.koji-cdn.com/d4d2aab7-1847-481d-8aa6-6866d81d5e0f/xpzxm-enemy16.png",
     "powerupDuration": 5,
     "powerupText": "POWER UP",
-    "maxJumps": 2
+    "maxJumps": 2,
+    "jump": "https://objects.koji-cdn.com/531ccf36-2cf2-46a2-82ef-685e8786578a/gn7qv-jump.mp3",
+    "collect": "https://objects.koji-cdn.com/531ccf36-2cf2-46a2-82ef-685e8786578a/7qcwn-collect.mp3",
+    "powerupSound": "https://objects.koji-cdn.com/531ccf36-2cf2-46a2-82ef-685e8786578a/3es72-powerup.mp3"
   },
   "@@editor": [
     {
@@ -367,9 +370,21 @@
           }
         },
         {
-          "key": "tap",
-          "name": "Tap Sound",
-          "description": "Played on tap",
+          "key": "jump",
+          "name": "Jump Sound",
+          "description": "Played on jump",
+          "type": "sound"
+        },
+        {
+          "key": "collect",
+          "name": "Collect Sound",
+          "description": "Played on collect",
+          "type": "sound"
+        },
+        {
+          "key": "powerupSound",
+          "name": "Powerup Sound",
+          "description": "Played on powerup",
           "type": "sound"
         },
         {

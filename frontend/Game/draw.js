@@ -50,9 +50,6 @@ function handleTouchStart() {
             }
 
             if (!hasGameEnded && startCountdown <= -1 && !isTouching) {
-                if (sndTap) {
-                    sndTap.play();
-                }
                 player.handleTap();
             }
         }
@@ -116,7 +113,7 @@ function cleanup() {
         }
     }
 
-     for (let i = 0; i < collectibles.length; i++) {
+    for (let i = 0; i < collectibles.length; i++) {
         if (collectibles[i].removable) {
             collectibles.splice(i, 1);
         }
@@ -141,6 +138,7 @@ export function init() {
     window.currentView = VIEW_TUTORIAL;
     window.endState = STATE_NONE;
     timeUntilAbleToTransition = 0.5;
+    globalSpeedModifier = 1;
 
     groundLevel = height * 0.85;
     globalSpeed = objSize * Koji.config.settings.gameSpeed;
@@ -149,7 +147,7 @@ export function init() {
 
     spawnBackground();
 
-    
+
     ground = new Ground();
     guide = new Guide(width / 2, height / 2);
     player = new Player(width * 0.2, height / 2);
@@ -346,7 +344,7 @@ function drawScore() {
 }
 
 function updateEntities() {
-     for (let i = 0; i < particles.length; i++) {
+    for (let i = 0; i < particles.length; i++) {
         particles[i].update();
         particles[i].render();
     }
@@ -355,12 +353,12 @@ function updateEntities() {
         ground.render();
     }
 
-   
-
     if (player) {
         player.update();
         player.render();
     }
+
+   
 
     for (let i = 0; i < obstacles.length; i++) {
         obstacles[i].update();
@@ -375,6 +373,11 @@ function updateEntities() {
     for (let i = 0; i < floatingTexts.length; i++) {
         floatingTexts[i].update();
         floatingTexts[i].render();
+    }
+
+     if (playerDeath) {
+        playerDeath.update();
+        playerDeath.render();
     }
 }
 

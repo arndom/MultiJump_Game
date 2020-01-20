@@ -18,6 +18,7 @@ window.floatingTexts = [];
 window.particles = [];
 window.obstacles = [];
 window.player = null;
+window.playerDeath = null;
 window.guide = null;
 window.backgroundLayers = [];
 window.collectibles = [];
@@ -42,8 +43,10 @@ window.imgPlayerPowerup = null;
 
 //===Audio
 window.sndMusic = null;
-window.sndTap = null;
+window.sndJump = null;
 window.sndGameOver = null;
+window.sndCollect = null;
+window.sndPowerup = null;
 
 //===Size stuff
 window.objSize = 30;
@@ -110,8 +113,10 @@ function loadImages() {
 }
 
 function loadSounds() {
-    if (Koji.config.settings.tap) sndTap = loadSound(Koji.config.settings.tap);
+    if (Koji.config.settings.jump) sndJump = loadSound(Koji.config.settings.jump);
     if (Koji.config.settings.gameOver) sndGameOver = loadSound(Koji.config.settings.gameOver);
+    if (Koji.config.settings.collect) sndCollect = loadSound(Koji.config.settings.collect);
+    if (Koji.config.settings.powerupSound) sndPowerup = loadSound(Koji.config.settings.powerupSound);
     if (Koji.config.settings.backgroundMusic) sndMusic = loadSound(Koji.config.settings.backgroundMusic);
 }
 

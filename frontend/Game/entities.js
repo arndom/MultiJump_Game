@@ -105,6 +105,7 @@ export class Player extends Entity {
                         obstacles[i].handleDestroy();
                     } else {
                         spawnParticles(this.pos.x, this.pos.y, 20);
+                        playerDeath = new PlayerDeath(this.pos.x, this.pos.y);
                         endGame();
                     }
 
@@ -138,6 +139,10 @@ export class Player extends Entity {
 
         this.jumpCount++;
         this.jumpAnimTimer = 0;
+
+        if(sndJump){
+            sndJump.play();
+        }
     }
 
     isGrounded() {
@@ -236,6 +241,39 @@ export class Player extends Entity {
         scale(this.scale.x, this.scale.y);
         image(this.img, -size / 2, -size / 2, size, size);
         pop();
+    }
+}
+
+
+class PlayerDeath extends Entity{
+    constructor(x, y){
+        super(x, y);
+        this.sizeModStart = globalSizeMod;
+        this.sizeMod = this.sizeModStart;
+        this.sizeModGoal = globalSizeMod * 12;
+        this.animTimer = 0;
+        this.gravity = objSize * 0.035;
+        this.velocityY = -objSize * 0.9;
+        this.img = imgPlayer;
+        this.rotSpeed = 0.1;
+    }
+
+    update(){
+        this.velocityY += this.gravity;
+
+        this.pos.y += this.velocityY;
+
+        this.pos.x = Smooth(this.pos.x, width/2, 20);
+
+        if(this.animTimer < 1){
+            this.animTimer += 1/frameRate() * 0.15;
+            
+            this.sizeMod = Ease(EasingFunctions.easeOutCubic, this.animTimer, this.sizeModStart, this.sizeModGoal - this.sizeModStart);
+
+            
+        }
+
+        this.rotation += this.rotSpeed;
     }
 }
 
@@ -348,7 +386,7 @@ export class Collectible extends Entity {
     }
 
     handleCollect() {
-        if (!this.isCollected) {
+        if (!this.isCollected && !hasGameEnded) {
 
             this.isCollected = true;
 
@@ -357,6 +395,10 @@ export class Collectible extends Entity {
             spawnScoreText(this.pos.x, this.pos.y - objSize * this.sizeMod);
 
             spawnCollectibleParticles(this.pos.x, this.pos.y, 10);
+
+            if(sndCollect){
+                sndCollect.play();
+            }
         }
     }
 }
@@ -370,7 +412,7 @@ class Powerup extends Collectible {
 
 
     handleCollect() {
-        if (!this.isCollected) {
+        if (!this.isCollected && !hasGameEnded) {
 
             this.isCollected = true;
 
@@ -381,6 +423,10 @@ class Powerup extends Collectible {
             spawnPowerupText();
 
             player.activatePowerup();
+
+            if(sndPowerup){
+                sndPowerup.play();
+            }
         }
     }
 }
