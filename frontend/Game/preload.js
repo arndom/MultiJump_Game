@@ -20,6 +20,8 @@ window.obstacles = [];
 window.player = null;
 window.guide = null;
 window.backgroundLayers = [];
+window.collectibles = [];
+window.ground = null;
 
 //===Score data
 window.score = 0;
