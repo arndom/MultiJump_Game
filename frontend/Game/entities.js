@@ -351,6 +351,8 @@ export class Collectible extends Entity {
 
             addScore(scoreGain);
 
+            spawnScoreText(this.pos.x, this.pos.y - objSize * this.sizeMod);
+
             spawnCollectibleParticles(this.pos.x, this.pos.y, 10);
         }
     }
@@ -373,6 +375,8 @@ class Powerup extends Collectible {
 
             addScore(scoreGain);
 
+            spawnPowerupText();
+            
             player.activatePowerup();
         }
     }
@@ -632,4 +636,18 @@ export class BackgroundLayer {
 
         image(this.img, this.x2, 0, width, height);
     }
+}
+
+function spawnScoreText(x, y){
+    const floatingText = new FloatingText(x, y, "+" + scoreGain);
+    floatingText.maxSize = objSize * 0.75;
+
+    floatingTexts.push(floatingText);
+}
+
+function spawnPowerupText(){
+    const floatingText = new FloatingText(width/2, height/2, Koji.config.settings.powerupText);
+    floatingText.maxSize = objSize * 1.5;
+
+    floatingTexts.push(floatingText);
 }
