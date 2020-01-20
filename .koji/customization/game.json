@@ -53,7 +53,10 @@
     "ground": "https://images.koji-cdn.com/d4d2aab7-1847-481d-8aa6-6866d81d5e0f/daj0s-floor2.png",
     "airObstacleRate": 50,
     "playerJumpAnimation": "frontflip",
-    "collectibleAnimation": "rotateClockwise"
+    "collectibleAnimation": "rotateClockwise",
+    "gameSpeed": 0.32,
+    "collectibleRate": 100,
+    "powerupRate": 15
   },
   "@@editor": [
     {
@@ -104,6 +107,17 @@
           "typeOptions": {
             "min": 0.5,
             "max": 3,
+            "step": 0.01
+          }
+        },
+        {
+          "key": "gameSpeed",
+          "name": "Game Speed",
+          "description": "How fast does everything move?",
+          "type": "range",
+          "typeOptions": {
+            "min": 0.1,
+            "max": 0.45,
             "step": 0.01
           }
         },
@@ -231,6 +245,17 @@
           "type": "image"
         },
         {
+          "key": "collectibleRate",
+          "name": "Collectible Rate",
+          "description": "Chance to spawn a collectible with each obstacle.",
+          "type": "range",
+          "typeOptions": {
+            "min": 0,
+            "max": 100,
+            "step": 1
+          }
+        },
+        {
           "key": "collectibleAnimation",
           "name": "Collectible Animation",
           "description": "How the collectibles will animate",
@@ -262,6 +287,17 @@
           "name": "Powerup",
           "description": "Ideal size: 128x128",
           "type": "image"
+        },
+        {
+          "key": "powerupRate",
+          "name": "Powerup Rate",
+          "description": "Chance to spawn a powerup instead of a collectible.",
+          "type": "range",
+          "typeOptions": {
+            "min": 0,
+            "max": 100,
+            "step": 1
+          }
         },
         {
           "key": "ground",

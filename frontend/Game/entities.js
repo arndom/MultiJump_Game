@@ -27,7 +27,17 @@ export class Entity {
 
     //Basic circle collision
     collisionWith(other) {
-        const distCheck = (objSize * this.sizeMod + objSize * other.sizeMod) / 2;
+        const distCheck = (objSize * this.sizeMod + objSize * other.sizeMod) / 2.25;
+
+        if (dist(this.pos.x, this.pos.y, other.pos.x, other.pos.y) < distCheck) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    collisionWithCollectible(other) {
+        const distCheck = (objSize * this.sizeMod + objSize * other.sizeMod) / 1.75;
 
         if (dist(this.pos.x, this.pos.y, other.pos.x, other.pos.y) < distCheck) {
             return true;
@@ -67,15 +77,9 @@ export class Player extends Entity {
             this.velocityY += this.gravity;
         }
 
-        if (isNowGrounded && !this.wasGrounded) {
-            this.landAnimTimer = 0;
-            spawnLandingParticles(this.pos.x, this.pos.y + objSize * this.sizeMod / 2, 10);
-            this.jumpCount = 0;
-        }
-
+        this.handleLanding();
 
         this.pos.y += this.velocityY;
-
         this.pos.y = constrain(this.pos.y, 0, this.bottom);
 
         this.wasGrounded = isNowGrounded;
@@ -142,6 +146,14 @@ export class Player extends Entity {
         }
 
         return false;
+    }
+
+    handleLanding() {
+        if (this.isGrounded() && !this.wasGrounded && !hasGameEnded) {
+            this.landAnimTimer = 0;
+            spawnLandingParticles(this.pos.x, this.pos.y + objSize * this.sizeMod / 2, 10);
+            this.jumpCount = 0;
+        }
     }
 
     handleLandingAnimation() {
@@ -226,6 +238,57 @@ export class Obstacle extends Entity {
     }
 }
 
+export class Collectible extends Entity {
+    constructor(x, y) {
+        super(x, y);
+
+        this.img = imgCollectible;
+        this.sizeMod = globalSizeMod * 0.75;
+
+        this.rotSpeed = 0.1;
+
+        this.animationType = Koji.config.settings.collectibleAnimation;
+
+        if (this.animationType == 'rotateClockwise' || this.animationType == 'rotateCounterClockwise') {
+            this.rotation = random(0, Math.PI);
+        }
+
+        this.animTimer = 0;
+        this.isCollected = false;
+    }
+
+    update() {
+        this.pos.x -= globalSpeed;
+
+        handleAnimation();
+
+        if(this.isCollected){
+            this.removable = true;
+        }
+    }
+
+    handleAnimation() {
+        if (this.animationType == 'rotateClockwise') {
+            this.rotation += this.rotSpeed;
+        }
+        if (this.animationType == 'rotateCounterClockwise') {
+            this.rotation -= this.rotSpeed;
+        }
+        if (this.animationType == 'pulse') {
+            this.animTimer += 1 / frameRate();
+
+            this.sizeMod += SineWave(0.5, 0.5, this.animTimer);
+        }
+    }
+
+    handleCollect(){
+        if(!this.isCollected){
+
+            this.isCollected = true;
+        }
+    }
+}
+
 export class Ground {
     constructor() {
         this.posY = groundLevel;
@@ -234,6 +297,8 @@ export class Ground {
 
         this.posX = [];
         this.generateGround();
+
+        this.handleCollectibleSpawn();
     }
 
     generateGround() {
@@ -245,12 +310,35 @@ export class Ground {
         }
     }
 
+    handleCollectibleSpawn() {
+        if (random() * 100 < Koji.config.settings.collectibleRate) {
+            this.spawnCollectible();
+        }
+    }
+
+    spawnCollectible() {
+        const x = this.pos.x;
+        let y = this.pos.y - globalSizeMod * objSize;
+
+        if (this.isAir) {
+            if (random() < 0.5) {
+                y = this.pos.y + globalSizeMod * objSize;
+            }
+        }
+
+        if (random() * 100 < Koji.config.settings.powerupRate) {
+            collectibles.push(new Powerup(x, y));
+        } else {
+            collectibles.push(new Collectible(x, y));
+        }
+    }
+
     update() {
 
         for (let i = 0; i < this.posX.length; i++) {
             if (this.posX[i] < -this.sizeMod * objSize / 2) {
                 this.posX[i] = this.getRightMostTile() + this.sizeMod * objSize;
-                
+
             }
             this.posX[i] -= globalSpeed;
         }
@@ -441,8 +529,6 @@ export class BackgroundLayer {
 
     update() {
         if (player) {
-           
-
             if (this.x1 < -width) {
                 this.x1 = width;
             }
@@ -450,7 +536,7 @@ export class BackgroundLayer {
                 this.x2 = width;
             }
 
-             this.x1 -= this.speedModifier * objSize;
+            this.x1 -= this.speedModifier * objSize;
             this.x2 -= this.speedModifier * objSize;
         }
 

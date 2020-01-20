@@ -143,7 +143,7 @@ export function init() {
     timeUntilAbleToTransition = 0.5;
 
     groundLevel = height * 0.85;
-    globalSpeed = objSize * 0.4;
+    globalSpeed = objSize * Koji.config.settings.gameSpeed;
 
     clearArrays();
 
@@ -433,8 +433,8 @@ function manageSpawn() {
     spawnTimer -= 1 / frameRate();
 
     if (spawnTimer <= 0) {
-        //spawnObstacle();
-        spawnTimer = averageSpawnPeriod * random(0.65, 1);
+        spawnObstacle();
+        spawnTimer = averageSpawnPeriod * random(0.65, 1.25);
     }
 }
 
@@ -443,10 +443,10 @@ function spawnObstacle() {
     const x = width + objSize * 5;
     let y = groundLevel - objSize * groundSizeMod / 2 - globalSizeMod * objSize / 2;
 
-    let isAir = random() * 100 < Koji.config.airObstacleRate;
+    let isAir = random() * 100 < Koji.config.settings.airObstacleRate;
 
     if (isAir) {
-        y -= globalSizeMod * objSize / 2;
+        y -= globalSizeMod * objSize;
     }
 
     const obstacle = new Obstacle(x, y);
