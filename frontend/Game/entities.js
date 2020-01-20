@@ -44,7 +44,7 @@ export class Player extends Entity {
         this.img = imgPlayer;
         this.gravity = objSize * 0.02;
         this.velocityY = 0;
-        this.jumpStrength = objSize * 0.5;
+        this.jumpStrength = objSize * 0.45;
         this.sizeMod = globalSizeMod;
         this.animTimer = 0;
         this.wasGrounded = false;
@@ -69,7 +69,7 @@ export class Player extends Entity {
 
         if (isNowGrounded && !this.wasGrounded) {
             this.landAnimTimer = 0;
-
+            spawnLandingParticles(this.pos.x, this.pos.y + objSize * this.sizeMod / 2, 10);
             this.jumpCount = 0;
         }
 
@@ -155,7 +155,7 @@ export class Player extends Entity {
 
     handleJumpingAnimation() {
         if (this.jumpAnimTimer < 1) {
-            this.jumpAnimTimer += 1 / frameRate() * 3;
+            this.jumpAnimTimer += 1 / frameRate() * 1.75;
 
             const animationType = Koji.config.settings.playerJumpAnimation;
 
@@ -222,6 +222,60 @@ export class Obstacle extends Entity {
             return true;
         } else {
             return false;
+        }
+    }
+}
+
+export class Ground {
+    constructor() {
+        this.posY = groundLevel;
+        this.sizeMod = groundSizeMod;
+        this.img = imgGroundTile;
+
+        this.posX = [];
+        this.generateGround();
+    }
+
+    generateGround() {
+        const tileSize = this.sizeMod * objSize;
+        const tileCount = ceil(width / tileSize) + 2;
+
+        for (let i = 0; i < tileCount; i++) {
+            this.posX.push(i * tileSize);
+        }
+    }
+
+    update() {
+
+        for (let i = 0; i < this.posX.length; i++) {
+            if (this.posX[i] < -this.sizeMod * objSize / 2) {
+                this.posX[i] = this.getRightMostTile() + this.sizeMod * objSize;
+                
+            }
+            this.posX[i] -= globalSpeed;
+        }
+    }
+
+    getRightMostTile() {
+        let rightmost = this.posX[0];
+
+        for (let i = 1; i < this.posX.length; i++) {
+            if (this.posX[i] > rightmost) {
+                rightmost = this.posX[i];
+            }
+        }
+
+        return rightmost;
+    }
+
+    render() {
+        const size = objSize * this.sizeMod;
+
+        for (let i = 0; i < this.posX.length; i++) {
+            push();
+            translate(this.posX[i], this.posY);
+            image(this.img, -size / 2, -size / 2, size, size);
+            pop();
         }
     }
 }
@@ -329,6 +383,19 @@ function spawnJumpParticles(x, y, amount) {
 
 }
 
+function spawnLandingParticles(x, y, amount) {
+    for (let i = 0; i < amount; i++) {
+        const particle = new Particle(x, y);
+        particle.lifetime = 0.5;
+        const maxVelocity = 6;
+        particle.velocity = createVector(random(-maxVelocity, maxVelocity), random(-maxVelocity, 0));
+        particle.defaultVelocity = createVector(particle.velocity.x, particle.velocity.y);
+
+        particles.push(particle);
+    }
+
+}
+
 export class Guide extends Entity {
     constructor(x, y) {
         super(x, y);
@@ -374,8 +441,7 @@ export class BackgroundLayer {
 
     update() {
         if (player) {
-            this.x1 -= this.speedModifier * objSize;
-            this.x2 -= this.speedModifier * objSize;
+           
 
             if (this.x1 < -width) {
                 this.x1 = width;
@@ -383,6 +449,9 @@ export class BackgroundLayer {
             if (this.x2 < -width) {
                 this.x2 = width;
             }
+
+             this.x1 -= this.speedModifier * objSize;
+            this.x2 -= this.speedModifier * objSize;
         }
 
 

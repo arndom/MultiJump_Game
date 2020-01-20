@@ -50,6 +50,9 @@ class Game extends PureComponent {
         window.FloatingText = require('../Game/entities.js').FloatingText;
         window.Player = require('../Game/entities.js').Player;
         window.Obstacle = require('../Game/entities.js').Obstacle;
+        window.Ground = require('../Game/entities.js').Ground;
+        window.Collectible = require('../Game/entities.js').Collectible;
+        window.Powerup = require('../Game/entities.js').Powerup;
 
         window.init = require('../Game/draw.js').init;
         window.Smooth = require('../Game/helpers/functions.js').Smooth;

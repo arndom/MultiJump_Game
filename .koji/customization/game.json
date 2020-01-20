@@ -180,7 +180,7 @@
         {
           "key": "playerJumpAnimation",
           "name": "Player Jump Animation",
-          "description": "Appearance of player's jump",
+          "description": "Jump Style",
           "type": "select",
           "typeOptions": {
             "placeholder": "Choose an option...",

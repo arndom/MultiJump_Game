@@ -115,6 +115,13 @@ function cleanup() {
             obstacles.splice(i, 1);
         }
     }
+
+     for (let i = 0; i < collectibles.length; i++) {
+        if (collectibles[i].removable) {
+            collectibles.splice(i, 1);
+        }
+    }
+
     if (guide && guide.removable) {
         guide = null;
     }
@@ -142,8 +149,11 @@ export function init() {
 
     spawnBackground();
 
+    
+    ground = new Ground();
     guide = new Guide(width / 2, height / 2);
     player = new Player(width * 0.2, height / 2);
+
 
     if (window.getAppView() == 'game') {
         playMusic();
@@ -336,15 +346,16 @@ function drawScore() {
 }
 
 function updateEntities() {
+     for (let i = 0; i < particles.length; i++) {
+        particles[i].update();
+        particles[i].render();
+    }
     if (ground) {
         ground.update();
         ground.render();
     }
 
-    for (let i = 0; i < particles.length; i++) {
-        particles[i].update();
-        particles[i].render();
-    }
+   
 
     if (player) {
         player.update();
