@@ -44,7 +44,7 @@ export class Player extends Entity {
         this.img = imgPlayer;
         this.gravity = objSize * 0.02;
         this.velocityY = 0;
-        this.jumpStrength = objSize * 0.4;
+        this.jumpStrength = objSize * 0.5;
         this.sizeMod = globalSizeMod;
         this.animTimer = 0;
         this.wasGrounded = false;
@@ -52,34 +52,33 @@ export class Player extends Entity {
         this.maxJumps = 2;
         this.jumpAnimTimer = 0;
         this.landAnimTimer = 0;
+
+        this.bottom = groundLevel - groundSizeMod * objSize / 2 - this.sizeMod * objSize / 2;
+        this.modifierY = 0;
     }
 
     update() {
 
         const isNowGrounded = this.isGrounded();
 
-        if (!isNowGrounded) {
-            this.velocityY += this.gravity;
-
-        } else {
+        if (isNowGrounded) {
             this.velocityY = 0;
-            //this.pos.y = groundLevel - groundSizeMod * objSize / 2 - this.sizeMod * objSize / 2;
+        } else {
+            this.velocityY += this.gravity;
+        }
+
+        if (isNowGrounded && !this.wasGrounded) {
+            this.landAnimTimer = 0;
 
             this.jumpCount = 0;
         }
 
 
-        if (isNowGrounded && !this.wasGrounded) {
-            this.landAnimTimer = 0;
-            console.log('sdf')
-
-            this.wasGrounded = true;
-        }
-
-        
-
-
         this.pos.y += this.velocityY;
+
+        this.pos.y = constrain(this.pos.y, 0, this.bottom);
+
+        this.wasGrounded = isNowGrounded;
 
 
         this.handleCollisionCollectibles();
@@ -87,12 +86,6 @@ export class Player extends Entity {
 
         this.handleLandingAnimation();
         this.handleJumpingAnimation();
-
-        if (this.animTimer < 1) {
-            this.animTimer += 1 / frameRate() * 3;
-
-            this.scale.y = Ease(EasingFunctions.outBack, this.animTimer, 1.5, -0.5);
-        }
     }
 
     handleCollisionObstacles() {
@@ -111,7 +104,7 @@ export class Player extends Entity {
 
     handleCollisionCollectibles() {
         for (let i = 0; i < collectibles.length; i++) {
-            if (this.collisionWith(collectiblesc[i])) {
+            if (this.collisionWith(collectibles[i])) {
                 collectibles[i].handleCollect();
                 break;
             }
@@ -119,13 +112,13 @@ export class Player extends Entity {
     }
 
     handleTap() {
-        if (this.canJump() && this.jumpCount < this.maxJumps) {
+        if (this.canJump() || this.jumpCount < this.maxJumps) {
             this.jump();
         }
     }
 
     jump() {
-        this.pos.y -= 4;
+        this.pos.y -= 8;
         this.velocityY = -this.jumpStrength;
 
         spawnJumpParticles(this.pos.x, this.pos.y + objSize * this.sizeMod / 2, 5);
@@ -135,7 +128,7 @@ export class Player extends Entity {
     }
 
     isGrounded() {
-        if (this.pos.y > groundLevel - groundSizeMod * objSize / 2 - this.sizeMod * objSize / 2 - this.velocityY) {
+        if (this.pos.y >= this.bottom) {
             return true;
         }
 
@@ -156,6 +149,7 @@ export class Player extends Entity {
             this.landAnimTimer += 1 / frameRate() * 3;
 
             this.scale.y = Ease(EasingFunctions.easeOutCubic, this.landAnimTimer, 0.5, 0.5);
+            this.modifierY = Ease(EasingFunctions.easeOutCubic, this.landAnimTimer, this.sizeMod * objSize / 4, -this.sizeMod * objSize / 4);
         }
     }
 
@@ -194,7 +188,14 @@ export class Player extends Entity {
             return;
         }
 
-        super.render();
+        const size = objSize * this.sizeMod;
+
+        push();
+        translate(this.pos.x, this.pos.y + this.modifierY);
+        rotate(this.rotation);
+        scale(this.scale.x, this.scale.y);
+        image(this.img, -size / 2, -size / 2, size, size);
+        pop();
     }
 }
 
