@@ -7,7 +7,7 @@
     "soundOnIcon": "https://images.koji-cdn.com/4fba5aca-3a39-409c-8db0-c660207a39ee/fmvax-5b0754d85f5f44339e01e5ac6d6e5c6c.png",
     "soundOffIcon": "https://images.koji-cdn.com/b4acde8c-96d4-4b1e-9e6e-4cca208833fe/hqr5b-caf83cefc49348cb8a46c9e5647abcbb.png",
     "debug": {
-      "startScreen": "game"
+      "startScreen": "home"
     }
   },
   "@@editor": [

@@ -8,7 +8,7 @@
     "speedMin": 0.1,
     "speedMax": 0.225,
     "timePenalty": 1,
-    "minimumScoreForWin": 15,
+    "minimumScoreForWin": 20,
     "particle": "https://images.koji-cdn.com/d4d2aab7-1847-481d-8aa6-6866d81d5e0f/sxtcu-cloud4.png",
     "explosion": "https://images.koji-cdn.com/b4acde8c-96d4-4b1e-9e6e-4cca208833fe/0swbr-f34ab333f65046c6bcce7e81fe99050d.png",
     "goodObject": [
@@ -33,7 +33,7 @@
       "https://images.koji-cdn.com/d4d2aab7-1847-481d-8aa6-6866d81d5e0f/mwf5o-star5.png"
     ],
     "winAnimation": "falling",
-    "instructionsText": "Instructions:\n1. Tap to fly\n2. Avoid obstacles\n3. Get 15 points to win!",
+    "instructionsText": "Instructions:\n1. Tap to jump\n2. Collect coins & avoid obstacles\n3. Get 20 points to win!",
     "timeUpText": "Time's up!",
     "textColor": "#ffffff",
     "guide": "https://images.koji-cdn.com/eb880e52-1249-4535-aef1-7b0f19f57a50/mk6ga-6tx6fpointcopy.png",
@@ -49,14 +49,14 @@
       "https://images.koji-cdn.com/b0720d03-3380-47ce-9b47-97dff00fe491/y9gis-7c246e075b8f4161ae8533230bbfd8e6.png"
     ],
     "collectible": "https://images.koji-cdn.com/d4d2aab7-1847-481d-8aa6-6866d81d5e0f/pe7id-slot1.png",
-    "powerup": "https://images.koji-cdn.com/d4d2aab7-1847-481d-8aa6-6866d81d5e0f/nkqn3-lifecopy.png",
+    "powerup": "https://images.koji-cdn.com/d4d2aab7-1847-481d-8aa6-6866d81d5e0f/9v2qt-upgradeDamage.png",
     "ground": "https://images.koji-cdn.com/d4d2aab7-1847-481d-8aa6-6866d81d5e0f/daj0s-floor2.png",
     "airObstacleRate": 50,
     "playerJumpAnimation": "frontflip",
-    "collectibleAnimation": "rotateClockwise",
+    "collectibleAnimation": "rotateCounterClockwise",
     "gameSpeed": 0.3,
     "collectibleRate": 100,
-    "powerupRate": 15,
+    "powerupRate": 10,
     "playerPowerup": "https://images.koji-cdn.com/d4d2aab7-1847-481d-8aa6-6866d81d5e0f/xpzxm-enemy16.png",
     "powerupDuration": 5,
     "powerupText": "POWER UP"

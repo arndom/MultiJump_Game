@@ -52,7 +52,7 @@ export function submitScore() {
 
 export function calculateObjSize() {
 
-  let sizeModifier = 0.65;
+  let sizeModifier = 0.95;
   if (height > width) {
     sizeModifier = 1;
   }

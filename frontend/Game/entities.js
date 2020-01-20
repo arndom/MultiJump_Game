@@ -288,6 +288,9 @@ export class Obstacle extends Entity {
         if(!this.isDestroyed){
             spawnParticles(this.pos.x, this.pos.y, 5);
             spawnCollectibleParticles(this.pos.x, this.pos.y, 6);
+
+            spawnScoreText(this.pos.x, this.pos.y - this.sizeMod * objSize);
+
             this.isDestroyed = true;
         }
     }
@@ -376,7 +379,7 @@ class Powerup extends Collectible {
             addScore(scoreGain);
 
             spawnPowerupText();
-            
+
             player.activatePowerup();
         }
     }
