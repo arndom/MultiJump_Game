@@ -20,7 +20,17 @@ export default function draw() {
         }
     }
 
-    if (hasGameEnded) {
+    if (gameTimer > 0) {
+        if(isCountdownDone()){
+            handleGame();
+        }
+    } else {
+        if (!hasGameEnded) {
+            endGame();
+        }
+    }
+
+    if(hasGameEnded){
         handleGameEnd();
     }
 
@@ -139,6 +149,7 @@ export function init() {
     window.endState = STATE_NONE;
     timeUntilAbleToTransition = 0.5;
     globalSpeedModifier = 1;
+    lives = startingLives;
 
     groundLevel = height * 0.85;
     globalSpeed = objSize * Koji.config.settings.gameSpeed;
@@ -294,6 +305,18 @@ function drawGameTimer() {
     text(gameTimer.toFixed(1), timerX, timerY);
 }
 
+function drawLives() {
+    const livesX = objSize / 2;
+    const livesY = objSize * 3;
+    const lifeSize = globalSizeMod * objSize * 0.75;
+
+    for (let i = 0; i < lives; i++) {
+        image(imgLife, livesX + i * lifeSize, livesY, lifeSize, lifeSize);
+    }
+
+
+}
+
 function drawCountdown() {
     const countdownX = width / 2;
     const countdownY = height / 2 - objSize * 4;
@@ -359,7 +382,7 @@ function updateEntities() {
         player.render();
     }
 
-   
+
 
     for (let i = 0; i < obstacles.length; i++) {
         obstacles[i].update();
@@ -376,7 +399,7 @@ function updateEntities() {
         floatingTexts[i].render();
     }
 
-     if (playerDeath) {
+    if (playerDeath) {
         playerDeath.update();
         playerDeath.render();
     }
@@ -384,6 +407,7 @@ function updateEntities() {
 
 export function endGame() {
     hasGameEnded = true;
+    gameTimer = 0;
 
     determineGameOutcome();
 
@@ -415,8 +439,16 @@ function handleGame() {
     globalSpeed = Smooth(globalSpeed, globalGoalSpeed, 4);
 
     manageSpawn();
+
+    updateGameTimer();
+    drawGameTimer();
+
+    drawLives();
 }
 
+function updateGameTimer() {
+    gameTimer -= 1 / frameRate();
+}
 
 function handleGameEnd() {
     if (endState == STATE_WIN) {
@@ -443,7 +475,7 @@ function manageSpawn() {
 
     if (spawnTimer <= 0) {
         spawnObstacle();
-        spawnTimer = averageSpawnPeriod * random(0.65, 1.25);
+        spawnTimer = averageSpawnPeriod * random(0.75, 1.35);
     }
 }
 

@@ -71,6 +71,8 @@ export class Player extends Entity {
         this.powerupDuration = Koji.config.settings.powerupDuration;
         this.powerupTimer = 0;
 
+        this.invincibilityTimer = 0;
+
     }
 
     update() {
@@ -95,22 +97,21 @@ export class Player extends Entity {
         this.handleCollisionObstacles();
         this.handleLandingAnimation();
         this.handleJumpingAnimation();
+
+        this.invincibilityTimer -= 1 / frameRate();
     }
 
     handleCollisionObstacles() {
         if (!hasGameEnded) {
             for (let i = 0; i < obstacles.length; i++) {
                 if (this.collisionWith(obstacles[i])) {
-                    if (this.isPowerupEnabled) {
-                        obstacles[i].handleDestroy();
-                    } else {
-                        spawnParticles(this.pos.x, this.pos.y, 20);
-                        playerDeath = new PlayerDeath(this.pos.x, this.pos.y);
-                        endGame();
+                    obstacles[i].handleDestroy();
+
+                    if (!this.isPowerupEnabled && this.invincibilityTimer <= 0) {
+                        this.loseLife();
                     }
 
                     break;
-
                 }
             }
         }
@@ -140,7 +141,7 @@ export class Player extends Entity {
         this.jumpCount++;
         this.jumpAnimTimer = 0;
 
-        if(sndJump){
+        if (sndJump) {
             sndJump.play();
         }
     }
@@ -228,10 +229,33 @@ export class Player extends Entity {
 
     }
 
+    loseLife() {
+        lives--;
+
+        if (lives <= 0) {
+            spawnParticles(this.pos.x, this.pos.y, 20);
+            playerDeath = new PlayerDeath(this.pos.x, this.pos.y);
+            endGame();
+        } else {
+            this.activateInvincibility();
+        }
+    }
+
+    activateInvincibility() {
+        this.invincibilityTimer = 1;
+    }
+
     render() {
         if (hasGameEnded) {
             return;
         }
+
+        if (this.invincibilityTimer > 0) {
+            if ((floor(this.invincibilityTimer * 10)) % 2 == 0) {
+                return;
+            }
+        }
+
 
         const size = objSize * this.sizeMod;
 
@@ -241,12 +265,13 @@ export class Player extends Entity {
         scale(this.scale.x, this.scale.y);
         image(this.img, -size / 2, -size / 2, size, size);
         pop();
+
     }
 }
 
 
-class PlayerDeath extends Entity{
-    constructor(x, y){
+class PlayerDeath extends Entity {
+    constructor(x, y) {
         super(x, y);
         this.sizeModStart = globalSizeMod;
         this.sizeMod = this.sizeModStart;
@@ -258,19 +283,19 @@ class PlayerDeath extends Entity{
         this.rotSpeed = 0.1;
     }
 
-    update(){
+    update() {
         this.velocityY += this.gravity;
 
         this.pos.y += this.velocityY;
 
-        this.pos.x = Smooth(this.pos.x, width/2, 20);
+        this.pos.x = Smooth(this.pos.x, width / 2, 20);
 
-        if(this.animTimer < 1){
-            this.animTimer += 1/frameRate() * 0.15;
-            
+        if (this.animTimer < 1) {
+            this.animTimer += 1 / frameRate() * 0.15;
+
             this.sizeMod = Ease(EasingFunctions.easeOutCubic, this.animTimer, this.sizeModStart, this.sizeModGoal - this.sizeModStart);
 
-            
+
         }
 
         this.rotation += this.rotSpeed;
@@ -322,12 +347,17 @@ export class Obstacle extends Entity {
         }
     }
 
-    handleDestroy(){
-        if(!this.isDestroyed){
+    handleDestroy() {
+        if (!this.isDestroyed) {
             spawnParticles(this.pos.x, this.pos.y, 5);
-            spawnCollectibleParticles(this.pos.x, this.pos.y, 6);
+            
 
-            spawnScoreText(this.pos.x, this.pos.y - this.sizeMod * objSize);
+            if(player.isPowerupEnabled){
+                spawnScoreText(this.pos.x, this.pos.y - this.sizeMod * objSize);
+                addScore(scoreGain);
+                spawnCollectibleParticles(this.pos.x, this.pos.y, 6);
+            }
+            
 
             this.isDestroyed = true;
         }
@@ -396,7 +426,7 @@ export class Collectible extends Entity {
 
             spawnCollectibleParticles(this.pos.x, this.pos.y, 10);
 
-            if(sndCollect){
+            if (sndCollect) {
                 sndCollect.play();
             }
         }
@@ -424,7 +454,7 @@ class Powerup extends Collectible {
 
             player.activatePowerup();
 
-            if(sndPowerup){
+            if (sndPowerup) {
                 sndPowerup.play();
             }
         }
@@ -687,15 +717,15 @@ export class BackgroundLayer {
     }
 }
 
-function spawnScoreText(x, y){
+function spawnScoreText(x, y) {
     const floatingText = new FloatingText(x, y, "+" + scoreGain);
     floatingText.maxSize = objSize * 0.75;
 
     floatingTexts.push(floatingText);
 }
 
-function spawnPowerupText(){
-    const floatingText = new FloatingText(width/2, height/2, Koji.config.settings.powerupText);
+function spawnPowerupText() {
+    const floatingText = new FloatingText(width / 2, height / 2, Koji.config.settings.powerupText);
     floatingText.maxSize = objSize * 1.5;
 
     floatingTexts.push(floatingText);

@@ -3,7 +3,7 @@
     "scoreGain": 1,
     "maxParticles": 150,
     "maxParticlesMobile": 50,
-    "gameLength": 15,
+    "gameLength": 60,
     "averageSpawnPeriod": 1,
     "speedMin": 0.1,
     "speedMax": 0.225,
@@ -54,7 +54,7 @@
     "airObstacleRate": 50,
     "playerJumpAnimation": "frontflip",
     "collectibleAnimation": "pulse",
-    "gameSpeed": 0.3,
+    "gameSpeed": 0.27,
     "collectibleRate": 100,
     "powerupRate": 10,
     "playerPowerup": "https://images.koji-cdn.com/d4d2aab7-1847-481d-8aa6-6866d81d5e0f/xpzxm-enemy16.png",
@@ -63,7 +63,9 @@
     "maxJumps": 2,
     "jump": "https://objects.koji-cdn.com/531ccf36-2cf2-46a2-82ef-685e8786578a/gn7qv-jump.mp3",
     "collect": "https://objects.koji-cdn.com/531ccf36-2cf2-46a2-82ef-685e8786578a/7qcwn-collect.mp3",
-    "powerupSound": "https://objects.koji-cdn.com/531ccf36-2cf2-46a2-82ef-685e8786578a/3es72-powerup.mp3"
+    "powerupSound": "https://objects.koji-cdn.com/531ccf36-2cf2-46a2-82ef-685e8786578a/3es72-powerup.mp3",
+    "lives": 3,
+    "lifeIcon": "https://images.koji-cdn.com/d4d2aab7-1847-481d-8aa6-6866d81d5e0f/xhoh4-player.png"
   },
   "@@editor": [
     {
@@ -115,6 +117,28 @@
             "min": 0.5,
             "max": 3,
             "step": 0.01
+          }
+        },
+        {
+          "key": "lives",
+          "name": "Lives",
+          "description": "How many lives does the player have?",
+          "type": "range",
+          "typeOptions": {
+            "min": 1,
+            "max": 5,
+            "step": 1
+          }
+        },
+        {
+          "key": "gameLength",
+          "name": "Game Length",
+          "description": "How long does the game last? (Seconds)",
+          "type": "range",
+          "typeOptions": {
+            "min": 5,
+            "max": 180,
+            "step": 1
           }
         },
         {
@@ -349,6 +373,12 @@
         {
           "key": "guide",
           "name": "Guide Icon",
+          "description": "Ideal size: 100x100",
+          "type": "image"
+        },
+        {
+          "key": "lifeIcon",
+          "name": "Life Icon",
           "description": "Ideal size: 100x100",
           "type": "image"
         },

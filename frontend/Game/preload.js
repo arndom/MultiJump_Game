@@ -40,6 +40,7 @@ window.imgCollectible = null;
 window.imgPowerup = null;
 window.imgGroundTile = null;
 window.imgPlayerPowerup = null;
+window.imgLife = null;
 
 //===Audio
 window.sndMusic = null;
@@ -83,6 +84,9 @@ window.globalSpeedModifier = 1;
 window.globalSizeMod = 3;
 window.groundSizeMod = 5;
 
+window.startingLives = null;
+window.lives = null;
+
 export default function preload() {
     loadGoogleFont();
     loadImages();
@@ -98,6 +102,7 @@ function loadImages() {
     imgGroundTile = loadImage(Koji.config.settings.ground);
     imgCollectible = loadImage(Koji.config.settings.collectible);
     imgPowerup = loadImage(Koji.config.settings.powerup);
+    imgLife = loadImage(Koji.config.settings.lifeIcon);
      
      for (let i = 0; i < Koji.config.settings.obstacle.length; i++) {
         imgObstacle[i] = loadImage(Koji.config.settings.obstacle[i]);
@@ -126,6 +131,9 @@ function loadSettings() {
     gameTimer = gameLength;
     timeUpTimer = timeUpDuration;
     averageSpawnPeriod = Koji.config.settings.averageSpawnPeriod;
+    startingLives = Koji.config.settings.lives;
+    lives = startingLives;
+    
 }
 
 function loadGoogleFont() {
