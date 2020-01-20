@@ -232,6 +232,10 @@ export class Player extends Entity {
     loseLife() {
         lives--;
 
+        if (sndGameOver) {
+            sndGameOver.play();
+        }
+
         if (lives <= 0) {
             spawnParticles(this.pos.x, this.pos.y, 20);
             playerDeath = new PlayerDeath(this.pos.x, this.pos.y);
@@ -350,14 +354,14 @@ export class Obstacle extends Entity {
     handleDestroy() {
         if (!this.isDestroyed) {
             spawnParticles(this.pos.x, this.pos.y, 5);
-            
 
-            if(player.isPowerupEnabled){
+
+            if (player.isPowerupEnabled) {
                 spawnScoreText(this.pos.x, this.pos.y - this.sizeMod * objSize);
                 addScore(scoreGain);
                 spawnCollectibleParticles(this.pos.x, this.pos.y, 6);
             }
-            
+
 
             this.isDestroyed = true;
         }

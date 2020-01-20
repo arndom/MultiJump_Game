@@ -419,8 +419,8 @@
         },
         {
           "key": "gameOver",
-          "name": "Game Over Sound",
-          "description": "Played on game over",
+          "name": "Lose Life Sound",
+          "description": "Played when you hit an obstacle",
           "type": "sound"
         }
       ]

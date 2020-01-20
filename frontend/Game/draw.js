@@ -419,9 +419,7 @@ export function endGame() {
         spawnLoseText();
     }
 
-    if (sndGameOver) {
-        sndGameOver.play();
-    }
+   
 }
 
 function determineGameOutcome() {
