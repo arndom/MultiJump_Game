@@ -73,6 +73,8 @@ window.backgroundSpeedFactorMax = 0.25;
 window.groundLevel = null;
 
 window.globalSpeed = null;
+window.globalSizeMod = 3;
+window.groundSizeMod = 5;
 
 export default function preload() {
     loadGoogleFont();

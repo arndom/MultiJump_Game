@@ -50,7 +50,10 @@
     ],
     "collectible": "https://images.koji-cdn.com/d4d2aab7-1847-481d-8aa6-6866d81d5e0f/pe7id-slot1.png",
     "powerup": "https://images.koji-cdn.com/d4d2aab7-1847-481d-8aa6-6866d81d5e0f/nkqn3-lifecopy.png",
-    "ground": "https://images.koji-cdn.com/d4d2aab7-1847-481d-8aa6-6866d81d5e0f/daj0s-floor2.png"
+    "ground": "https://images.koji-cdn.com/d4d2aab7-1847-481d-8aa6-6866d81d5e0f/daj0s-floor2.png",
+    "airObstacleRate": 50,
+    "playerJumpAnimation": "frontflip",
+    "collectibleAnimation": "rotateClockwise"
   },
   "@@editor": [
     {
@@ -175,6 +178,33 @@
           "type": "image"
         },
         {
+          "key": "playerJumpAnimation",
+          "name": "Player Jump Animation",
+          "description": "Appearance of player's jump",
+          "type": "select",
+          "typeOptions": {
+            "placeholder": "Choose an option...",
+            "options": [
+              {
+                "value": "noAnimation",
+                "label": "No Animation"
+              },
+              {
+                "value": "frontflip",
+                "label": "Front Flip"
+              },
+              {
+                "value": "backflip",
+                "label": "Back Flip"
+              },
+              {
+                "value": "elongate",
+                "label": "Elongate"
+              }
+            ]
+          }
+        },
+        {
           "key": "obstacle",
           "name": "Obstacles",
           "description": "Ideal size: 128x128",
@@ -184,10 +214,48 @@
           }
         },
         {
+          "key": "airObstacleRate",
+          "name": "Air Obstacle Rate",
+          "description": "Chance to spawn an aerial obstacle instead of ground.",
+          "type": "range",
+          "typeOptions": {
+            "min": 0,
+            "max": 100,
+            "step": 1
+          }
+        },
+        {
           "key": "collectible",
           "name": "Collectibles",
           "description": "Ideal size: 128x128",
           "type": "image"
+        },
+        {
+          "key": "collectibleAnimation",
+          "name": "Collectible Animation",
+          "description": "How the collectibles will animate",
+          "type": "select",
+          "typeOptions": {
+            "placeholder": "Choose an option...",
+            "options": [
+              {
+                "value": "noAnimation",
+                "label": "No Animation"
+              },
+              {
+                "value": "rotateClockwise",
+                "label": "Rotate Clockwise"
+              },
+              {
+                "value": "rotateCounterClockwise",
+                "label": "Rotate Counter Clockwise"
+              },
+              {
+                "value": "pulse",
+                "label": "Pulse"
+              }
+            ]
+          }
         },
         {
           "key": "powerup",
