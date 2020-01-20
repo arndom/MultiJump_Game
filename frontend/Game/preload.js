@@ -38,6 +38,7 @@ window.imgPlayer = null;
 window.imgCollectible = null;
 window.imgPowerup = null;
 window.imgGroundTile = null;
+window.imgPlayerPowerup = null;
 
 //===Audio
 window.sndMusic = null;
@@ -75,6 +76,7 @@ window.backgroundSpeedFactorMax = 0.25;
 window.groundLevel = null;
 
 window.globalSpeed = null;
+window.globalSpeedModifier = 1;
 window.globalSizeMod = 3;
 window.groundSizeMod = 5;
 
@@ -89,6 +91,7 @@ function loadImages() {
     imgParticle = loadImage(Koji.config.settings.particle);
     imgGuide = loadImage(Koji.config.settings.guide);
     imgPlayer = loadImage(Koji.config.settings.player);
+    imgPlayerPowerup = loadImage(Koji.config.settings.playerPowerup);
     imgGroundTile = loadImage(Koji.config.settings.ground);
     imgCollectible = loadImage(Koji.config.settings.collectible);
     imgPowerup = loadImage(Koji.config.settings.powerup);

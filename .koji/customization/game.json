@@ -37,7 +37,7 @@
     "timeUpText": "Time's up!",
     "textColor": "#ffffff",
     "guide": "https://images.koji-cdn.com/eb880e52-1249-4535-aef1-7b0f19f57a50/mk6ga-6tx6fpointcopy.png",
-    "player": "https://images.koji-cdn.com/d4d2aab7-1847-481d-8aa6-6866d81d5e0f/0vrub-bird.png",
+    "player": "https://images.koji-cdn.com/d4d2aab7-1847-481d-8aa6-6866d81d5e0f/xhoh4-player.png",
     "obstacle": [
       "https://images.koji-cdn.com/d4d2aab7-1847-481d-8aa6-6866d81d5e0f/ix0aa-blockweak.png"
     ],
@@ -54,9 +54,11 @@
     "airObstacleRate": 50,
     "playerJumpAnimation": "frontflip",
     "collectibleAnimation": "rotateClockwise",
-    "gameSpeed": 0.32,
+    "gameSpeed": 0.3,
     "collectibleRate": 100,
-    "powerupRate": 15
+    "powerupRate": 15,
+    "playerPowerup": "https://images.koji-cdn.com/d4d2aab7-1847-481d-8aa6-6866d81d5e0f/xpzxm-enemy16.png",
+    "powerupDuration": 5
   },
   "@@editor": [
     {
@@ -298,6 +300,23 @@
             "max": 100,
             "step": 1
           }
+        },
+        {
+          "key": "powerupDuration",
+          "name": "Powerup Duration",
+          "description": "How long the powerup can last.",
+          "type": "range",
+          "typeOptions": {
+            "min": 3,
+            "max": 20,
+            "step": 0.5
+          }
+        },
+        {
+          "key": "playerPowerup",
+          "name": "Player - Powerup",
+          "description": "Ideal size: 128x128",
+          "type": "image"
         },
         {
           "key": "ground",

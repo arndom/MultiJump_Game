@@ -407,6 +407,8 @@ function determineGameOutcome() {
 
 
 function handleGame() {
+    globalSpeed = objSize * Koji.config.settings.gameSpeed * globalSpeedModifier;
+
     manageSpawn();
 }
 

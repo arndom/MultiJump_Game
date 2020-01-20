@@ -54,7 +54,7 @@ export class Player extends Entity {
         this.img = imgPlayer;
         this.gravity = objSize * 0.02;
         this.velocityY = 0;
-        this.jumpStrength = objSize * 0.45;
+        this.jumpStrength = objSize * 0.42;
         this.sizeMod = globalSizeMod;
         this.animTimer = 0;
         this.wasGrounded = false;
@@ -65,6 +65,12 @@ export class Player extends Entity {
 
         this.bottom = groundLevel - groundSizeMod * objSize / 2 - this.sizeMod * objSize / 2;
         this.modifierY = 0;
+
+        this.isPowerupEnabled = false;
+
+        this.powerupDuration = Koji.config.settings.powerupDuration;
+        this.powerupTimer = 0;
+
     }
 
     update() {
@@ -84,10 +90,9 @@ export class Player extends Entity {
 
         this.wasGrounded = isNowGrounded;
 
-
+        this.handlePowerup();
         this.handleCollisionCollectibles();
         this.handleCollisionObstacles();
-
         this.handleLandingAnimation();
         this.handleJumpingAnimation();
     }
@@ -96,9 +101,13 @@ export class Player extends Entity {
         if (!hasGameEnded) {
             for (let i = 0; i < obstacles.length; i++) {
                 if (this.collisionWith(obstacles[i])) {
+                    if (this.isPowerupEnabled) {
+                        obstacles[i].handleDestroy();
+                    } else {
+                        spawnParticles(this.pos.x, this.pos.y, 20);
+                        endGame();
+                    }
 
-                    spawnParticles(this.pos.x, this.pos.y, 20);
-                    endGame();
                     break;
 
                 }
@@ -187,12 +196,31 @@ export class Player extends Entity {
         }
     }
 
-    isOffscreen() {
-        if (this.pos.y < -objSize * this.sizeMod / 2 || this.pos.y > height + objSize * this.sizeMod / 2) {
-            return true;
-        } else {
-            return false;
+    handlePowerup() {
+        if (this.isPowerupEnabled) {
+            this.powerupTimer -= 1 / frameRate();
+
+            if (this.powerupTimer <= 0) {
+                this.deactivatePowerup();
+            }
+
+            if (this.powerupTimer <= 0.5) {
+                globalSpeedModifier = 1;
+            }
         }
+    }
+
+    activatePowerup() {
+        this.powerupTimer = this.powerupDuration;
+        this.isPowerupEnabled = true;
+        this.img = imgPlayerPowerup;
+        globalSpeedModifier = 2;
+    }
+
+    deactivatePowerup() {
+        this.isPowerupEnabled = false;
+        this.img = imgPlayer;
+
     }
 
     render() {
@@ -219,13 +247,48 @@ export class Obstacle extends Entity {
         this.sizeMod = globalSizeMod;
 
         this.isAir = false;
+
+        this.handleCollectibleSpawn();
+
+        this.isDestroyed = false;
+    }
+
+    handleCollectibleSpawn() {
+        if (random() * 100 < Koji.config.settings.collectibleRate) {
+            this.spawnCollectible();
+        }
+    }
+
+    spawnCollectible() {
+        const x = this.pos.x;
+        let y = this.pos.y - globalSizeMod * objSize;
+
+        if (this.isAir) {
+            if (random() < 0.5) {
+                y = this.pos.y + globalSizeMod * objSize;
+            }
+        }
+
+        if (random() * 100 < Koji.config.settings.powerupRate && !player.isPowerupEnabled) {
+            collectibles.push(new Powerup(x, y));
+        } else {
+            collectibles.push(new Collectible(x, y));
+        }
     }
 
     update() {
         this.pos.x -= globalSpeed;
 
-        if (this.isOffscreen()) {
+        if (this.isOffscreen() || this.isDestroyed) {
             this.removable = true;
+        }
+    }
+
+    handleDestroy(){
+        if(!this.isDestroyed){
+            spawnParticles(this.pos.x, this.pos.y, 5);
+            spawnCollectibleParticles(this.pos.x, this.pos.y, 6);
+            this.isDestroyed = true;
         }
     }
 
@@ -245,7 +308,7 @@ export class Collectible extends Entity {
         this.img = imgCollectible;
         this.sizeMod = globalSizeMod * 0.75;
 
-        this.rotSpeed = 0.1;
+        this.rotSpeed = 0.02;
 
         this.animationType = Koji.config.settings.collectibleAnimation;
 
@@ -260,9 +323,9 @@ export class Collectible extends Entity {
     update() {
         this.pos.x -= globalSpeed;
 
-        handleAnimation();
+        this.handleAnimation();
 
-        if(this.isCollected){
+        if (this.isCollected) {
             this.removable = true;
         }
     }
@@ -281,10 +344,36 @@ export class Collectible extends Entity {
         }
     }
 
-    handleCollect(){
-        if(!this.isCollected){
+    handleCollect() {
+        if (!this.isCollected) {
 
             this.isCollected = true;
+
+            addScore(scoreGain);
+
+            spawnCollectibleParticles(this.pos.x, this.pos.y, 10);
+        }
+    }
+}
+
+class Powerup extends Collectible {
+    constructor(x, y) {
+        super(x, y);
+
+        this.img = imgPowerup;
+    }
+
+
+    handleCollect() {
+        if (!this.isCollected) {
+
+            this.isCollected = true;
+
+            spawnPowerupParticles(this.pos.x, this.pos.y, 10);
+
+            addScore(scoreGain);
+
+            player.activatePowerup();
         }
     }
 }
@@ -297,8 +386,6 @@ export class Ground {
 
         this.posX = [];
         this.generateGround();
-
-        this.handleCollectibleSpawn();
     }
 
     generateGround() {
@@ -307,29 +394,6 @@ export class Ground {
 
         for (let i = 0; i < tileCount; i++) {
             this.posX.push(i * tileSize);
-        }
-    }
-
-    handleCollectibleSpawn() {
-        if (random() * 100 < Koji.config.settings.collectibleRate) {
-            this.spawnCollectible();
-        }
-    }
-
-    spawnCollectible() {
-        const x = this.pos.x;
-        let y = this.pos.y - globalSizeMod * objSize;
-
-        if (this.isAir) {
-            if (random() < 0.5) {
-                y = this.pos.y + globalSizeMod * objSize;
-            }
-        }
-
-        if (random() * 100 < Koji.config.settings.powerupRate) {
-            collectibles.push(new Powerup(x, y));
-        } else {
-            collectibles.push(new Collectible(x, y));
         }
     }
 
@@ -478,6 +542,26 @@ function spawnLandingParticles(x, y, amount) {
         const maxVelocity = 6;
         particle.velocity = createVector(random(-maxVelocity, maxVelocity), random(-maxVelocity, 0));
         particle.defaultVelocity = createVector(particle.velocity.x, particle.velocity.y);
+
+        particles.push(particle);
+    }
+
+}
+
+function spawnCollectibleParticles(x, y, amount) {
+    for (let i = 0; i < amount; i++) {
+        const particle = new Particle(x, y);
+        particle.img = imgCollectible;
+
+        particles.push(particle);
+    }
+
+}
+
+function spawnPowerupParticles(x, y, amount) {
+    for (let i = 0; i < amount; i++) {
+        const particle = new Particle(x, y);
+        particle.img = imgPowerup;
 
         particles.push(particle);
     }
