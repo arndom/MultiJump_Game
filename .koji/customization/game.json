@@ -38,14 +38,19 @@
     "textColor": "#ffffff",
     "guide": "https://images.koji-cdn.com/eb880e52-1249-4535-aef1-7b0f19f57a50/mk6ga-6tx6fpointcopy.png",
     "player": "https://images.koji-cdn.com/d4d2aab7-1847-481d-8aa6-6866d81d5e0f/0vrub-bird.png",
-    "obstacle": "https://images.koji-cdn.com/d4d2aab7-1847-481d-8aa6-6866d81d5e0f/ix0aa-blockweak.png",
+    "obstacle": [
+      "https://images.koji-cdn.com/d4d2aab7-1847-481d-8aa6-6866d81d5e0f/ix0aa-blockweak.png"
+    ],
     "gameOver": "https://objects.koji-cdn.com/eb880e52-1249-4535-aef1-7b0f19f57a50/oxgoe-lose.mp3",
     "background": [
       "https://images.koji-cdn.com/b0720d03-3380-47ce-9b47-97dff00fe491/5i9l8-bb10c69f6e6d4e15a290a8e5f559e35c.png",
       "https://images.koji-cdn.com/b0720d03-3380-47ce-9b47-97dff00fe491/bdt0y-8e8388627858416390d1c5eb5dcbf8d1.png",
       "https://images.koji-cdn.com/b0720d03-3380-47ce-9b47-97dff00fe491/2kqy0-d5c1ce1253c54049862a15386d76c9a5.png",
       "https://images.koji-cdn.com/b0720d03-3380-47ce-9b47-97dff00fe491/y9gis-7c246e075b8f4161ae8533230bbfd8e6.png"
-    ]
+    ],
+    "collectible": "https://images.koji-cdn.com/d4d2aab7-1847-481d-8aa6-6866d81d5e0f/pe7id-slot1.png",
+    "powerup": "https://images.koji-cdn.com/d4d2aab7-1847-481d-8aa6-6866d81d5e0f/nkqn3-lifecopy.png",
+    "ground": "https://images.koji-cdn.com/d4d2aab7-1847-481d-8aa6-6866d81d5e0f/daj0s-floor2.png"
   },
   "@@editor": [
     {
@@ -171,7 +176,28 @@
         },
         {
           "key": "obstacle",
-          "name": "Obstacle",
+          "name": "Obstacles",
+          "description": "Ideal size: 128x128",
+          "type": "image[]",
+          "arrayOptions": {
+            "min": 1
+          }
+        },
+        {
+          "key": "collectible",
+          "name": "Collectibles",
+          "description": "Ideal size: 128x128",
+          "type": "image"
+        },
+        {
+          "key": "powerup",
+          "name": "Powerup",
+          "description": "Ideal size: 128x128",
+          "type": "image"
+        },
+        {
+          "key": "ground",
+          "name": "Ground",
           "description": "Ideal size: 128x128",
           "type": "image"
         },

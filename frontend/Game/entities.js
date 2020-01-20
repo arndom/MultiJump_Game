@@ -53,7 +53,7 @@ export class Player extends Entity {
         this.velocityY += this.gravity;
         this.pos.y += this.velocityY;
 
-        if (this.isOffscreen() || this.isInCollision()) {
+        if (this.isInCollision()) {
             if (!hasGameEnded) {
                 spawnParticles(this.pos.x, this.pos.y, 20);
                 endGame();
@@ -106,9 +106,8 @@ export class Obstacle extends Entity {
     constructor(x, y) {
         super(x, y);
 
-        this.img = imgObstacle;
+        this.img = imgObstacle[floor(random() * imgObstacle.length)];
         this.sizeMod = random(2, 2.5);
-        this.moveSpeed = objSize * 0.35;
         this.timer = 0;
         this.sizeMod = 6;
         this.doesGiveScore = false;
@@ -116,7 +115,7 @@ export class Obstacle extends Entity {
     }
 
     update() {
-        this.pos.x -= this.moveSpeed;
+        this.pos.x -= globalSpeed;
 
         this.timer += 1 / frameRate();
 
@@ -130,8 +129,7 @@ export class Obstacle extends Entity {
     }
 
     isOffscreen() {
-        if (this.pos.x < -objSize * this.sizeMod
-            || this.pos.x > width + objSize * this.sizeMod) {
+        if (this.pos.x < -objSize * this.sizeMod) {
             return true;
         } else {
             return false;

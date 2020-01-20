@@ -31,8 +31,11 @@ window.imgBackground = [];
 window.imgParticle = null;
 window.imgWinParticle = [];
 window.imgGuide = null;
-window.imgObstacle = null;
+window.imgObstacle = [];
 window.imgPlayer = null;
+window.imgCollectible = null;
+window.imgPowerup = null;
+window.imgGroundTile = null;
 
 //===Audio
 window.sndMusic = null;
@@ -67,6 +70,10 @@ window.spawnTimer = 0.5;
 window.timeUntilAbleToTransition = 0.5;
 window.backgroundSpeedFactorMax = 0.25;
 
+window.groundLevel = null;
+
+window.globalSpeed = null;
+
 export default function preload() {
     loadGoogleFont();
     loadImages();
@@ -78,7 +85,13 @@ function loadImages() {
     imgParticle = loadImage(Koji.config.settings.particle);
     imgGuide = loadImage(Koji.config.settings.guide);
     imgPlayer = loadImage(Koji.config.settings.player);
-    imgObstacle = loadImage(Koji.config.settings.obstacle);
+    imgGroundTile = loadImage(Koji.config.settings.ground);
+    imgCollectible = loadImage(Koji.config.settings.collectible);
+    imgPowerup = loadImage(Koji.config.settings.powerup);
+     
+     for (let i = 0; i < Koji.config.settings.obstacle.length; i++) {
+        imgObstacle[i] = loadImage(Koji.config.settings.obstacle[i]);
+    }
 
     for (let i = 0; i < Koji.config.settings.winParticles.length; i++) {
         imgWinParticle[i] = loadImage(Koji.config.settings.winParticles[i]);

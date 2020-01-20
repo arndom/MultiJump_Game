@@ -135,6 +135,9 @@ export function init() {
     window.endState = STATE_NONE;
     timeUntilAbleToTransition = 0.5;
 
+    groundLevel = height * 0.85;
+    globalSpeed = objSize * 0.4;
+
     clearArrays();
 
     spawnBackground();
