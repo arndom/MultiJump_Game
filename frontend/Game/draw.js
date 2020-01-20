@@ -407,7 +407,8 @@ function determineGameOutcome() {
 
 
 function handleGame() {
-    globalSpeed = objSize * Koji.config.settings.gameSpeed * globalSpeedModifier;
+    const globalGoalSpeed = objSize * Koji.config.settings.gameSpeed * globalSpeedModifier;
+    globalSpeed = Smooth(globalSpeed, globalGoalSpeed, 4);
 
     manageSpawn();
 }
@@ -417,6 +418,8 @@ function handleGameEnd() {
     if (endState == STATE_WIN) {
         handleWinAnimation();
     }
+
+    globalSpeed = Smooth(globalSpeed, 0, 8);
 
     drawContinueText();
 

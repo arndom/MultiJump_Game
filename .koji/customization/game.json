@@ -53,13 +53,14 @@
     "ground": "https://images.koji-cdn.com/d4d2aab7-1847-481d-8aa6-6866d81d5e0f/daj0s-floor2.png",
     "airObstacleRate": 50,
     "playerJumpAnimation": "frontflip",
-    "collectibleAnimation": "rotateCounterClockwise",
+    "collectibleAnimation": "pulse",
     "gameSpeed": 0.3,
     "collectibleRate": 100,
     "powerupRate": 10,
     "playerPowerup": "https://images.koji-cdn.com/d4d2aab7-1847-481d-8aa6-6866d81d5e0f/xpzxm-enemy16.png",
     "powerupDuration": 5,
-    "powerupText": "POWER UP"
+    "powerupText": "POWER UP",
+    "maxJumps": 2
   },
   "@@editor": [
     {
@@ -175,7 +176,7 @@
         {
           "key": "particle",
           "name": "Particle",
-          "description": "Ideal size: 96x96",
+          "description": "Jumping and landing particle. Ideal size: 96x96",
           "type": "image"
         },
         {
@@ -193,6 +194,17 @@
           "name": "Player",
           "description": "Ideal size: 128x128",
           "type": "image"
+        },
+        {
+          "key": "maxJumps",
+          "name": "Maximum Jumps",
+          "description": "How many times can the player jump before hitting the ground?",
+          "type": "range",
+          "typeOptions": {
+            "min": 1,
+            "max": 3,
+            "step": 1
+          }
         },
         {
           "key": "playerJumpAnimation",

@@ -59,7 +59,7 @@ export class Player extends Entity {
         this.animTimer = 0;
         this.wasGrounded = false;
         this.jumpCount = 0;
-        this.maxJumps = 2;
+        this.maxJumps = Koji.config.settings.maxJumps;
         this.jumpAnimTimer = 0;
         this.landAnimTimer = 0;
 
@@ -319,7 +319,7 @@ export class Collectible extends Entity {
             this.rotation = random(0, Math.PI);
         }
 
-        this.animTimer = 0;
+        this.animTimer = random(0, 1);
         this.isCollected = false;
     }
 
@@ -343,7 +343,7 @@ export class Collectible extends Entity {
         if (this.animationType == 'pulse') {
             this.animTimer += 1 / frameRate();
 
-            this.sizeMod += SineWave(0.5, 0.5, this.animTimer);
+            this.sizeMod += SineWave(0.0125, 0.3, this.animTimer);
         }
     }
 
@@ -627,8 +627,8 @@ export class BackgroundLayer {
                 this.x2 = width;
             }
 
-            this.x1 -= this.speedModifier * objSize;
-            this.x2 -= this.speedModifier * objSize;
+            this.x1 -= this.speedModifier * globalSpeed;
+            this.x2 -= this.speedModifier * globalSpeed;
         }
 
 
