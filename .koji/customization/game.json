@@ -67,7 +67,7 @@
     "jump": "https://objects.koji-cdn.com/531ccf36-2cf2-46a2-82ef-685e8786578a/gn7qv-jump.mp3",
     "collect": "https://objects.koji-cdn.com/531ccf36-2cf2-46a2-82ef-685e8786578a/7qcwn-collect.mp3",
     "powerupSound": "https://objects.koji-cdn.com/531ccf36-2cf2-46a2-82ef-685e8786578a/3es72-powerup.mp3",
-    "lives": 3,
+    "lives": 1,
     "lifeIcon": "https://images.koji-cdn.com/d4d2aab7-1847-481d-8aa6-6866d81d5e0f/xhoh4-player.png",
     "backgroundSpeed": 0.98
   },

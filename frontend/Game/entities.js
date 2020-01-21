@@ -285,21 +285,24 @@ class PlayerDeath extends Entity {
         this.velocityY = -objSize * 0.9;
         this.img = imgPlayer;
         this.rotSpeed = 0.1;
+
+        this.hasHitScreen = false;
     }
 
     update() {
+
+       
+    
         this.velocityY += this.gravity;
 
         this.pos.y += this.velocityY;
 
-        this.pos.x = Smooth(this.pos.x, width / 2, 20);
+        this.pos.x = Smooth(this.pos.x, width / 2, 12);
 
         if (this.animTimer < 1) {
             this.animTimer += 1 / frameRate() * 0.15;
 
             this.sizeMod = Ease(EasingFunctions.easeOutCubic, this.animTimer, this.sizeModStart, this.sizeModGoal - this.sizeModStart);
-
-
         }
 
         this.rotation += this.rotSpeed;
