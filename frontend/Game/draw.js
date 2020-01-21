@@ -21,7 +21,7 @@ export default function draw() {
     }
 
     if (gameTimer > 0) {
-        if(isCountdownDone()){
+        if (isCountdownDone()) {
             handleGame();
         }
     } else {
@@ -30,7 +30,7 @@ export default function draw() {
         }
     }
 
-    if(hasGameEnded){
+    if (hasGameEnded) {
         handleGameEnd();
     }
 
@@ -160,7 +160,7 @@ export function init() {
 
 
     ground = new Ground();
-    guide = new Guide(width / 2, height / 2);
+    guide = new Guide(width / 2, height * 0.5);
     player = new Player(width * 0.2, height / 2);
 
 
@@ -223,7 +223,10 @@ function drawTutorial() {
 
     const instructionsX = width / 2;
     const instructionsY = height * 0.12;
-    const instructionsSize = objSize * 1;
+    let instructionsSize = objSize * 1;
+    if (width > height) {
+        instructionsSize = objSize * 0.75;
+    }
 
     const instructionsText = Koji.config.settings.instructionsText;
 
@@ -232,7 +235,8 @@ function drawTutorial() {
     fill(textColor);
     textAlign(CENTER, TOP);
 
-    text(instructionsText, instructionsX, instructionsY);
+    const desiredTextWidth = width * 0.9;
+    text(instructionsText, instructionsX - desiredTextWidth / 2, instructionsY, desiredTextWidth);
 
     if (guide) {
         guide.update();
@@ -283,12 +287,12 @@ function spawnLoseText() {
     floatingTexts.push(floatingText);
 }
 
-function constrainTextSize(txt, initialSize){
+function constrainTextSize(txt, initialSize) {
     let size = initialSize;
 
     textSize(size);
 
-    while(textWidth(txt) > width * 0.9){
+    while (textWidth(txt) > width * 0.9) {
         size *= 0.99;
         textSize(size);
     }
@@ -300,7 +304,7 @@ function constrainTextSize(txt, initialSize){
 
 function drawContinueText() {
     const textX = width / 2;
-    const textY = height - objSize * 3;
+    const textY = height * 0.95;
     const txtSize = objSize * 0.75;
 
     textAlign(CENTER, BOTTOM);
@@ -311,24 +315,22 @@ function drawContinueText() {
 }
 
 function drawGameTimer() {
-    const timerX = objSize / 2;
+    const timerX = width / 2;
     const timerY = objSize / 2;
     textSize(objSize);
     fill(textColor);
-    textAlign(LEFT, TOP);
+    textAlign(CENTER, TOP);
     text(gameTimer.toFixed(1), timerX, timerY);
 }
 
 function drawLives() {
     const livesX = objSize / 2;
-    const livesY = objSize * 3;
-    const lifeSize = globalSizeMod * objSize * 0.75;
+    const livesY = objSize / 2;
+    const lifeSize = globalSizeMod * objSize * 0.5;
 
     for (let i = 0; i < lives; i++) {
         image(imgLife, livesX + i * lifeSize, livesY, lifeSize, lifeSize);
     }
-
-
 }
 
 function drawCountdown() {
@@ -433,7 +435,7 @@ export function endGame() {
         spawnLoseText();
     }
 
-   
+
 }
 
 function determineGameOutcome() {

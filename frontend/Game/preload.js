@@ -136,6 +136,7 @@ function loadSettings() {
     averageSpawnPeriod = Koji.config.settings.averageSpawnPeriod;
     startingLives = Koji.config.settings.lives;
     lives = startingLives;
+    backgroundSpeedFactorMax = Koji.config.settings.backgroundSpeed;
     
 }
 

@@ -666,24 +666,41 @@ export class Guide extends Entity {
         this.startY = this.pos.y;
         this.moveAmount = objSize;
         this.sizeMod = 2;
+
+        this.playerDummy = new PlayerDummy(width /2 , height * 0.75);
+
     }
 
     update() {
 
         if (this.animTimer < 1) {
-            this.animTimer += 1 / frameRate() * 3;
+            this.animTimer += 1 / frameRate() * 1;
         } else {
             this.animTimer = 0;
+
+            this.playerDummy.handleTap();
         }
 
-        this.pos.y = this.startY + CosineWave(objSize * 0.5, 0.25, this.animTimer)
+        this.pos.y = this.startY + SineWave(objSize * 0.5, 0.25, this.animTimer)
 
 
         this.timer -= 1 / frameRate();
 
+        this.playerDummy.update();
+
+
         if (this.timer <= 0) {
             this.removable = true;
         }
+    }
+
+    render() {
+
+
+        this.playerDummy.render();
+
+        super.render();
+
     }
 }
 
@@ -695,6 +712,9 @@ export class BackgroundLayer {
         this.img = imgBackground[index];
 
         this.speedModifier = backgroundSpeedFactorMax * (index / imgBackground.length);
+        if(imgBackground.length == 1){
+          this.speedModifier = backgroundSpeedFactorMax;
+        }
 
     }
 
@@ -710,14 +730,12 @@ export class BackgroundLayer {
             this.x1 -= this.speedModifier * globalSpeed;
             this.x2 -= this.speedModifier * globalSpeed;
         }
-
-
     }
 
     render() {
-        image(this.img, this.x1, 0, width, height);
+        image(this.img, this.x1, 0, width + 4, height);
 
-        image(this.img, this.x2, 0, width, height);
+        image(this.img, this.x2, 0, width + 4, height);
     }
 }
 
@@ -733,4 +751,122 @@ function spawnPowerupText() {
     floatingText.maxSize = objSize * 1.5;
 
     floatingTexts.push(floatingText);
+}
+
+class PlayerDummy extends Entity {
+    constructor(x, y) {
+        super(x, y);
+
+        this.img = imgPlayer;
+        this.gravity = objSize * 0.02;
+        this.velocityY = 0;
+        this.jumpStrength = objSize * 0.42;
+        this.sizeMod = globalSizeMod * 0.65;
+        this.animTimer = 0;
+        this.wasGrounded = false;
+
+        this.jumpAnimTimer = 0;
+        this.landAnimTimer = 0;
+
+        this.bottom = height * 0.75;
+  
+        this.modifierY = 0;
+
+    }
+
+    update() {
+
+        const isNowGrounded = this.isGrounded();
+
+        if (isNowGrounded) {
+            this.velocityY = 0;
+        } else {
+            this.velocityY += this.gravity;
+        }
+
+        this.handleLanding();
+
+        this.pos.y += this.velocityY;
+        this.pos.y = constrain(this.pos.y, 0, this.bottom);
+
+        this.wasGrounded = isNowGrounded;
+
+        this.handleLandingAnimation();
+        this.handleJumpingAnimation();
+
+    }
+
+    handleTap() {
+        this.jump();
+    }
+
+    jump() {
+        
+        this.pos.y = this.bottom - 8;
+        this.velocityY = -this.jumpStrength;
+
+        spawnJumpParticles(this.pos.x, this.pos.y + objSize * this.sizeMod / 2, 5);
+
+        this.jumpAnimTimer = 0;
+    }
+
+    isGrounded() {
+        if (this.pos.y >= this.bottom) {
+            return true;
+        }
+
+        return false;
+
+    }
+
+    handleLanding() {
+        if (this.isGrounded() && !this.wasGrounded) {
+            this.landAnimTimer = 0;
+            spawnLandingParticles(this.pos.x, this.pos.y + objSize * this.sizeMod / 2, 10);
+            this.jumpCount = 0;
+        }
+    }
+
+    handleLandingAnimation() {
+        if (this.landAnimTimer < 1) {
+            this.landAnimTimer += 1 / frameRate() * 3;
+
+            this.scale.y = Ease(EasingFunctions.easeOutCubic, this.landAnimTimer, 0.5, 0.5);
+            this.modifierY = Ease(EasingFunctions.easeOutCubic, this.landAnimTimer, this.sizeMod * objSize / 4, -this.sizeMod * objSize / 4);
+        }
+    }
+
+    handleJumpingAnimation() {
+        if (this.jumpAnimTimer < 1) {
+            this.jumpAnimTimer += 1 / frameRate() * 1.75;
+
+            const animationType = Koji.config.settings.playerJumpAnimation;
+
+            if (animationType == 'frontflip') {
+                this.rotation = Ease(EasingFunctions.easeOutCubic, this.jumpAnimTimer, 0, Math.PI * 2);
+            }
+
+            if (animationType == 'backflip') {
+                this.rotation = Ease(EasingFunctions.easeOutCubic, this.jumpAnimTimer, 0, -Math.PI * 2);
+            }
+
+            if (animationType == 'elongate') {
+                this.scale.y = Ease(EasingFunctions.easeOutCubic, this.jumpAnimTimer, 1.5, -0.5);
+            }
+        } else {
+            this.rotation = 0;
+        }
+    }
+
+    render() {
+        const size = objSize * this.sizeMod;
+
+        push();
+        translate(this.pos.x, this.pos.y + this.modifierY);
+        rotate(this.rotation);
+        scale(this.scale.x, this.scale.y);
+        image(this.img, -size / 2, -size / 2, size, size);
+        pop();
+
+    }
 }
