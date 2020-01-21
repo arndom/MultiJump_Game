@@ -380,7 +380,7 @@ export class Collectible extends Entity {
     constructor(x, y) {
         super(x, y);
 
-        this.img = imgCollectible;
+        this.img = imgCollectible[floor(random() * imgCollectible.length)];
         this.sizeMod = globalSizeMod * 0.75;
 
         this.rotSpeed = 0.02;
@@ -638,7 +638,7 @@ function spawnLandingParticles(x, y, amount) {
 function spawnCollectibleParticles(x, y, amount) {
     for (let i = 0; i < amount; i++) {
         const particle = new Particle(x, y);
-        particle.img = imgCollectible;
+        particle.img = imgCollectible[floor(random() * imgCollectible.length)];
 
         particles.push(particle);
     }

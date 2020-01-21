@@ -265,7 +265,7 @@ function spawnWinText() {
     floatingText.velocityY = 0;
     floatingText.timer = 100;
     floatingText.shouldPulse = true;
-    floatingText.maxSize = objSize * 2;
+    floatingText.maxSize = constrainTextSize(Koji.config.settings.winText, objSize * 2);
 
     floatingTexts.push(floatingText);
 
@@ -278,9 +278,23 @@ function spawnLoseText() {
     floatingText.velocityY = 0;
     floatingText.timer = 100;
     floatingText.easeFunction = EasingFunctions.easeInOutQuad;
-    floatingText.maxSize = objSize * 2;
+    floatingText.maxSize = constrainTextSize(Koji.config.settings.loseText, objSize * 2);
 
     floatingTexts.push(floatingText);
+}
+
+function constrainTextSize(txt, initialSize){
+    let size = initialSize;
+
+    textSize(size);
+
+    while(textWidth(txt) > width * 0.9){
+        size *= 0.99;
+        textSize(size);
+    }
+
+    return size;
+
 }
 
 

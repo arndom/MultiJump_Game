@@ -36,7 +36,7 @@ window.imgWinParticle = [];
 window.imgGuide = null;
 window.imgObstacle = [];
 window.imgPlayer = null;
-window.imgCollectible = null;
+window.imgCollectible = [];
 window.imgPowerup = null;
 window.imgGroundTile = null;
 window.imgPlayerPowerup = null;
@@ -100,7 +100,6 @@ function loadImages() {
     imgPlayer = loadImage(Koji.config.settings.player);
     imgPlayerPowerup = loadImage(Koji.config.settings.playerPowerup);
     imgGroundTile = loadImage(Koji.config.settings.ground);
-    imgCollectible = loadImage(Koji.config.settings.collectible);
     imgPowerup = loadImage(Koji.config.settings.powerup);
     imgLife = loadImage(Koji.config.settings.lifeIcon);
      
@@ -110,6 +109,10 @@ function loadImages() {
 
     for (let i = 0; i < Koji.config.settings.winParticles.length; i++) {
         imgWinParticle[i] = loadImage(Koji.config.settings.winParticles[i]);
+    }
+
+    for (let i = 0; i < Koji.config.settings.collectible.length; i++) {
+        imgCollectible[i] = loadImage(Koji.config.settings.collectible[i]);
     }
 
     for (let i = 0; i < Koji.config.settings.background.length; i++) {

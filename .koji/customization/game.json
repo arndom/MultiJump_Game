@@ -4,7 +4,7 @@
     "maxParticles": 150,
     "maxParticlesMobile": 50,
     "gameLength": 60,
-    "averageSpawnPeriod": 1,
+    "averageSpawnPeriod": 1.2,
     "speedMin": 0.1,
     "speedMax": 0.225,
     "timePenalty": 1,
@@ -25,7 +25,7 @@
     "tapGood": "https://objects.koji-cdn.com/f0bb4ea3-93ad-451f-86df-f3ca66072917/co8y8-goodTap.mp3",
     "tapBad": "https://objects.koji-cdn.com/f0bb4ea3-93ad-451f-86df-f3ca66072917/ils52-badTap.mp3",
     "winText": "YOU WIN!",
-    "loseText": "Game Over",
+    "loseText": "Better luck next time!",
     "winParticles": [
       "https://images.koji-cdn.com/d4d2aab7-1847-481d-8aa6-6866d81d5e0f/6ik7b-star1.png",
       "https://images.koji-cdn.com/d4d2aab7-1847-481d-8aa6-6866d81d5e0f/xvpr0-star3.png",
@@ -48,7 +48,10 @@
       "https://images.koji-cdn.com/b0720d03-3380-47ce-9b47-97dff00fe491/2kqy0-d5c1ce1253c54049862a15386d76c9a5.png",
       "https://images.koji-cdn.com/b0720d03-3380-47ce-9b47-97dff00fe491/y9gis-7c246e075b8f4161ae8533230bbfd8e6.png"
     ],
-    "collectible": "https://images.koji-cdn.com/d4d2aab7-1847-481d-8aa6-6866d81d5e0f/pe7id-slot1.png",
+    "collectible": [
+      "https://images.koji-cdn.com/d4d2aab7-1847-481d-8aa6-6866d81d5e0f/pe7id-slot1.png",
+      "https://images.koji-cdn.com/d4d2aab7-1847-481d-8aa6-6866d81d5e0f/l2vt8-coin.png"
+    ],
     "powerup": "https://images.koji-cdn.com/d4d2aab7-1847-481d-8aa6-6866d81d5e0f/9v2qt-upgradeDamage.png",
     "ground": "https://images.koji-cdn.com/d4d2aab7-1847-481d-8aa6-6866d81d5e0f/daj0s-floor2.png",
     "airObstacleRate": 50,
@@ -284,7 +287,7 @@
           "key": "collectible",
           "name": "Collectibles",
           "description": "Ideal size: 128x128",
-          "type": "image"
+          "type": "image[]"
         },
         {
           "key": "collectibleRate",
