@@ -66,9 +66,13 @@ function handleTouchStart() {
 
         isTouching = true;
 
-
         if (currentView == VIEW_TUTORIAL) {
             currentView = VIEW_GAME;
+        }
+
+        //Prevent double tap on mobile/ios
+        if(currentView == VIEW_GAME && !hasGameEnded){
+            return false;
         }
     }
 }
