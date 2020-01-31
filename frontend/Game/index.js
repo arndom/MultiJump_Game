@@ -17,11 +17,24 @@ class Game extends PureComponent {
         setScore() { },
     };
 
+    isIOS = () => {
+        if (/iP(hone|od|ad)/.test(navigator.platform)) {
+            return true;
+        }
+
+        return false;
+    }
+
     initGame = () => {
         window.getAppView = this.props.getAppView;
         window.setAppView = this.props.setAppView;
         window.setScore = this.props.setScore;
         window.setOutcome = this.props.setOutcome;
+
+        if (this.isIOS()) {
+            window.mousePressed = () => { };
+            window.mouseReleased = () => { };
+        }
 
         // Require the functions
         window.preload = require('../Game/preload').default;
@@ -96,5 +109,7 @@ class Game extends PureComponent {
         return null;
     }
 }
+
+
 
 export default Game;
