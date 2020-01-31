@@ -71,7 +71,7 @@ function handleTouchStart() {
         }
 
         //Prevent double tap on mobile/ios
-        if(currentView == VIEW_GAME && !hasGameEnded){
+        if (currentView == VIEW_GAME && !hasGameEnded) {
             return false;
         }
     }
@@ -186,8 +186,10 @@ export function addScore(amount) {
 }
 
 export function goToPostGame() {
-    if (sndMusic) {
-        sndMusic.stop();
+    try {
+        sndMusic.dispose();
+    } catch (error) {
+        console.log(error);
     }
 
     submitScore();

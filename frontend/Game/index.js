@@ -94,6 +94,7 @@ class Game extends PureComponent {
             this.initGame();
         } catch (err) {
             console.log('Error hot reloading game: ', err);
+            window.setAppView('home');
         }
     }
 
