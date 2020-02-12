@@ -1,5 +1,5 @@
-import React, { Fragment, PureComponent } from 'react';
-import styled, { keyframes } from 'styled-components';
+import React, { PureComponent } from 'react';
+import styled from 'styled-components';
 import GameScreen from './Screens/Game';
 import PostGameScreen from './Screens/PostGame';
 import HomeScreen from './Screens/Home';
@@ -7,14 +7,13 @@ import LeaderboardModal from './Modals/Leaderboard';
 import Koji from '@withkoji/vcc';
 import Modal from 'react-modal';
 import WebFont from 'webfontloader';
-import Fade from 'react-reveal/Fade';
 
 const Container = styled.div`
   width: 100vw;
   height: 100vh;
   background: ${({ backgroundColor, backgroundImage, backgroundImageMode }) => {
     if (backgroundImage && backgroundImage !== '') {
-      return `url("${backgroundImage}") no-repeat center center / ${backgroundImageMode}`;
+      return `url("${backgroundImage}?auto=format,compress&fit=max&h=${window.innerHeight * 2}&w=${window.innerWidth * 2}") no-repeat center center / ${backgroundImageMode}`;
     }
     return backgroundColor;
   }}
