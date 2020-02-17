@@ -196,14 +196,14 @@ export function goToPostGame() {
 }
 
 function updateSound() {
-    if (window.__template_config.soundEnabled) {
-        if (getAudioContext().state == 'suspended') {
+    try {
+        if (window.__template_config.soundEnabled) {
             getAudioContext().resume();
-        }
-    } else {
-        if (getAudioContext().state == 'running') {
+        } else {
             getAudioContext().suspend();
         }
+    } catch (error) {
+        console.log(error);
     }
 }
 
