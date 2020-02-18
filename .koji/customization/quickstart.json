@@ -1,66 +1,73 @@
 {
-  "quickstart": {
-    "items": [
-      "general.fontFamily",
-      "general.backgroundImage",
-      {
-        "keys": [
-          "homeScreen.playButtonColor"
-        ],
-        "name": "Primary Color",
-        "type": "color"
-      },
-      {
-        "keys": [
-          "homeScreen.cardBackgroundColor",
-          "postGameScreen.playAgainButtonColor"
-        ],
-        "name": "Secondary Color",
-        "type": "color"
-      },
-      {
-        "keys": [
-          "homeScreen.titleText"
-        ],
-        "name": "Game Title",
-        "type": "text"
-      },
-      {
-        "keys": [
-          "homeScreen.featuredImage"
-        ],
-        "name": "Logo Image",
-        "type": "image"
-      },
-      {
-        "keys": [
-          "settings.player",
-          "settings.playerPowerup"
-        ],
-        "name": "Player",
-        "type": "image"
-      },
-      {
-        "keys": [
-          "settings.obstacle"
-        ],
-        "name": "Obstacle",
-        "type": "image[]"
-      },
-       {
-        "keys": [
-          "settings.powerup"
-        ],
-        "name": "Powerup",
-        "type": "image"
-      },
-       {
-        "keys": [
-          "settings.collectible"
-        ],
-        "name": "Collectible",
-        "type": "image[]"
-      }
-    ]
-  }
+    "quickstart": {
+        "items": [
+            "general.fontFamily",
+            {
+                "keys": [
+                    "settings.background",
+                    "general.backgroundImage"
+                ],
+                "name": "Background",
+                "type": "image"
+            },
+            {
+                "keys": [
+                    "homeScreen.playButtonColor"
+                ],
+                "name": "Primary Color",
+                "type": "color"
+            },
+            {
+                "keys": [
+                    "homeScreen.cardBackgroundColor",
+                    "postGameScreen.playAgainButtonColor"
+                ],
+                "name": "Secondary Color",
+                "type": "color"
+            },
+            {
+                "keys": [
+                    "homeScreen.titleText"
+                ],
+                "name": "Game Title",
+                "type": "text"
+            },
+            {
+                "keys": [
+                    "homeScreen.featuredImage"
+                ],
+                "name": "Logo Image",
+                "type": "image"
+            },
+            {
+                "keys": [
+                    "settings.player",
+                    "settings.playerPowerup"
+                ],
+                "name": "Player",
+                "type": "image"
+            },
+            {
+                "keys": [
+                    "settings.obstacle"
+                ],
+                "name": "Obstacle",
+                "type": "image[]"
+            },
+            {
+                "keys": [
+                    "settings.powerup"
+                ],
+                "name": "Powerup",
+                "type": "image"
+            },
+            {
+                "keys": [
+                    "settings.collectible"
+                ],
+                "name": "Collectible",
+                "type": "image[]"
+            }
+        ]
+    }
 }
