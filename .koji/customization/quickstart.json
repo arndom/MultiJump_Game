@@ -4,7 +4,6 @@
             "general.fontFamily",
             {
                 "keys": [
-                    "settings.background",
                     "general.backgroundImage"
                 ],
                 "name": "Background",
