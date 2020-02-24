@@ -321,6 +321,7 @@ function drawContinueText() {
 }
 
 function drawGameTimer() {
+    if (!Koji.config.settings.enableTimer) return;
     const timerX = width / 2;
     const timerY = objSize / 2;
     textSize(objSize);
@@ -448,10 +449,11 @@ function determineGameOutcome() {
     if (score >= Koji.config.settings.minimumScoreForWin) {
         winGame();
     } else {
-        loseGame();
+        if (!isLeaderboardEnabled() || !Koji.config.settings.enableTimer) {
+            loseGame();
+        }
     }
 }
-
 
 
 function handleGame() {
@@ -467,6 +469,7 @@ function handleGame() {
 }
 
 function updateGameTimer() {
+    if (!Koji.config.settings.enableTimer) return;
     gameTimer -= 1 / frameRate();
 }
 
