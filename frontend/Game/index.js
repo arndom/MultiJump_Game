@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
 class Game extends PureComponent {
@@ -22,29 +22,21 @@ class Game extends PureComponent {
     window.setAppView = this.props.setAppView;
     window.setScore = this.props.setScore;
     window.setOutcome = this.props.setOutcome;
+
+    window.preload = require('../Game/preload').default;
+    window.setup = require('../Game/setup').default;
+    window.draw = require('../Game/draw').default;
+
+    this.initGame();
+  }
+
+  initGame = () => {
+    if (this.p5Game) this.p5Game.remove();
+    this.p5Game = new window.p5(null, document.getElementById('game-container'));
   }
 
   render() {
-    return (
-      <div>
-        <button
-          onClick={() => {
-            this.props.setScore(10000);
-            this.props.setAppView('postGame');
-          }}
-        >
-          {'End the game with a score of 10,000'}
-        </button>
-        <button
-          onClick={() => {
-            this.props.setScore(10);
-            this.props.setAppView('postGame');
-          }}
-        >
-          {'End the game with a score of 10'}
-        </button>
-      </div>
-    );
+    return null;
   }
 }
 
