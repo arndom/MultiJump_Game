@@ -6,20 +6,17 @@ import PreGameScreen from './Screens/PreGame';
 import Koji from '@withkoji/vcc';
 import WebFont from 'webfontloader';
 
+const GameScreenWrapper = styled.div`
+  display: ${({ show }) => show ? 'block' : 'none'}
+`;
+
+// Note: Putting the image url inside the styled component
+// causes the image to be re-downloaded even when re-renders
+// aren't triggered
 const Container = styled.div`
   width: 100vw;
   height: 100vh;
-  background: ${({ backgroundColor, backgroundImage, backgroundImageMode }) => {
-    if (backgroundImage && backgroundImage !== '') {
-      return `url("${backgroundImage}?auto=format,compress&fit=max&h=${window.innerHeight * 2}&w=${window.innerWidth * 2}") no-repeat center center / ${backgroundImageMode}`;
-    }
-    return backgroundColor;
-  }}
   overflow: hidden;
-`;
-
-const GameScreenWrapper = styled.div`
-  display: ${({ show }) => show ? 'block' : 'none'}
 `;
 
 class App extends PureComponent {
@@ -45,12 +42,13 @@ class App extends PureComponent {
       this.setState({ initView: Koji.config.general.debug.startScreen, view: Koji.config.general.debug.startScreen });
     }
 
-    if (Koji.config.general.fontFamily !== document.body.style.fontFamily) {
+    if (Koji.config.general.fontFamily.family !== document.body.style.fontFamily) {
       this.loadFont();
     }
   }
 
   loadFont = () => {
+    console.log('load font');
     WebFont.load({ google: { families: [Koji.config.general.fontFamily.family] } });
     document.body.style.fontFamily = Koji.config.general.fontFamily.family;
   };
@@ -71,8 +69,7 @@ class App extends PureComponent {
   render() {
     return (
       <Container
-        backgroundImage={Koji.config.general.backgroundImage}
-        backgroundImageMode={Koji.config.general.backgroundImageMode}
+        style={{ background: `url("${Koji.config.general.backgroundImage}?auto=format,compress&fit=max&h=${window.innerHeight * 2}&w=${window.innerWidth * 2}") no-repeat center center / cover` }}
       >
         {
           this.state.view === 'preGame' &&

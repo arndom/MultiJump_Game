@@ -19,6 +19,7 @@ import './index.css';
 import App from './Wrapper/App';
 
 const render = Component => {
+  console.log('render');
   ReactDOM.render(
     <AppContainer>
       <Component />

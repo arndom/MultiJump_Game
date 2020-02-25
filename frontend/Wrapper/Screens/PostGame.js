@@ -53,6 +53,10 @@ const CardWrapper = styled.div`
     align-items: center;
   }
 
+  .label-wrapper {
+    font-size: 2vh;
+  }
+
   .input-wrapper {
     margin-bottom: 2vh;
     width: 100%;
@@ -69,6 +73,7 @@ const CardWrapper = styled.div`
   }
 
   input[type="checkbox"] {
+    font-size: 2vh;
     margin-left: 0;
   }
 
