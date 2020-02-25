@@ -16,6 +16,14 @@ class Game extends PureComponent {
     setScore() {},
   };
 
+  componentDidMount() {
+    // Add commands to the global scope
+    window.getAppView = this.props.getAppView;
+    window.setAppView = this.props.setAppView;
+    window.setScore = this.props.setScore;
+    window.setOutcome = this.props.setOutcome;
+  }
+
   render() {
     return (
       <div>
