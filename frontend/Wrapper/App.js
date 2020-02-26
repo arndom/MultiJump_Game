@@ -48,7 +48,6 @@ class App extends PureComponent {
   }
 
   loadFont = () => {
-    console.log('load font');
     WebFont.load({ google: { families: [Koji.config.general.fontFamily.family] } });
     document.body.style.fontFamily = Koji.config.general.fontFamily.family;
   };

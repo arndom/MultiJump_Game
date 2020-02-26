@@ -259,7 +259,6 @@ class PostGameScreen extends PureComponent {
           .then((response) => response.json())
           .then(({ scores }) => {
             this.setState({ formSubmitting: false, formSubmitted: true, scores });
-            console.log('t', this.state.scores);
           })
           .catch(err => {
             console.log('Fetch Error: ', err);
