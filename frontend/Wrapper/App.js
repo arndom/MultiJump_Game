@@ -29,7 +29,7 @@ class App extends PureComponent {
     templateConfig: {
       soundEnabled: true,
     },
-    view: Koji.config.general.debug.startScreen,
+    view: window.navigator.userAgent.includes('KojiCrawler') ? 'game' : Koji.config.general.debug.startScreen,
   };
 
   componentDidMount() {
