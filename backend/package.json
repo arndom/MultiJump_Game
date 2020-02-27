@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "scripts": {
     "compile": "babel src -d dist --copy-files --ignore \"node_modules/**/*.js\"",
-    "start-dev": "NODE_ENV=development babel-watch -L --watch ../.koji/ src/server.js",
+    "prestart": "koji-vcc watch &",
+    "start-dev": "koji-vcc watch & NODE_ENV=development babel-watch -L --watch ../.koji/ src/server.js",
     "start": "NODE_ENV=production node dist/server.js"
   },
   "dependencies": {
