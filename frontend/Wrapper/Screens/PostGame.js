@@ -98,7 +98,7 @@ const SocialWrapper = styled.div`
       height: 16vw;
       max-width: 72px;
       max-height: 72px;
-      margin: 2vw;
+      margin: 4%;
   }
 
   img {
