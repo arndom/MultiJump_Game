@@ -1,0 +1,89 @@
+{
+  "preGameScreen": {
+    "reveal": "fadeTop",
+    "displayType": "borderedCard",
+    "cardBackgroundImage": "",
+    "cardBackgroundColor": "#542525",
+    "buttonColor": "#e01111",
+    "textColor": "#ffffff",
+    "titleTextColor": "#fbfbfb",
+    "featuredImage": "https://images.koji-cdn.com/4fba5aca-3a39-409c-8db0-c660207a39ee/d7q7q-yourimagehere2.png",
+    "titleText": "Runner",
+    "titleColor": "#ffffff",
+    "playButtonText": "Play",
+    "playButtonColor": "#1c4da8"
+  },
+  "@@editor": [
+    {
+      "key": "preGameScreen",
+      "name": "1. Start Screen",
+      "source": "preGameScreen.json",
+      "fields": [
+        {
+          "key": "featuredImage",
+          "name": "Featured Image",
+          "type": "image"
+        },
+        {
+          "key": "titleText",
+          "name": "Title Text",
+          "type": "text"
+        },
+        {
+          "key": "titleColor",
+          "name": "Title Color",
+          "type": "color"
+        },
+        {
+          "key": "playButtonText",
+          "name": "Play Button Text",
+          "type": "text"
+        },
+        {
+          "key": "playButtonColor",
+          "name": "Play Button Color",
+          "type": "color"
+        },
+        {
+          "key": "reveal",
+          "name": "Reveal Animation",
+          "description": "How the pre game screen reveal is animated",
+          "type": "select",
+          "typeOptions": {
+            "placeholder": "Choose an option...",
+            "options": [
+              {
+                "label": "Bounce Bottom",
+                "value": "bounceBottom"
+              },
+              {
+                "label": "Bounce Top",
+                "value": "bounceTop"
+              },
+              {
+                "label": "Fade Bottom",
+                "value": "fadeBottom"
+              },
+              {
+                "label": "Fade Top",
+                "value": "fadeTop"
+              },
+              {
+                "label": "Zoom Bottom",
+                "value": "zoomBottom"
+              },
+              {
+                "label": "Zoom Top",
+                "value": "zoomTop"
+              },
+              {
+                "label": "Rubber Band",
+                "value": "rubberBand"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,115 +1,171 @@
 {
-    "postGameScreen": {
-        "showPlayAgainButton": true,
-        "playAgainButtonText": "Play Again",
-        "playAgainButtonFontSize": 20,
-        "playAgainButtonColor": "#000000",
-        "title": "Thanks for Playing!",
-        "actions": {
-            "action": "traffic",
-            "emailCollection": "yes",
-            "phoneCollection": "no",
-            "optInText": "I agree to be contacted",
-            "submitButtonText": "Submit",
-            "submitButtonColor": "#2d179b",
-            "viewLeaderboardButtonText": "View Leaderboard",
-            "viewLeaderboardButtonColor": "#2f1f7d",
-            "text": "Create a game on Koji in 5 minutes!",
-            "buttonText": "Get Started",
-            "buttonLink": "https://withkoji.com",
-            "leaderboardColor": "#361db3",
-            "leaderboardBackgroundColor": "#5a4d9c",
-            "buttonColor": "#88ea6c",
-            "winText": "Congratulations, you won!",
-            "loseText": "Good try, better luck next time!",
-            "message": "Visit <a href=\"https://withkoji.com\">our site</a> to learn more."
-        },
-        "reveal": "fadeTop"
-    },
-    "@@editor": [
+  "postGameScreen": {
+    "reveal": "bounceBottom",
+    "leaderboardEnabled": true,
+    "ctaEnabled": true,
+    "ctaHeadline": "Check out our site!!",
+    "socialShareEnabled": true,
+    "socialShareHeadline": "Invite Friends",
+    "playAgainLinkEnabled": true,
+    "playAgainLinkText": "Play Again",
+    "playAgainLinkColor": "#000000",
+    "facebookIcon": "https://images.koji-cdn.com/4fba5aca-3a39-409c-8db0-c660207a39ee/ovg2x-roundedfacebook.png",
+    "linkedInIcon": "https://images.koji-cdn.com/4fba5aca-3a39-409c-8db0-c660207a39ee/qlyjr-roundedlinkedin.png",
+    "twitterIcon": "https://images.koji-cdn.com/4fba5aca-3a39-409c-8db0-c660207a39ee/o7q85-roundedtwitter.png",
+    "redditIcon": "https://images.koji-cdn.com/4fba5aca-3a39-409c-8db0-c660207a39ee/kovap-roundedreddit.png",
+    "collectEmail": "yes",
+    "collectPhone": "no",
+    "optInText": "I agree to receive updates",
+    "ctaButtonColor": "#1c4da8",
+    "ctaButtonText": "Visit Site",
+    "ctaButtonLink": "https://withkoji.com"
+  },
+  "@@editor": [
+    {
+      "key": "postGameScreen",
+      "name": "3. End Card",
+      "source": "postGameScreen.json",
+      "fields": [
         {
-            "key": "postGameScreen",
-            "name": "4. Post Game Screen",
-            "icon": "🎴",
-            "source": "postGameScreen.json",
-            "fields": [
-                {
-                    "key": "reveal",
-                    "name": "Reveal Animation",
-                    "description": "How the home screen reveal is animated",
-                    "type": "select",
-                    "typeOptions": {
-                        "placeholder": "Choose an option...",
-                        "options": [
-                            {
-                                "label": "Bounce Bottom",
-                                "value": "bounceBottom"
-                            },
-                            {
-                                "label": "Bounce Top",
-                                "value": "bounceTop"
-                            },
-                            {
-                                "label": "Fade Bottom",
-                                "value": "fadeBottom"
-                            },
-                            {
-                                "label": "Fade Top",
-                                "value": "fadeTop"
-                            },
-                            {
-                                "label": "Zoom Bottom",
-                                "value": "zoomBottom"
-                            },
-                            {
-                                "label": "Zoom Top",
-                                "value": "zoomTop"
-                            },
-                            {
-                                "label": "Rubber Band",
-                                "value": "rubberBand"
-                            }
-                        ]
-                    }
-                },
-                {
-                    "key": "title",
-                    "name": "Title Text",
-                    "description": "The title for the post game card (e.g., Thanks for playing!)",
-                    "type": "text"
-                },
-                {
-                    "key": "showPlayAgainButton",
-                    "name": "Show Play Again Button",
-                    "type": "boolean"
-                },
-                {
-                    "key": "playAgainButtonText",
-                    "name": "Play Again Button Text",
-                    "type": "text"
-                },
-                {
-                    "key": "playAgainButtonColor",
-                    "name": "Play Again Button Color",
-                    "type": "color"
-                },
-                {
-                    "key": "playAgainButtonFontSize",
-                    "name": "Play Again Button Font Size",
-                    "description": "Note: Values are capped automatically to make sure the content stays on screen",
-                    "type": "range",
-                    "typeOptions": {
-                        "min": 8,
-                        "max": 32,
-                        "step": 1
-                    }
-                },
-                {
-                    "key": "actions",
-                    "name": "Actions",
-                    "type": "custom<post-game-actions>"
-                }
+          "key": "leaderboardEnabled",
+          "name": "LEADERBOARD",
+          "type": "boolean"
+        },
+        {
+          "key": "collectEmail",
+          "name": "Collect Email",
+          "type": "select",
+          "typeOptions": {
+            "placeholder": "Choose an option...",
+            "options": [
+              {
+                "value": "no",
+                "label": "Do Not Collect"
+              },
+              {
+                "value": "yes",
+                "label": "Collect"
+              },
+              {
+                "value": "require",
+                "label": "Collect & Require For Submission"
+              }
             ]
+          }
+        },
+        {
+          "key": "collectPhone",
+          "name": "Collect Phone",
+          "type": "select",
+          "typeOptions": {
+            "placeholder": "Choose an option...",
+            "options": [
+              {
+                "value": "no",
+                "label": "Do Not Collect"
+              },
+              {
+                "value": "yes",
+                "label": "Collect"
+              },
+              {
+                "value": "require",
+                "label": "Collect & Require For Submission"
+              }
+            ]
+          }
+        },
+        {
+          "key": "optInText",
+          "name": "Opt In Text",
+          "type": "text"
+        },
+        {
+          "key": "leaderboardWebhookURL",
+          "name": "Zapier Webhook URL",
+          "description": "If you have a Zapier integration, you can connect with their webhook service. Watch a tutorial here: https://withkoji.com",
+          "type": "text"
+        },
+        {
+          "key": "ctaEnabled",
+          "name": "CALL TO ACTION",
+          "type": "boolean"
+        },
+        {
+          "key": "ctaHeadline",
+          "name": "CTA Headline",
+          "type": "text"
+        },
+        {
+          "key": "ctaButtonText",
+          "name": "CTA Button Text",
+          "type": "text"
+        },
+        {
+          "key": "ctaButtonLink",
+          "name": "CTA Button Link",
+          "type": "text"
+        },
+        {
+          "key": "ctaButtonColor",
+          "name": "CTA Button Color",
+          "type": "color"
+        },
+        {
+          "key": "socialShareEnabled",
+          "name": "SOCIAL SHARE",
+          "type": "boolean"
+        },
+        {
+          "key": "socialShareHeadline",
+          "name": "Social Share Headline",
+          "type": "text"
+        },
+        {
+          "key": "playAgainLinkEnabled",
+          "name": "Show Play Again Link",
+          "type": "boolean"
+        },
+        {
+          "key": "reveal",
+          "name": "Reveal Animation",
+          "description": "How the pre game screen reveal is animated",
+          "type": "select",
+          "typeOptions": {
+            "placeholder": "Choose an option...",
+            "options": [
+              {
+                "label": "Bounce Bottom",
+                "value": "bounceBottom"
+              },
+              {
+                "label": "Bounce Top",
+                "value": "bounceTop"
+              },
+              {
+                "label": "Fade Bottom",
+                "value": "fadeBottom"
+              },
+              {
+                "label": "Fade Top",
+                "value": "fadeTop"
+              },
+              {
+                "label": "Zoom Bottom",
+                "value": "zoomBottom"
+              },
+              {
+                "label": "Zoom Top",
+                "value": "zoomTop"
+              },
+              {
+                "label": "Rubber Band",
+                "value": "rubberBand"
+              }
+            ]
+          }
         }
-    ]
+      ]
+    }
+  ]
 }

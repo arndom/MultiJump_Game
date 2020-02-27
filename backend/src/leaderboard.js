@@ -1,8 +1,9 @@
 import Database from '@withkoji/database';
 import uuid from 'uuid';
 import md5 from 'md5';
+import Koji from '@withkoji/vcc';
 
-export default function(app) {
+export default function (app) {
   app.get('/leaderboard', async (req, res) => {
     const database = new Database();
     const rawScores = await database.get('leaderboard');
@@ -16,6 +17,7 @@ export default function(app) {
         score,
         dateCreated
       }))
+      .filter((e) => e.score)
       .sort((a, b) => b.score - a.score)
       .slice(0, 100);
 
@@ -34,19 +36,30 @@ export default function(app) {
       return;
     }
 
-    const { privateAttributes = {} } = req.body;
     const recordBody = {
-        name: req.body.name,
-        score: req.body.score,
-        dateCreated: Math.round(Date.now() / 1000),
-        email: req.body.email,
-        emailOptIn: req.body.emailOptIn,
-        phone: req.body.phone,
+      ...req.body,
+      dateCreated: Math.round(Date.now() / 1000),
     };
 
     const recordId = uuid.v4();
     const database = new Database();
-    await database.set('leaderboard', recordId, recordBody);
+    const promises = [];
+
+    promises.push(async () => {
+      await database.set('leaderboard', recordId, recordBody);
+    });
+
+    if (Koji.config.postGameScreen.leaderboardWebhookURL) {
+      promises.push(async () => {
+        await fetch(Koji.config.postGameScreen.leaderboardWebhookURL, {
+          method: 'POST',
+          body: JSON.stringify(recordBody),
+        });
+      });
+    }
+
+    // Run in parallel
+    await Promise.all(promises.map(async p => p()));
 
     res.status(200).json({
       success: true

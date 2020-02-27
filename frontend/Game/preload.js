@@ -141,9 +141,10 @@ function loadSettings() {
 }
 
 function loadGoogleFont() {
-    let link = document.createElement('link');
-    link.href = "https://fonts.googleapis.com/css?family=" + Koji.config.general.fontFamily.replace(" ", "+");
+    const fontFamily = Koji.config.general.fontFamily.family;
+    const link = document.createElement('link');
+    link.href = "https://fonts.googleapis.com/css?family=" + fontFamily.replace(" ", "+");
     link.rel = 'stylesheet';
     document.head.appendChild(link);
-    myFont = Koji.config.general.fontFamily;
+    myFont = fontFamily;
 }

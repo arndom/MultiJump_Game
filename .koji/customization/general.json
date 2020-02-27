@@ -1,70 +1,79 @@
 {
   "general": {
-    "fontFamily": "Montserrat",
-    "backgroundImage": "https://images.koji-cdn.com/f0bb4ea3-93ad-451f-86df-f3ca66072917/q4yaf-BG.png",
+    "fontFamily": {
+      "kind": "webfonts#webfont",
+      "family": "Poppins",
+      "category": "sans-serif",
+      "variants": [
+        "100",
+        "100italic",
+        "200",
+        "200italic",
+        "300",
+        "300italic",
+        "regular",
+        "italic",
+        "500",
+        "500italic",
+        "600",
+        "600italic",
+        "700",
+        "700italic",
+        "800",
+        "800italic",
+        "900",
+        "900italic"
+      ],
+      "subsets": [
+        "latin",
+        "devanagari",
+        "latin-ext"
+      ],
+      "version": "v9",
+      "lastModified": "2019-10-15",
+      "files": {
+        "100": "http://fonts.gstatic.com/s/poppins/v9/pxiGyp8kv8JHgFVrLPTed3FBGPaTSQ.ttf",
+        "200": "http://fonts.gstatic.com/s/poppins/v9/pxiByp8kv8JHgFVrLFj_V1tvFP-KUEg.ttf",
+        "300": "http://fonts.gstatic.com/s/poppins/v9/pxiByp8kv8JHgFVrLDz8V1tvFP-KUEg.ttf",
+        "500": "http://fonts.gstatic.com/s/poppins/v9/pxiByp8kv8JHgFVrLGT9V1tvFP-KUEg.ttf",
+        "600": "http://fonts.gstatic.com/s/poppins/v9/pxiByp8kv8JHgFVrLEj6V1tvFP-KUEg.ttf",
+        "700": "http://fonts.gstatic.com/s/poppins/v9/pxiByp8kv8JHgFVrLCz7V1tvFP-KUEg.ttf",
+        "800": "http://fonts.gstatic.com/s/poppins/v9/pxiByp8kv8JHgFVrLDD4V1tvFP-KUEg.ttf",
+        "900": "http://fonts.gstatic.com/s/poppins/v9/pxiByp8kv8JHgFVrLBT5V1tvFP-KUEg.ttf",
+        "100italic": "http://fonts.gstatic.com/s/poppins/v9/pxiAyp8kv8JHgFVrJJLmE3tFOvODSVFF.ttf",
+        "200italic": "http://fonts.gstatic.com/s/poppins/v9/pxiDyp8kv8JHgFVrJJLmv1plEN2PQEhcqw.ttf",
+        "300italic": "http://fonts.gstatic.com/s/poppins/v9/pxiDyp8kv8JHgFVrJJLm21llEN2PQEhcqw.ttf",
+        "regular": "http://fonts.gstatic.com/s/poppins/v9/pxiEyp8kv8JHgFVrFJDUc1NECPY.ttf",
+        "italic": "http://fonts.gstatic.com/s/poppins/v9/pxiGyp8kv8JHgFVrJJLed3FBGPaTSQ.ttf",
+        "500italic": "http://fonts.gstatic.com/s/poppins/v9/pxiDyp8kv8JHgFVrJJLmg1hlEN2PQEhcqw.ttf",
+        "600italic": "http://fonts.gstatic.com/s/poppins/v9/pxiDyp8kv8JHgFVrJJLmr19lEN2PQEhcqw.ttf",
+        "700italic": "http://fonts.gstatic.com/s/poppins/v9/pxiDyp8kv8JHgFVrJJLmy15lEN2PQEhcqw.ttf",
+        "800italic": "http://fonts.gstatic.com/s/poppins/v9/pxiDyp8kv8JHgFVrJJLm111lEN2PQEhcqw.ttf",
+        "900italic": "http://fonts.gstatic.com/s/poppins/v9/pxiDyp8kv8JHgFVrJJLm81xlEN2PQEhcqw.ttf"
+      }
+    },
+    "backgroundImage": "https://images.koji-cdn.com/157b340c-ca63-4aae-99b3-03d5936121e2/kb3xv-022MorpheusDen.png",
     "backgroundImageMode": "cover",
-    "backgroundColor": "#000000",
     "soundOnIcon": "https://images.koji-cdn.com/4fba5aca-3a39-409c-8db0-c660207a39ee/fmvax-5b0754d85f5f44339e01e5ac6d6e5c6c.png",
     "soundOffIcon": "https://images.koji-cdn.com/b4acde8c-96d4-4b1e-9e6e-4cca208833fe/hqr5b-caf83cefc49348cb8a46c9e5647abcbb.png",
     "debug": {
-      "startScreen": "home"
+      "startScreen": "preGame"
     }
   },
   "@@editor": [
     {
       "key": "general",
-      "name": "1. General Settings",
-      "icon": "⚙️",
+      "name": " Global Settings",
       "source": "general.json",
       "fields": [
         {
           "key": "fontFamily",
-          "name": "Google Font Family",
-          "description": "Visit https://fonts.google.com, and copy and paste the name only (e.g., Roboto)",
-          "type": "text"
+          "name": "Font",
+          "type": "custom<jims-google-font-vcc>"
         },
         {
           "key": "backgroundImage",
           "name": "Background Image",
-          "description": "Background Image for all screens. If none is selected, will fall back to Background Color",
-          "type": "image"
-        },
-        {
-          "key": "backgroundImageMode",
-          "name": "Background Image Display Mode",
-          "type": "select",
-          "typeOptions": {
-            "placeholder": "Choose an option...",
-            "options": [
-              {
-                "label": "Cover",
-                "value": "cover"
-              },
-              {
-                "label": "Fit to Window",
-                "value": "contain"
-              },
-              {
-                "label": "Auto (No Resizing)",
-                "value": "auto"
-              }
-            ]
-          }
-        },
-        {
-          "key": "backgroundColor",
-          "name": "Background Color",
-          "description": "Background Color for all screens.",
-          "type": "color"
-        },
-        {
-          "key": "soundOnIcon",
-          "name": "Sound On Icon",
-          "type": "image"
-        },
-        {
-          "key": "soundOffIcon",
-          "name": "Sound Off Icon",
           "type": "image"
         },
         {
@@ -75,22 +84,22 @@
           "typeOptions": {
             "Debug": {
               "startScreen": {
-                "name": "Start Screen",
-                "description": "Note: Helpful for testing your updates, make sure to set back to \"Home Screen\" before publishing!",
+                "name": "Screen",
+                "description": "Note: Helpful for testing your updates, make sure to set back to \"Start Screen\" before publishing!",
                 "type": "select",
                 "typeOptions": {
                   "placeholder": "Choose an option...",
                   "options": [
                     {
-                      "label": "Home Screen",
-                      "value": "home"
+                      "label": "Start Screen",
+                      "value": "preGame"
                     },
                     {
-                      "label": "Game Screen",
+                      "label": "Gameplay",
                       "value": "game"
                     },
                     {
-                      "label": "Post Game Screen",
+                      "label": "End Card",
                       "value": "postGame"
                     }
                   ]

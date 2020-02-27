@@ -12,11 +12,11 @@
  *   here.
  */
 
-import React from "react";
-import ReactDOM from "react-dom";
-import { AppContainer } from "react-hot-loader";
-import "./index.css";
-import App from "./Wrapper/App";
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { AppContainer } from 'react-hot-loader';
+import './index.css';
+import App from './Wrapper/App';
 import Koji from '@withkoji/vcc';
 
 window.Koji = Koji;
@@ -26,14 +26,14 @@ const render = Component => {
     <AppContainer>
       <Component />
     </AppContainer>,
-    document.getElementById("root")
+    document.getElementById('root')
   );
 };
 
 render(App);
 
 if (module.hot) {
-  module.hot.accept("./Wrapper/App", () => {
+  module.hot.accept('./Wrapper/App', () => {
     render(App);
   });
 }

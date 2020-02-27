@@ -1,0 +1,20 @@
+{
+  "name": "scaffold",
+  "version": "1.0.0",
+  "description": "## Adding Your Game",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://projects.koji-cdn.com/4fba5aca-3a39-409c-8db0-c660207a39ee.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-eslint": "^10.0.3",
+    "eslint": "^6.8.0",
+    "eslint-plugin-react": "^7.18.3"
+  }
+}

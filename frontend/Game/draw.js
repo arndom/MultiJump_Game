@@ -92,9 +92,7 @@ export function touchEnded() {
 
 function handleTouchEnd() {
     //===This is required to fix a problem where the music sometimes doesn't start on mobile
-    if (window.__template_config.soundEnabled && getAudioContext().state !== 'running') {
-        getAudioContext().resume();
-    }
+    if (window.getTemplateConfig().soundEnabled && getAudioContext().state !== 'running') getAudioContext().resume();
 
     isTouching = false;
 }
@@ -195,9 +193,9 @@ export function goToPostGame() {
     submitScore();
 }
 
-function updateSound() {
+export function updateSound() {
     try {
-        if (window.__template_config.soundEnabled) {
+        if (getTemplateConfig().soundEnabled) {
             getAudioContext().resume();
         } else {
             getAudioContext().suspend();
@@ -217,7 +215,7 @@ export function windowResized() {
 }
 
 function drawBackground() {
-    background(Koji.config.general.backgroundColor);
+    background("#ffffff");
 
     for (let i = 0; i < backgroundLayers.length; i++) {
         backgroundLayers[i].update();
@@ -449,9 +447,7 @@ function determineGameOutcome() {
     if (score >= Koji.config.settings.minimumScoreForWin) {
         winGame();
     } else {
-        if (!isLeaderboardEnabled() || !Koji.config.settings.enableTimer) {
-            loseGame();
-        }
+        loseGame();
     }
 }
 
@@ -483,10 +479,6 @@ function handleGameEnd() {
     drawContinueText();
 
     timeUntilAbleToTransition -= 1 / frameRate();
-}
-
-function isLeaderboardEnabled() {
-    return Koji.config.postGameScreen.actions.action == 'leads';
 }
 
 function isCountdownDone() {

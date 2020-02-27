@@ -7,18 +7,17 @@ export function detectMobile() {
   return check;
 };
 
-//use this to play music if your music is loaded
 export function playMusic() {
+    try {
+        sndMusic.setVolume(Koji.config.settings.musicVolume);
+        sndMusic.setLoop(true);
+        sndMusic.play();
+    } catch (error) {
+        console.log(error);
 
-  try {
-    if (sndMusic) {
-      sndMusic.setVolume(Koji.config.settings.musicVolume);
-      sndMusic.setLoop(true);
-      sndMusic.play();
+        //Repeat in case the music wasn't loaded the first time
+        setTimeout(playMusic, 500);
     }
-  } catch (error) {
-  }
-
 }
 
 

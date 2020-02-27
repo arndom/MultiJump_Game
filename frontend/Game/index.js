@@ -15,6 +15,7 @@ class Game extends PureComponent {
         setAppView() { },
         setOutcome() { },
         setScore() { },
+        getTemplateConfig() { }
     };
 
     isIOS = () => {
@@ -30,6 +31,7 @@ class Game extends PureComponent {
         window.setAppView = this.props.setAppView;
         window.setScore = this.props.setScore;
         window.setOutcome = this.props.setOutcome;
+        window.getTemplateConfig = this.props.getTemplateConfig;
 
         if (this.isIOS()) {
             window.mousePressed = () => { };

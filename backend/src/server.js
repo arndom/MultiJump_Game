@@ -1,6 +1,5 @@
 import 'babel-polyfill';
 import express from 'express';
-import * as fs from 'fs';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 
@@ -15,7 +14,7 @@ app.options('*', cors())
 
 // Enable body parsers for reading POST data. We set up this app to 
 // accept JSON bodies and x-www-form-urlencoded bodies. If you wanted to
-// process other request tpes, like form-data or graphql, you would need
+// process other request types, like form-data or graphql, you would need
 // to include the appropriate parser middlewares here.
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
@@ -39,8 +38,8 @@ leaderboard(app);
 
 // Start server
 app.listen(process.env.PORT || 3333, null, async err => {
-    if (err) {
-        console.log(err.message);
-    }
-    console.log('[koji] backend started');
+  if (err) {
+    console.log(err.message);
+  }
+  console.log('[koji] backend started');
 });
