@@ -11,29 +11,22 @@
             },
             {
                 "keys": [
-                    "homeScreen.playButtonColor"
+                    "preGameScreen.playButtonColor",
+                    "preGameScreen.titleColor"
                 ],
                 "name": "Primary Color",
                 "type": "color"
             },
             {
                 "keys": [
-                    "homeScreen.cardBackgroundColor",
-                    "postGameScreen.playAgainButtonColor"
-                ],
-                "name": "Secondary Color",
-                "type": "color"
-            },
-            {
-                "keys": [
-                    "homeScreen.titleText"
+                    "preGameScreen.titleText"
                 ],
                 "name": "Game Title",
                 "type": "text"
             },
             {
                 "keys": [
-                    "homeScreen.featuredImage"
+                    "preGameScreen.featuredImage"
                 ],
                 "name": "Logo Image",
                 "type": "image"
