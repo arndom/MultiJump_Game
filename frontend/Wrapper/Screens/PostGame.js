@@ -425,7 +425,7 @@ class PostGameScreen extends PureComponent {
                   <CTALink
                     backgroundColor={Koji.config.postGameScreen.ctaButtonColor}
                     href={Koji.config.postGameScreen.ctaButtonLink}
-                    target={'_self'}
+                    target={'_top'}
                   >
                     {Koji.config.postGameScreen.ctaButtonText}
                   </CTALink>
@@ -439,25 +439,25 @@ class PostGameScreen extends PureComponent {
                 <SocialWrapper>
                   <a
                     href={`https://twitter.com/intent/tweet?text=${window.encodeURIComponent(document.title)}: ${window.encodeURIComponent(window.location.href)}`}
-                    target={'_self'}
+                    target={'_top'}
                   >
                     <img src={Koji.config.postGameScreen.twitterIcon} />
                   </a>
                   <a
                     href={`https://www.facebook.com/sharer/sharer.php?u=${window.encodeURIComponent(window.location.href)}`}
-                    target={'_self'}
+                    target={'_top'}
                   >
                     <img src={Koji.config.postGameScreen.facebookIcon} />
                   </a>
                   <a
                     href={`https://www.linkedin.com/shareArticle?mini=true&url=${window.encodeURIComponent(window.location.href)}&title=${window.encodeURIComponent(document.title)}&source=LinkedIn`}
-                    target={'_self'}
+                    target={'_top'}
                   >
                     <img src={Koji.config.postGameScreen.linkedInIcon} />
                   </a>
                   <a
                     href={`http://www.reddit.com/submit?url=${window.encodeURIComponent(window.location.href)}`}
-                    target={'_self'}
+                    target={'_top'}
                   >
                     <img src={Koji.config.postGameScreen.redditIcon} />
                   </a>
