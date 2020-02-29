@@ -305,6 +305,10 @@ class PostGameScreen extends PureComponent {
     const collectEmail = ['yes', 'require'].includes(Koji.config.postGameScreen.collectEmail);
     const collectPhone = ['yes', 'require'].includes(Koji.config.postGameScreen.collectPhone);
 
+    const appLocation = (window.location != window.parent.location)
+            ? document.referrer
+            : document.location.href;
+
     return (
       <FlexWrapper id={'flex-wrapper'}>
         <Reveal
@@ -452,25 +456,25 @@ class PostGameScreen extends PureComponent {
                 <div className={'social-headline'}>{Koji.config.postGameScreen.socialShareHeadline}</div>
                 <SocialWrapper>
                   <a
-                    href={`https://twitter.com/intent/tweet?text=${window.encodeURIComponent(document.title)}: ${window.encodeURIComponent(window.location.href)}`}
+                    href={`https://twitter.com/intent/tweet?text=${window.encodeURIComponent('Check out this game! ')} ${window.encodeURIComponent(appLocation)}`}
                     target={'_top'}
                   >
                     <img src={Koji.config.postGameScreen.twitterIcon} />
                   </a>
                   <a
-                    href={`https://www.facebook.com/sharer/sharer.php?u=${window.encodeURIComponent(window.location.href)}`}
+                    href={`https://www.facebook.com/sharer/sharer.php?u=${window.encodeURIComponent(appLocation)}`}
                     target={'_top'}
                   >
                     <img src={Koji.config.postGameScreen.facebookIcon} />
                   </a>
                   <a
-                    href={`https://www.linkedin.com/shareArticle?mini=true&url=${window.encodeURIComponent(window.location.href)}&title=${window.encodeURIComponent(document.title)}&source=LinkedIn`}
+                    href={`https://www.linkedin.com/shareArticle?mini=true&url=${window.encodeURIComponent(appLocation)}&title=${window.encodeURIComponent('Check out this game!')}&source=LinkedIn`}
                     target={'_top'}
                   >
                     <img src={Koji.config.postGameScreen.linkedInIcon} />
                   </a>
                   <a
-                    href={`http://www.reddit.com/submit?url=${window.encodeURIComponent(window.location.href)}`}
+                    href={`http://www.reddit.com/submit?url=${window.encodeURIComponent(appLocation)}`}
                     target={'_top'}
                   >
                     <img src={Koji.config.postGameScreen.redditIcon} />
