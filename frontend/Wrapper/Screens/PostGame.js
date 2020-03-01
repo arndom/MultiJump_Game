@@ -28,12 +28,22 @@ const ContentWrapper = styled.div`
 
 const CardWrapper = styled.div`
   border-radius: 0.5vh;
-  width: 90vw;
-  min-width: 280px;
-  max-width: 480px;
   background: rgba(255, 255, 255, 0.9);
   padding: 4vh;
   margin-bottom: 4vh;
+  width: 90vw;
+
+  @media screen and (min-width: 720px) {
+    max-width: 480px;
+  }
+
+  @media screen and (min-width: 1440px) {
+    max-width: 720px;
+  }
+
+  @media screen and (min-width: 1800px) {
+    max-width: 900px;
+  }
 
   display: flex;
   flex-direction: column;
@@ -48,19 +58,17 @@ const CardWrapper = styled.div`
     text-align: left;
     margin-bottom: 0.5vh;
     width: 100%;
-    max-width: 320px;
     display: flex;
     align-items: center;
   }
 
   .label-wrapper {
-    font-size: 2vh;
+    font-size: 2.5vh;
   }
 
   .input-wrapper {
     margin-bottom: 2vh;
     width: 100%;
-    max-width: 320px;
   }
 
   .input-wrapper > input {
@@ -73,8 +81,8 @@ const CardWrapper = styled.div`
   }
 
   input[type="checkbox"] {
-    font-size: 2vh;
-    margin-left: 0;
+    transform: scale(1.2);
+    margin-right: 1vh;
   }
 
   .score-text {
@@ -92,16 +100,15 @@ const SocialWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 100%;
 
   a {
-      width: 16vw;
-      height: 16vw;
-      max-width: 72px;
-      max-height: 72px;
+      width: 20%;
       margin: 4%;
   }
 
   img {
+      max-width: 100%;
       max-height: 100%;
   }
 `;
@@ -166,7 +173,8 @@ const PlayAgainLink = styled.a`
 
 const SubmitButton = styled.button`
   font-size: 3vh;
-  padding: 1.5vh 10vh;
+  padding: 1.5vh 0;
+  width: 100%;
   border: 0;
   border-radius: 2vh;
   background: ${({ backgroundColor }) => backgroundColor};
@@ -185,6 +193,11 @@ const SubmitButton = styled.button`
 `;
 
 const CTALink = styled.a`
+  color: ${({ backgroundColor }) => isDarkColor(backgroundColor) ? '#f1f1f1' : '#111111'};
+  text-decoration: none;
+`;
+
+const CTAButton = styled.button`
   display: block;
   font-size: 3vh;
   padding: 1.5vh 10vh;
@@ -193,7 +206,6 @@ const CTALink = styled.a`
   background: ${({ backgroundColor }) => backgroundColor};
   color: ${({ backgroundColor }) => isDarkColor(backgroundColor) ? '#f1f1f1' : '#111111'};
   cursor: pointer;
-  text-decoration: none;
 
   transition: transform 0.1s;
 
@@ -292,6 +304,10 @@ class PostGameScreen extends PureComponent {
   render() {
     const collectEmail = ['yes', 'require'].includes(Koji.config.postGameScreen.collectEmail);
     const collectPhone = ['yes', 'require'].includes(Koji.config.postGameScreen.collectPhone);
+
+    const appLocation = (window.location != window.parent.location)
+            ? document.referrer
+            : document.location.href;
 
     return (
       <FlexWrapper id={'flex-wrapper'}>
@@ -425,9 +441,11 @@ class PostGameScreen extends PureComponent {
                   <CTALink
                     backgroundColor={Koji.config.postGameScreen.ctaButtonColor}
                     href={Koji.config.postGameScreen.ctaButtonLink}
-                    target={'_self'}
+                    target={'_top'}
                   >
-                    {Koji.config.postGameScreen.ctaButtonText}
+                    <CTAButton backgroundColor={Koji.config.postGameScreen.ctaButtonColor}>
+                        {Koji.config.postGameScreen.ctaButtonText}
+                    </CTAButton>
                   </CTALink>
                 </div>
               </CardWrapper>
@@ -438,26 +456,26 @@ class PostGameScreen extends PureComponent {
                 <div className={'social-headline'}>{Koji.config.postGameScreen.socialShareHeadline}</div>
                 <SocialWrapper>
                   <a
-                    href={`https://twitter.com/intent/tweet?text=${window.encodeURIComponent(document.title)}: ${window.encodeURIComponent(window.location.href)}`}
-                    target={'_self'}
+                    href={`https://twitter.com/intent/tweet?text=${window.encodeURIComponent('Check out this game! ')} ${window.encodeURIComponent(appLocation)}`}
+                    target={'_top'}
                   >
                     <img src={Koji.config.postGameScreen.twitterIcon} />
                   </a>
                   <a
-                    href={`https://www.facebook.com/sharer/sharer.php?u=${window.encodeURIComponent(window.location.href)}`}
-                    target={'_self'}
+                    href={`https://www.facebook.com/sharer/sharer.php?u=${window.encodeURIComponent(appLocation)}`}
+                    target={'_top'}
                   >
                     <img src={Koji.config.postGameScreen.facebookIcon} />
                   </a>
                   <a
-                    href={`https://www.linkedin.com/shareArticle?mini=true&url=${window.encodeURIComponent(window.location.href)}&title=${window.encodeURIComponent(document.title)}&source=LinkedIn`}
-                    target={'_self'}
+                    href={`https://www.linkedin.com/shareArticle?mini=true&url=${window.encodeURIComponent(appLocation)}&title=${window.encodeURIComponent('Check out this game!')}&source=LinkedIn`}
+                    target={'_top'}
                   >
                     <img src={Koji.config.postGameScreen.linkedInIcon} />
                   </a>
                   <a
-                    href={`http://www.reddit.com/submit?url=${window.encodeURIComponent(window.location.href)}`}
-                    target={'_self'}
+                    href={`http://www.reddit.com/submit?url=${window.encodeURIComponent(appLocation)}`}
+                    target={'_top'}
                   >
                     <img src={Koji.config.postGameScreen.redditIcon} />
                   </a>

@@ -13,9 +13,9 @@
     "linkedInIcon": "https://images.koji-cdn.com/4fba5aca-3a39-409c-8db0-c660207a39ee/qlyjr-roundedlinkedin.png",
     "twitterIcon": "https://images.koji-cdn.com/4fba5aca-3a39-409c-8db0-c660207a39ee/o7q85-roundedtwitter.png",
     "redditIcon": "https://images.koji-cdn.com/4fba5aca-3a39-409c-8db0-c660207a39ee/kovap-roundedreddit.png",
-    "collectEmail": "yes",
+    "collectEmail": "no",
     "collectPhone": "no",
-    "optInText": "I agree to receive updates",
+    "optInText": "Keep me updated!",
     "ctaButtonColor": "#1c4da8",
     "ctaButtonText": "Visit Site",
     "ctaButtonLink": "https://withkoji.com"
