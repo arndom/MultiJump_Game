@@ -23,6 +23,7 @@
   "@@editor": [
     {
       "key": "postGameScreen",
+      "icon": "🏆",
       "name": "3. End Card",
       "source": "postGameScreen.json",
       "fields": [

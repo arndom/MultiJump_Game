@@ -16,6 +16,7 @@
   "@@editor": [
     {
       "key": "preGameScreen",
+      "icon": "🖼️",
       "name": "1. Start Screen",
       "source": "preGameScreen.json",
       "fields": [
