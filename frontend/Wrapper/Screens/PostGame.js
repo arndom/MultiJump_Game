@@ -384,7 +384,7 @@ class PostGameScreen extends PureComponent {
                               onChange={e => this.setState({ optIn: e.currentTarget.checked })}
                               type={'checkbox'}
                             />
-                            {'Opt In'}
+                            {Koji.config.postGameScreen.optInText}
                           </div>
                         </div>
                       }
