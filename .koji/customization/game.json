@@ -3,8 +3,8 @@
   "@@editor": [
     {
       "key": "settings",
-      "icon": "🎮",
       "name": "2. Gameplay",
+      "icon": "🎮",
       "source": "settings.json",
       "fields": [
         {
