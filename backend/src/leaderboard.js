@@ -2,6 +2,7 @@ import Database from '@withkoji/database';
 import uuid from 'uuid';
 import md5 from 'md5';
 import Koji from '@withkoji/vcc';
+import fetch from 'node-fetch';
 
 export default function (app) {
   app.get('/leaderboard', async (req, res) => {

@@ -76,7 +76,7 @@
     {
       "key": "settings",
       "name": "2. Gameplay",
-      "icon": "",
+      "icon": "🎮",
       "source": "settings.json",
       "fields": [
         {

@@ -63,6 +63,7 @@
   "@@editor": [
     {
       "key": "general",
+      "icon": "🌎",
       "name": " Global Settings",
       "source": "general.json",
       "fields": [
