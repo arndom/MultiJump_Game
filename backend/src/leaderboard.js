@@ -3,6 +3,7 @@ import uuid from 'uuid';
 import md5 from 'md5';
 import Koji from '@withkoji/vcc';
 import fetch from 'node-fetch';
+import words from 'profane-words';
 
 export default function (app) {
   app.get('/leaderboard', async (req, res) => {
@@ -41,6 +42,16 @@ export default function (app) {
       ...req.body,
       dateCreated: Math.round(Date.now() / 1000),
     };
+
+    const { name } = recordBody;
+    const punctuationRegEx = new RegExp(/[!@#$%^&*()-=_+|;':",.<>?'\s]/);
+    const nameWords = name.split(punctuationRegEx);
+
+    nameWords.forEach((nameWord = '') => {
+        if (words.includes(nameWord)) {
+            recordBody.name = '********';
+        }
+    });
 
     const recordId = uuid.v4();
     const database = new Database();
