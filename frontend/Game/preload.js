@@ -95,25 +95,17 @@ export default function preload() {
 }
 
 function loadImages() {
-    imgParticle = loadImage(Koji.config.settings.particle);
-    imgGuide = loadImage(Koji.config.settings.guide);
-    imgPlayer = loadImage(Koji.config.settings.player);
-    imgPlayerPowerup = loadImage(Koji.config.settings.playerPowerup);
-    imgGroundTile = loadImage(Koji.config.settings.ground);
-    imgPowerup = loadImage(Koji.config.settings.powerup);
-    imgLife = loadImage(Koji.config.settings.lifeIcon);
-     
-     for (let i = 0; i < Koji.config.settings.obstacle.length; i++) {
-        imgObstacle[i] = loadImage(Koji.config.settings.obstacle[i]);
-    }
+    imgParticle = loadImage(`${Koji.config.settings.particle}?fit=max&h=40&w=40`);
+    imgGuide = loadImage(`${Koji.config.settings.guide}?fit=max&h=128&w=128`);
+    imgPlayer = loadImage(`${Koji.config.settings.player}?fit=max&h=128&w=128`);
+    imgPlayerPowerup = loadImage(`${Koji.config.settings.playerPowerup}?fit=max&h=128&w=128`);
+    imgGroundTile = loadImage(`${Koji.config.settings.ground}?fit=max&h=128&w=128`);
+    imgPowerup = loadImage(`${Koji.config.settings.powerup}?fit=max&h=128&w=128`);
+    imgLife = loadImage(`${Koji.config.settings.lifeIcon}?fit=max&h=40&w=40`);
+    for (let i = 0; i < Koji.config.settings.obstacle.length; i++) imgObstacle[i] = loadImage(`${Koji.config.settings.obstacle[i]}?fit=max&h=128&w=128`);
+    for (let i = 0; i < Koji.config.settings.winParticles.length; i++) imgWinParticle[i] = loadImage(`${Koji.config.settings.winParticles[i]}?fit=max&h=40&w=40`);
+    for (let i = 0; i < Koji.config.settings.collectible.length; i++) imgCollectible[i] = loadImage(`${Koji.config.settings.collectible[i]}?fit=max&h=128&w=128`);
 
-    for (let i = 0; i < Koji.config.settings.winParticles.length; i++) {
-        imgWinParticle[i] = loadImage(Koji.config.settings.winParticles[i]);
-    }
-
-    for (let i = 0; i < Koji.config.settings.collectible.length; i++) {
-        imgCollectible[i] = loadImage(Koji.config.settings.collectible[i]);
-    }
 
     for (let i = 0; i < Koji.config.settings.background.length; i++) {
         imgBackground[i] = loadImage(Koji.config.settings.background[i]);
@@ -137,7 +129,7 @@ function loadSettings() {
     startingLives = Koji.config.settings.lives;
     lives = startingLives;
     backgroundSpeedFactorMax = Koji.config.settings.backgroundSpeed;
-    
+
 }
 
 function loadGoogleFont() {
