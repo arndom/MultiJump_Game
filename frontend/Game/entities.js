@@ -479,6 +479,7 @@ class Powerup extends Collectible {
             spawnPowerupText();
 
             player.activatePowerup();
+            player1.activatePowerup();
 
             if (sndPowerup) {
                 sndPowerup.play();

@@ -161,6 +161,7 @@ export function init() {
     globalSpeedModifier = 1;
     lives = startingLives;
     score = 0;
+    spawnTimer = 0.5;
 
     groundLevel = height * 0.95;
     midLevel = height * 0.45;
