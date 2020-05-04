@@ -51,20 +51,27 @@ export function touchStarted() {
 }
 
 function handleTouchStart() {
+
     if (window.getAppView() == 'game') {
+        
 
 
         if (currentView == VIEW_GAME) {
+
             if (hasGameEnded && timeUntilAbleToTransition <= 0) {
                 canTransition = true;
             }
 
-            if (!hasGameEnded && startCountdown <= -1 && !isTouching) {
-                player.handleTap();
+            if (!hasGameEnded && startCountdown <= -1 && !isTouching){  
+                if(mouseVec.y > midLevel) player.handleTap();  
+                if(mouseVec.y < midLevel) player1.handleTap();  
+                                
+                    // player1.handleTap();                  
             }
+        
         }
 
-        isTouching = true;
+        // isTouching = true;
 
         if (currentView == VIEW_TUTORIAL) {
             currentView = VIEW_GAME;
@@ -74,6 +81,7 @@ function handleTouchStart() {
         if (currentView == VIEW_GAME && !hasGameEnded) {
             return false;
         }
+
     }
 }
 
@@ -94,7 +102,8 @@ function handleTouchEnd() {
     //===This is required to fix a problem where the music sometimes doesn't start on mobile
     if (window.getTemplateConfig().soundEnabled && getAudioContext().state !== 'running') getAudioContext().resume();
 
-    isTouching = false;
+        isTouching = false;
+    
 }
 
 function cleanup() {
@@ -138,8 +147,7 @@ function cleanup() {
 
 export function init() {
     updateSound();
-
-    score = 0;
+    
 
     gameTimer = gameLength;
     timeUpTimer = timeUpDuration;
@@ -152,8 +160,11 @@ export function init() {
     timeUntilAbleToTransition = 0.5;
     globalSpeedModifier = 1;
     lives = startingLives;
+    score = 0;
 
-    groundLevel = height * 0.85;
+    groundLevel = height * 0.95;
+    midLevel = height * 0.45;
+
     globalSpeed = objSize * Koji.config.settings.gameSpeed;
 
     clearArrays();
@@ -162,8 +173,9 @@ export function init() {
 
 
     ground = new Ground();
-    guide = new Guide(width / 2, height * 0.5);
-    player = new Player(width * 0.2, height / 2);
+    guide = new Guide(width / 2, height * 0.35);
+    player = new Player(width * 0.2, height * 0.85, 0);
+    player1 = new Player(width * 0.2, height * 0.35, 1);
 
 
     if (window.getAppView() == 'game') {
@@ -389,6 +401,7 @@ function drawScore() {
 }
 
 function updateEntities() {
+    mouseVec = createVector(mouseX, mouseY);
     for (let i = 0; i < particles.length; i++) {
         particles[i].update();
         particles[i].render();
@@ -401,6 +414,10 @@ function updateEntities() {
     if (player) {
         player.update();
         player.render();
+    }
+    if (player1) {
+        player1.update();
+        player1.render();
     }
 
 
@@ -441,6 +458,7 @@ export function endGame() {
     }
 
 
+
 }
 
 function determineGameOutcome() {
@@ -462,6 +480,7 @@ function handleGame() {
     drawGameTimer();
 
     drawLives();
+    // clear();
 }
 
 function updateGameTimer() {
@@ -490,25 +509,33 @@ function manageSpawn() {
 
     if (spawnTimer <= 0) {
         spawnObstacle();
-        spawnTimer = averageSpawnPeriod * random(0.75, 1.35);
+        spawnTimer = averageSpawnPeriod * random(0.75, 1.35); //.75
     }
 }
 
 function spawnObstacle() {
 
-    const x = width + objSize * 5;
+    const x = width + objSize * 10;
+    const x2 = width + objSize * 5;
+
     let y = groundLevel - objSize * groundSizeMod / 2 - globalSizeMod * objSize / 2;
+    let y2 = midLevel - objSize * groundSizeMod /2 -globalSizeMod *objSize /2;
 
-    let isAir = random() * 100 < Koji.config.settings.airObstacleRate;
+    // let isAir = random() * 100 < Koji.config.settings.airObstacleRate;
 
-    if (isAir) {
-        y -= globalSizeMod * objSize;
-    }
+    // if (isAir) {
+    //     y -= globalSizeMod * objSize;
+    //     y2 -= globalSizeMod * objSize;
+    // }
 
     const obstacle = new Obstacle(x, y);
-    obstacle.isAir = isAir;
+    const  obstacle2 = new Obstacle(x2, y2);
+
+    // obstacle.isAir = isAir;
+    // obstacle2.isAir = isAir;
 
     obstacles.push(obstacle);
+    obstacles.push(obstacle2);
 }
 
 function spawnBackground() {

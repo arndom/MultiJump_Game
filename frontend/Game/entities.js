@@ -48,13 +48,13 @@ export class Entity {
 }
 
 export class Player extends Entity {
-    constructor(x, y) {
+    constructor(x, y, type) {
         super(x, y);
 
         this.img = imgPlayer;
         this.gravity = objSize * 0.02;
         this.velocityY = 0;
-        this.jumpStrength = objSize * 0.42;
+        this.jumpStrength = objSize * 0.42; //.42
         this.sizeMod = globalSizeMod;
         this.animTimer = 0;
         this.wasGrounded = false;
@@ -64,6 +64,13 @@ export class Player extends Entity {
         this.landAnimTimer = 0;
 
         this.bottom = groundLevel - groundSizeMod * objSize / 2 - this.sizeMod * objSize / 2;
+
+
+        if(type == 1){
+          this.img = imgPlayer1;
+          this.bottom = midLevel - groundSizeMod * objSize / 2 - this.sizeMod * objSize / 2;
+        }
+        
         this.modifierY = 0;
 
         this.isPowerupEnabled = false;
@@ -108,7 +115,7 @@ export class Player extends Entity {
                     obstacles[i].handleDestroy();
 
                     if (!this.isPowerupEnabled && this.invincibilityTimer <= 0) {
-                        this.loseLife();
+                        // this.loseLife();
                     }
 
                     break;
@@ -331,6 +338,8 @@ export class Obstacle extends Entity {
 
     spawnCollectible() {
         const x = this.pos.x;
+        // const x = width + objSize * 10;
+        // let y = this.pos.y;
         let y = this.pos.y - globalSizeMod * objSize;
 
         if (this.isAir) {
@@ -352,6 +361,16 @@ export class Obstacle extends Entity {
         if (this.isOffscreen() || this.isDestroyed) {
             this.removable = true;
         }
+
+        // if(!this.isDestroyed && player.pos.y < this.pos.y){
+
+        //     if(player.isNowGrounded){
+        //         // this.isDestroyed = true;
+        //     addScore(scoreGain);
+
+        //     }
+        //     // player.wasGrounded = true;
+        // }
     }
 
     handleDestroy() {
@@ -362,7 +381,7 @@ export class Obstacle extends Entity {
             if (player.isPowerupEnabled) {
                 spawnScoreText(this.pos.x, this.pos.y - this.sizeMod * objSize);
                 addScore(scoreGain);
-                spawnCollectibleParticles(this.pos.x, this.pos.y, 6);
+                // spawnCollectibleParticles(this.pos.x, this.pos.y, 6);
             }
 
 
@@ -471,6 +490,7 @@ class Powerup extends Collectible {
 export class Ground {
     constructor() {
         this.posY = groundLevel;
+        this.posY2 = midLevel;
         this.sizeMod = groundSizeMod;
         this.img = imgGroundTile;
 
@@ -494,7 +514,7 @@ export class Ground {
                 this.posX[i] = this.getRightMostTile() + this.sizeMod * objSize;
 
             }
-            this.posX[i] -= globalSpeed;
+            this.posX[i] -= globalSpeed*0.02;
         }
     }
 
@@ -516,6 +536,11 @@ export class Ground {
         for (let i = 0; i < this.posX.length; i++) {
             push();
             translate(this.posX[i], this.posY);
+            image(this.img, -size / 2, -size / 2, size, size);
+            pop();
+
+            push();
+            translate(this.posX[i], this.posY2);
             image(this.img, -size / 2, -size / 2, size, size);
             pop();
         }
@@ -670,7 +695,9 @@ export class Guide extends Entity {
         this.moveAmount = objSize;
         this.sizeMod = 2;
 
-        this.playerDummy = new PlayerDummy(width /2 , height * 0.75);
+        this.playerDummy = new PlayerDummy(width /2 , height * 0.85, 0);
+
+        this.playerDummy1 = new PlayerDummy(width /2 , height * 0.55, 1);
 
     }
 
@@ -682,6 +709,7 @@ export class Guide extends Entity {
             this.animTimer = 0;
 
             this.playerDummy.handleTap();
+            this.playerDummy1.handleTap();
         }
 
         this.pos.y = this.startY + SineWave(objSize * 0.5, 0.25, this.animTimer)
@@ -690,6 +718,9 @@ export class Guide extends Entity {
         this.timer -= 1 / frameRate();
 
         this.playerDummy.update();
+        
+        this.playerDummy1.update();
+
 
 
         if (this.timer <= 0) {
@@ -701,6 +732,8 @@ export class Guide extends Entity {
 
 
         this.playerDummy.render();
+
+        this.playerDummy1.render();
 
         super.render();
 
@@ -757,7 +790,7 @@ function spawnPowerupText() {
 }
 
 class PlayerDummy extends Entity {
-    constructor(x, y) {
+    constructor(x, y, type) {
         super(x, y);
 
         this.img = imgPlayer;
@@ -768,11 +801,16 @@ class PlayerDummy extends Entity {
         this.animTimer = 0;
         this.wasGrounded = false;
 
+        this.bottom = height * 0.85;
+    
+        if(type == 1){
+            this.img = imgPlayer1;
+            this.bottom = height * 0.65;
+        }
+
         this.jumpAnimTimer = 0;
         this.landAnimTimer = 0;
 
-        this.bottom = height * 0.75;
-  
         this.modifierY = 0;
 
     }

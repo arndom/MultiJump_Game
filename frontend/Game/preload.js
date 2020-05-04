@@ -18,11 +18,14 @@ window.floatingTexts = [];
 window.particles = [];
 window.obstacles = [];
 window.player = null;
+window.player1 = [];
 window.playerDeath = null;
 window.guide = null;
 window.backgroundLayers = [];
 window.collectibles = [];
 window.ground = null;
+
+window.mouseVec = null;
 
 //===Score data
 window.score = 0;
@@ -36,6 +39,7 @@ window.imgWinParticle = [];
 window.imgGuide = null;
 window.imgObstacle = [];
 window.imgPlayer = null;
+window.imgPlayer1 = null;
 window.imgCollectible = [];
 window.imgPowerup = null;
 window.imgGroundTile = null;
@@ -72,17 +76,18 @@ window.canTransition = false;
 
 window.goodBadRatio = 75;
 window.averageSpawnPeriod = null;
-window.spawnTimer = 0.5;
+window.spawnTimer = 0.5; //0.5
 
 window.timeUntilAbleToTransition = 0.5;
 window.backgroundSpeedFactorMax = 0.25;
 
 window.groundLevel = null;
+window.midLevel = null;
 
 window.globalSpeed = null;
 window.globalSpeedModifier = 1;
-window.globalSizeMod = 3;
-window.groundSizeMod = 5;
+window.globalSizeMod = 2;
+window.groundSizeMod = 0.2;
 
 window.startingLives = null;
 window.lives = null;
@@ -98,6 +103,7 @@ function loadImages() {
     imgParticle = loadImage(`${Koji.config.settings.particle}?fit=max&h=40&w=40`);
     imgGuide = loadImage(`${Koji.config.settings.guide}?fit=max&h=128&w=128`);
     imgPlayer = loadImage(`${Koji.config.settings.player}?fit=max&h=128&w=128`);
+    imgPlayer1 = loadImage(`${Koji.config.settings.player1}?fit=max&h=128&w=128`);
     imgPlayerPowerup = loadImage(`${Koji.config.settings.playerPowerup}?fit=max&h=128&w=128`);
     imgGroundTile = loadImage(`${Koji.config.settings.ground}?fit=max&h=128&w=128`);
     imgPowerup = loadImage(`${Koji.config.settings.powerup}?fit=max&h=128&w=128`);

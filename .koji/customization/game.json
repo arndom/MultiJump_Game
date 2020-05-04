@@ -4,7 +4,7 @@
     "maxParticles": 150,
     "maxParticlesMobile": 50,
     "gameLength": 60,
-    "averageSpawnPeriod": 1.2,
+    "averageSpawnPeriod": 2.21,
     "speedMin": 0.1,
     "speedMax": 0.225,
     "timePenalty": 1,
@@ -33,44 +33,44 @@
       "https://images.koji-cdn.com/d4d2aab7-1847-481d-8aa6-6866d81d5e0f/mwf5o-star5.png"
     ],
     "winAnimation": "falling",
-    "instructionsText": "Instructions:\n1. Tap to jump\n2. Collect coins & avoid obstacles\n3. Get 20 points to win!",
+    "instructionsText": "Instructions:\n1. Control Both Aliens by Tapping to Jump",
     "timeUpText": "Time's up!",
     "textColor": "#ffffff",
     "guide": "https://images.koji-cdn.com/eb880e52-1249-4535-aef1-7b0f19f57a50/mk6ga-6tx6fpointcopy.png",
-    "player": "https://images.koji-cdn.com/d4d2aab7-1847-481d-8aa6-6866d81d5e0f/xhoh4-player.png",
+    "player": "https://images.koji-cdn.com/27e2224a-50b5-4839-9eab-72f29afe2be8/hahag-char.png",
     "obstacle": [
       "https://images.koji-cdn.com/d4d2aab7-1847-481d-8aa6-6866d81d5e0f/ix0aa-blockweak.png"
     ],
     "gameOver": "https://objects.koji-cdn.com/531ccf36-2cf2-46a2-82ef-685e8786578a/5sbjd-gameover.mp3",
     "background": [
-      "https://images.koji-cdn.com/b0720d03-3380-47ce-9b47-97dff00fe491/5i9l8-bb10c69f6e6d4e15a290a8e5f559e35c.png",
-      "https://images.koji-cdn.com/b0720d03-3380-47ce-9b47-97dff00fe491/bdt0y-8e8388627858416390d1c5eb5dcbf8d1.png",
-      "https://images.koji-cdn.com/b0720d03-3380-47ce-9b47-97dff00fe491/2kqy0-d5c1ce1253c54049862a15386d76c9a5.png",
+      "https://images.koji-cdn.com/27e2224a-50b5-4839-9eab-72f29afe2be8/xgzqv-Decent.jpg",
+      "https://images.koji-cdn.com/27e2224a-50b5-4839-9eab-72f29afe2be8/ahghp-y9gis7c246e075b8f4161ae8533230bbfd8e6.png",
+      "https://images.koji-cdn.com/27e2224a-50b5-4839-9eab-72f29afe2be8/a3wm6-y9gis7c246e075b8f4161ae8533230bbfd8e6.png",
       "https://images.koji-cdn.com/b0720d03-3380-47ce-9b47-97dff00fe491/y9gis-7c246e075b8f4161ae8533230bbfd8e6.png"
     ],
     "collectible": [
-      "https://images.koji-cdn.com/d4d2aab7-1847-481d-8aa6-6866d81d5e0f/pe7id-slot1.png",
-      "https://images.koji-cdn.com/d4d2aab7-1847-481d-8aa6-6866d81d5e0f/l2vt8-coin.png"
+      "https://images.koji-cdn.com/27e2224a-50b5-4839-9eab-72f29afe2be8/ry5f4-a3.png"
     ],
-    "powerup": "https://images.koji-cdn.com/d4d2aab7-1847-481d-8aa6-6866d81d5e0f/9v2qt-upgradeDamage.png",
-    "ground": "https://images.koji-cdn.com/d4d2aab7-1847-481d-8aa6-6866d81d5e0f/daj0s-floor2.png",
+    "powerup": "https://images.koji-cdn.com/27e2224a-50b5-4839-9eab-72f29afe2be8/63dvv-a5.png",
+    "ground": "https://images.koji-cdn.com/27e2224a-50b5-4839-9eab-72f29afe2be8/z9nv8-26402485_preview.png",
     "airObstacleRate": 50,
     "playerJumpAnimation": "frontflip",
     "collectibleAnimation": "pulse",
     "gameSpeed": 0.27,
     "collectibleRate": 100,
     "powerupRate": 10,
-    "playerPowerup": "https://images.koji-cdn.com/d4d2aab7-1847-481d-8aa6-6866d81d5e0f/xpzxm-enemy16.png",
+    "playerPowerup": "https://images.koji-cdn.com/27e2224a-50b5-4839-9eab-72f29afe2be8/trv9w-4char.png",
     "powerupDuration": 5,
     "powerupText": "POWER UP",
-    "maxJumps": 2,
+    "maxJumps": 1,
     "jump": "https://objects.koji-cdn.com/531ccf36-2cf2-46a2-82ef-685e8786578a/gn7qv-jump.mp3",
     "collect": "https://objects.koji-cdn.com/531ccf36-2cf2-46a2-82ef-685e8786578a/7qcwn-collect.mp3",
     "powerupSound": "https://objects.koji-cdn.com/531ccf36-2cf2-46a2-82ef-685e8786578a/3es72-powerup.mp3",
     "lives": 3,
-    "lifeIcon": "https://images.koji-cdn.com/d4d2aab7-1847-481d-8aa6-6866d81d5e0f/xhoh4-player.png",
+    "lifeIcon": "https://images.koji-cdn.com/27e2224a-50b5-4839-9eab-72f29afe2be8/fzud2-h.png",
     "backgroundSpeed": 0.98,
-    "enableTimer": true
+    "enableTimer": true,
+    "player1": "https://images.koji-cdn.com/27e2224a-50b5-4839-9eab-72f29afe2be8/gpbql-1char.png"
   },
   "@@editor": [
     {
@@ -241,6 +241,12 @@
         {
           "key": "player",
           "name": "Player",
+          "description": "Ideal size: 128x128",
+          "type": "image"
+        },
+        {
+          "key": "player1",
+          "name": "Player1",
           "description": "Ideal size: 128x128",
           "type": "image"
         },
