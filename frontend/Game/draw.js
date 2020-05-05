@@ -43,12 +43,21 @@ export default function draw() {
 }
 
 export function touchStarted() {
-    try {
-        handleTouchStart();
+
+    try{
+
+        if(winMouseY <= height*0.45 ){
+            handleTouchStart();
+        }
+        if(winMouseY >= height*0.45 ){
+            handleTouchStart1();
+        }
+
     } catch (error) {
         console.log(error);
     }
 }
+
 
 function handleTouchStart() {
 
@@ -63,15 +72,52 @@ function handleTouchStart() {
             }
 
             if (!hasGameEnded && startCountdown <= -1 && !isTouching){  
-                if(mouseVec.y > midLevel) player.handleTap();  
-                if(mouseVec.y < midLevel) player1.handleTap();  
+                // if(mouseVec.y > midLevel) player.handleTap();  
+                // if(mouseVec.y < midLevel) 
+                player1.handleTap();  
                                 
                     // player1.handleTap();                  
             }
         
         }
 
-        // isTouching = true;
+        isTouching = true;
+
+        if (currentView == VIEW_TUTORIAL) {
+            currentView = VIEW_GAME;
+        }
+
+        //Prevent double tap on mobile/ios
+        if (currentView == VIEW_GAME && !hasGameEnded) {
+            return false;
+        }
+
+    }
+}
+
+function handleTouchStart1() {
+
+    if (window.getAppView() == 'game') {
+        
+
+
+        if (currentView == VIEW_GAME) {
+
+            if (hasGameEnded && timeUntilAbleToTransition <= 0) {
+                canTransition = true;
+            }
+
+            if (!hasGameEnded && startCountdown <= -1 && !isTouching){  
+                // if(mouseVec.y > midLevel)
+                 player.handleTap();  
+                // if(mouseVec.y < midLevel) player1.handleTap();  
+                                
+                    // player1.handleTap();                  
+            }
+        
+        }
+
+        isTouching = true;
 
         if (currentView == VIEW_TUTORIAL) {
             currentView = VIEW_GAME;
@@ -147,7 +193,7 @@ function cleanup() {
 
 export function init() {
     updateSound();
-    
+
 
     gameTimer = gameLength;
     timeUpTimer = timeUpDuration;
