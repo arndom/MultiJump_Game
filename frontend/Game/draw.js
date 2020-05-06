@@ -45,11 +45,8 @@ export default function draw() {
 export function touchStarted() {
 
     try{
+        
         handleTouchStart();
-        if (currentView == VIEW_GAME) {
-
-            return false;
-        }
     } catch (error) {
         console.log(error);
     }
@@ -67,6 +64,17 @@ function handleTouchStart() {
             if (hasGameEnded && timeUntilAbleToTransition <= 0) {
                 canTransition = true;
             }
+
+                
+        if (!hasGameEnded && startCountdown <= -1 && !isTouching){  
+            // mouseY = window.clientY;
+            if(mouseY <= height*0.45 ){
+                player1.handleTap(); 
+            }
+            if(mouseY >= height*0.45 ){
+                player.handleTap(); 
+            }         
+        }
         
         }
 
@@ -102,14 +110,6 @@ function handleTouchEnd() {
 
     if (window.getTemplateConfig().soundEnabled && getAudioContext().state !== 'running') getAudioContext().resume();
 
-    if (!hasGameEnded && startCountdown <= -1 && !isTouching){  
-        if(mouseY <= height*0.45 ){
-             player1.handleTap(); 
-        }
-        if(mouseY >= height*0.45 ){
-             player.handleTap(); 
-        }         
-    }
 
         isTouching = false;
     
@@ -168,8 +168,8 @@ export function init() {
     timeUntilAbleToTransition = 0.5;
     globalSpeedModifier = 1;
     lives = startingLives;
-    score = 0;
-    spawnTimer = 0.5;
+    // score = 0;
+    // spawnTimer = 0.5;
 
     groundLevel = height * 0.95;
     midLevel = height * 0.45;
@@ -190,6 +190,8 @@ export function init() {
     if (window.getAppView() == 'game') {
         playMusic();
     }
+
+    // touchEnded();
 }
 
 function clearArrays() {
