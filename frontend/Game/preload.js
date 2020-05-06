@@ -25,6 +25,12 @@ window.backgroundLayers = [];
 window.collectibles = [];
 window.ground = null;
 
+window.nmouseX = null;
+window.nmouseY = null;
+
+window.x = null;
+window.y = null;
+
 window.mouseVec = null;
 
 //===Score data

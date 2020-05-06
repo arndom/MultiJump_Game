@@ -362,15 +362,6 @@ export class Obstacle extends Entity {
             this.removable = true;
         }
 
-        // if(!this.isDestroyed && player.pos.y < this.pos.y){
-
-        //     if(player.isNowGrounded){
-        //         // this.isDestroyed = true;
-        //     addScore(scoreGain);
-
-        //     }
-        //     // player.wasGrounded = true;
-        // }
     }
 
     handleDestroy() {

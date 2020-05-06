@@ -45,14 +45,11 @@ export default function draw() {
 export function touchStarted() {
 
     try{
+        handleTouchStart();
+        if (currentView == VIEW_GAME) {
 
-        if(winMouseY <= height*0.45 ){
-            handleTouchStart();
+            return false;
         }
-        if(winMouseY >= height*0.45 ){
-            handleTouchStart1();
-        }
-
     } catch (error) {
         console.log(error);
     }
@@ -69,50 +66,6 @@ function handleTouchStart() {
 
             if (hasGameEnded && timeUntilAbleToTransition <= 0) {
                 canTransition = true;
-            }
-
-            if (!hasGameEnded && startCountdown <= -1 && !isTouching){  
-                // if(mouseVec.y > midLevel) player.handleTap();  
-                // if(mouseVec.y < midLevel) 
-                player1.handleTap();  
-                                
-                    // player1.handleTap();                  
-            }
-        
-        }
-
-        isTouching = true;
-
-        if (currentView == VIEW_TUTORIAL) {
-            currentView = VIEW_GAME;
-        }
-
-        //Prevent double tap on mobile/ios
-        if (currentView == VIEW_GAME && !hasGameEnded) {
-            return false;
-        }
-
-    }
-}
-
-function handleTouchStart1() {
-
-    if (window.getAppView() == 'game') {
-        
-
-
-        if (currentView == VIEW_GAME) {
-
-            if (hasGameEnded && timeUntilAbleToTransition <= 0) {
-                canTransition = true;
-            }
-
-            if (!hasGameEnded && startCountdown <= -1 && !isTouching){  
-                // if(mouseVec.y > midLevel)
-                 player.handleTap();  
-                // if(mouseVec.y < midLevel) player1.handleTap();  
-                                
-                    // player1.handleTap();                  
             }
         
         }
@@ -146,7 +99,17 @@ export function touchEnded() {
 
 function handleTouchEnd() {
     //===This is required to fix a problem where the music sometimes doesn't start on mobile
+
     if (window.getTemplateConfig().soundEnabled && getAudioContext().state !== 'running') getAudioContext().resume();
+
+    if (!hasGameEnded && startCountdown <= -1 && !isTouching){  
+        if(mouseY <= height*0.45 ){
+             player1.handleTap(); 
+        }
+        if(mouseY >= height*0.45 ){
+             player.handleTap(); 
+        }         
+    }
 
         isTouching = false;
     
@@ -193,7 +156,6 @@ function cleanup() {
 
 export function init() {
     updateSound();
-
 
     gameTimer = gameLength;
     timeUpTimer = timeUpDuration;
@@ -448,7 +410,7 @@ function drawScore() {
 }
 
 function updateEntities() {
-    mouseVec = createVector(mouseX, mouseY);
+        
     for (let i = 0; i < particles.length; i++) {
         particles[i].update();
         particles[i].render();
@@ -466,8 +428,6 @@ function updateEntities() {
         player1.update();
         player1.render();
     }
-
-
 
     for (let i = 0; i < obstacles.length; i++) {
         obstacles[i].update();
@@ -503,9 +463,6 @@ export function endGame() {
     if (endState == STATE_LOSE) {
         spawnLoseText();
     }
-
-
-
 }
 
 function determineGameOutcome() {
@@ -527,7 +484,6 @@ function handleGame() {
     drawGameTimer();
 
     drawLives();
-    // clear();
 }
 
 function updateGameTimer() {
@@ -562,8 +518,8 @@ function manageSpawn() {
 
 function spawnObstacle() {
 
-    const x = width + objSize * 10;
-    const x2 = width + objSize * 5;
+    const x = width + objSize * 5;
+    const x2 = width + objSize * 3;
 
     let y = groundLevel - objSize * groundSizeMod / 2 - globalSizeMod * objSize / 2;
     let y2 = midLevel - objSize * groundSizeMod /2 -globalSizeMod *objSize /2;
