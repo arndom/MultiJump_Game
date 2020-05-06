@@ -4,7 +4,7 @@
     "maxParticles": 150,
     "maxParticlesMobile": 50,
     "gameLength": 60,
-    "averageSpawnPeriod": 2.21,
+    "averageSpawnPeriod": 2,
     "speedMin": 0.1,
     "speedMax": 0.225,
     "timePenalty": 1,

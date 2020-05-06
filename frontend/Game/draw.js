@@ -38,6 +38,8 @@ export default function draw() {
         handleEndTransition();
     }
 
+    // handleTouchStart();
+
     drawScore();
     cleanup();
 }
@@ -66,8 +68,9 @@ function handleTouchStart() {
             }
 
                 
-        if (!hasGameEnded && startCountdown <= -1 && !isTouching){  
+        if (!hasGameEnded && startCountdown <= -1 && !isTouching && (!isMobile || event.type === 'touchstart')){  
             // mouseY = window.clientY;
+            // mouseY = event.clientY;
             if(mouseY <= height*0.45 ){
                 player1.handleTap(); 
             }
