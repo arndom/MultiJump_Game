@@ -4,7 +4,7 @@
     "maxParticles": 150,
     "maxParticlesMobile": 50,
     "gameLength": 60,
-    "averageSpawnPeriod": 2,
+    "averageSpawnPeriod": 2.3,
     "speedMin": 0.1,
     "speedMax": 0.225,
     "timePenalty": 1,
@@ -44,14 +44,14 @@
     "gameOver": "https://objects.koji-cdn.com/531ccf36-2cf2-46a2-82ef-685e8786578a/5sbjd-gameover.mp3",
     "background": [
       "https://images.koji-cdn.com/27e2224a-50b5-4839-9eab-72f29afe2be8/xgzqv-Decent.jpg",
-      "https://images.koji-cdn.com/27e2224a-50b5-4839-9eab-72f29afe2be8/ahghp-y9gis7c246e075b8f4161ae8533230bbfd8e6.png",
-      "https://images.koji-cdn.com/27e2224a-50b5-4839-9eab-72f29afe2be8/a3wm6-y9gis7c246e075b8f4161ae8533230bbfd8e6.png",
+      "https://images.koji-cdn.com/27e2224a-50b5-4839-9eab-72f29afe2be8/qxvau-y9gis7c246e075b8f4161ae8533230bbfd8e6.png",
+      "https://images.koji-cdn.com/27e2224a-50b5-4839-9eab-72f29afe2be8/z8vrp-y9gis7c246e075b8f4161ae8533230bbfd8e6.png",
       "https://images.koji-cdn.com/b0720d03-3380-47ce-9b47-97dff00fe491/y9gis-7c246e075b8f4161ae8533230bbfd8e6.png"
     ],
     "collectible": [
       "https://images.koji-cdn.com/27e2224a-50b5-4839-9eab-72f29afe2be8/ry5f4-a3.png"
     ],
-    "powerup": "https://images.koji-cdn.com/27e2224a-50b5-4839-9eab-72f29afe2be8/63dvv-a5.png",
+    "powerup": "https://images.koji-cdn.com/27e2224a-50b5-4839-9eab-72f29afe2be8/vhppa-a6.png",
     "ground": "https://images.koji-cdn.com/27e2224a-50b5-4839-9eab-72f29afe2be8/z9nv8-26402485_preview.png",
     "airObstacleRate": 50,
     "playerJumpAnimation": "frontflip",

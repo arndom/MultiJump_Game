@@ -27,6 +27,8 @@ const render = Component => {
       <Component />
     </AppContainer>,
     document.getElementById('root')
+
+    
   );
 };
 

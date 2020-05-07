@@ -24,7 +24,8 @@ export default function draw() {
         if (isCountdownDone()) {
             handleGame();
         }
-    } else {
+    } 
+    else {
         if (!hasGameEnded) {
             endGame();
         }
@@ -34,11 +35,10 @@ export default function draw() {
         handleGameEnd();
     }
 
-    if (canTransition) {
-        handleEndTransition();
-    }
+    // if (canTransition) {
+    //     handleEndTransition();
+    // }
 
-    // handleTouchStart();
 
     drawScore();
     cleanup();
@@ -68,16 +68,16 @@ function handleTouchStart() {
             }
 
                 
-        // if (!hasGameEnded && startCountdown <= -1 && !isTouching && (!isMobile || event.type === 'touchstart')){  
-        //     // mouseY = window.clientY;
-        //     // mouseY = event.clientY;
-        //     if(mouseY <= height*0.45 ){
-        //         player1.handleTap(); 
-        //     }
-        //     if(mouseY >= height*0.45 ){
-        //         player.handleTap(); 
-        //     }         
-        // }
+        if (!hasGameEnded && startCountdown <= -1 && !isTouching && !isMobile  ){  
+            console.log(event.clientY);
+            
+            if(mouseY <= height*0.45 ){
+                player1.handleTap(); 
+            }
+            if(mouseY >= height*0.45 ){
+                player.handleTap(); 
+            }         
+        }
         
         }
 
@@ -113,16 +113,6 @@ function handleTouchEnd() {
 
     if (window.getTemplateConfig().soundEnabled && getAudioContext().state !== 'running') getAudioContext().resume();
 
-    if (!hasGameEnded && startCountdown <= -1 && !isTouching && (!isMobile || event.type === 'touchstart')){  
-            // mouseY = window.clientY;
-            // mouseY = event.clientY;
-            if(mouseY <= height*0.45 ){
-                player1.handleTap(); 
-            }
-            if(mouseY >= height*0.45 ){
-                player.handleTap(); 
-            }         
-        }
         isTouching = false;
     
 }
@@ -167,7 +157,12 @@ function cleanup() {
 }
 
 export function init() {
+    clearArrays();
+
     updateSound();
+
+
+    score  = 0;
 
     gameTimer = gameLength;
     timeUpTimer = timeUpDuration;
@@ -465,6 +460,8 @@ function updateEntities() {
 }
 
 export function endGame() {
+    clearArrays();
+
     hasGameEnded = true;
     gameTimer = 0;
 
@@ -515,6 +512,8 @@ function handleGameEnd() {
     drawContinueText();
 
     timeUntilAbleToTransition -= 1 / frameRate();
+    if (canTransition) handleEndTransition();
+
 }
 
 function isCountdownDone() {

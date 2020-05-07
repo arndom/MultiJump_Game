@@ -245,7 +245,7 @@ export class Player extends Entity {
 
         if (lives <= 0) {
             spawnParticles(this.pos.x, this.pos.y, 20);
-            playerDeath = new PlayerDeath(this.pos.x, this.pos.y);
+            // playerDeath = new PlayerDeath(this.pos.x, this.pos.y);
             endGame();
         } else {
             this.activateInvincibility();

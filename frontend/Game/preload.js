@@ -25,11 +25,7 @@ window.backgroundLayers = [];
 window.collectibles = [];
 window.ground = null;
 
-window.nmouseX = null;
-window.nmouseY = null;
-
-window.x = null;
-window.y = null;
+window.cnv = null;
 
 window.mouseVec = null;
 
@@ -82,7 +78,7 @@ window.canTransition = false;
 
 window.goodBadRatio = 75;
 window.averageSpawnPeriod = null;
-window.spawnTimer = 2.5; //0.5
+window.spawnTimer = 0.5; //0.5
 
 window.timeUntilAbleToTransition = 0.5;
 window.backgroundSpeedFactorMax = 0.25;

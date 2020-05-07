@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 class Game extends PureComponent {
     static propTypes = {
         getAppView: PropTypes.func,
+        getTemplateConfig: PropTypes.func,
         setAppView: PropTypes.func,
         setOutcome: PropTypes.func,
         setScore: PropTypes.func,
