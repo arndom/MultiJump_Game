@@ -221,6 +221,8 @@ export function goToPostGame() {
     }
 
     submitScore();
+
+    
 }
 
 export function updateSound() {
@@ -489,7 +491,15 @@ function handleGame() {
     const globalGoalSpeed = objSize * Koji.config.settings.gameSpeed * globalSpeedModifier;
     globalSpeed = Smooth(globalSpeed, globalGoalSpeed, 4);
 
-    manageSpawn();
+    // if(!hasGameEnded){
+        manageSpawn(); 
+    // }
+
+    // if(gameTimer <= 0){
+    //     endGame();
+    // }
+
+   
 
     updateGameTimer();
     drawGameTimer();
