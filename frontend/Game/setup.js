@@ -21,26 +21,7 @@ export default function setup() {
 
 
   init();
-  window.onload = function(){
-    window.addEventListener('touchstart', function(e) {
-  // Cache the client X/Y coordinates
-    // myTouchX = e.touches[0].clientX;
-    // myTouchY = e.touches[0].clientY;
 
-        if (!hasGameEnded && startCountdown <= -1 && !isTouching && isMobile ){  
-        console.log(e.touches[0].clientY);
-        
-            if(e.touches[0].clientY <= height*0.45 ){
-                player1.handleTap(); 
-            }
-            if(e.touches[0].clientY >= height*0.45 ){
-                player.handleTap(); 
-            }
-
-        }
-
-    }, false);
-  }
   
   window.addEventListener('touchstart', function(e) {
   // Cache the client X/Y coordinates
