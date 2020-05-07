@@ -5,6 +5,22 @@ export default function setup() {
 
   createCanvas(width, height);
 
+
+
+//   cnv =  createCanvas(width, height);
+
+  textFont(myFont);
+
+    calculateObjSize();
+
+  isMobile = detectMobile();
+
+
+
+
+
+
+  init();
   window.addEventListener('touchstart', function(e) {
   // Cache the client X/Y coordinates
     // myTouchX = e.touches[0].clientX;
@@ -23,21 +39,5 @@ export default function setup() {
         }
 
     }, false);
-
-//   cnv =  createCanvas(width, height);
-
-  textFont(myFont);
-
-    calculateObjSize();
-
-  isMobile = detectMobile();
-
-
-
-
-
-
-  init();
-
 }
 
