@@ -7,7 +7,7 @@ export default function setup() {
 
  window.addEventListener('touchstart', function(e) {
 
-        if (!hasGameEnded && startCountdown <= -1 && !isTouching && isMobile ){  
+        // if (!hasGameEnded && startCountdown <= -1 && !isTouching && isMobile ){  
         console.log(e.touches[0].clientY);
         
             if(e.touches[0].clientY <= height*0.45 ){
@@ -17,7 +17,7 @@ export default function setup() {
                 player.handleTap(); 
             }
 
-        }
+        // }
 
     }, false);
 
