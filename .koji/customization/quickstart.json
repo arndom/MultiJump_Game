@@ -39,6 +39,14 @@
                 "name": "Player",
                 "type": "image"
             },
+                        {
+                "keys": [
+                    "settings.player1",
+                    "settings.playerPowerup"
+                ],
+                "name": "Player 2",
+                "type": "image"
+            },
             {
                 "keys": [
                     "settings.obstacle"

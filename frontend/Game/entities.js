@@ -64,6 +64,7 @@ export class Player extends Entity {
         this.landAnimTimer = 0;
 
         this.bottom = groundLevel - groundSizeMod * objSize / 2 - this.sizeMod * objSize / 2;
+        this.type = type;
 
 
         if(type == 1){
@@ -115,7 +116,7 @@ export class Player extends Entity {
                     obstacles[i].handleDestroy();
 
                     if (!this.isPowerupEnabled && this.invincibilityTimer <= 0) {
-                        this.loseLife();
+                        // this.loseLife();
                     }
 
                     break;
@@ -233,6 +234,10 @@ export class Player extends Entity {
     deactivatePowerup() {
         this.isPowerupEnabled = false;
         this.img = imgPlayer;
+
+        if(this.type == 1){
+          this.img = imgPlayer1;
+        }
 
     }
 

@@ -158,6 +158,7 @@ function cleanup() {
 
 export function init() {
     clearArrays();
+    cleanup();
 
     updateSound();
 
@@ -463,6 +464,7 @@ function updateEntities() {
 
 export function endGame() {
     clearArrays();
+    cleanup();
 
     hasGameEnded = true;
     gameTimer = 0;
@@ -489,7 +491,7 @@ function determineGameOutcome() {
 
 function handleGame() {
     const globalGoalSpeed = objSize * Koji.config.settings.gameSpeed * globalSpeedModifier;
-    globalSpeed = Smooth(globalSpeed, globalGoalSpeed, 4);
+    globalSpeed = Smooth(globalSpeed, globalGoalSpeed, 2);
 
     // if(!hasGameEnded){
         manageSpawn(); 

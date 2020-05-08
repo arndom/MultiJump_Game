@@ -64,7 +64,7 @@
     "playerPowerup": "https://images.koji-cdn.com/27e2224a-50b5-4839-9eab-72f29afe2be8/trv9w-4char.png",
     "powerupDuration": 5,
     "powerupText": "POWER UP",
-    "maxJumps": 2,
+    "maxJumps": 1,
     "jump": "https://objects.koji-cdn.com/531ccf36-2cf2-46a2-82ef-685e8786578a/gn7qv-jump.mp3",
     "collect": "https://objects.koji-cdn.com/531ccf36-2cf2-46a2-82ef-685e8786578a/7qcwn-collect.mp3",
     "powerupSound": "https://objects.koji-cdn.com/531ccf36-2cf2-46a2-82ef-685e8786578a/3es72-powerup.mp3",
@@ -248,7 +248,7 @@
         },
         {
           "key": "player1",
-          "name": "Player1",
+          "name": "Player 2",
           "description": "Ideal size: 128x128",
           "type": "image"
         },

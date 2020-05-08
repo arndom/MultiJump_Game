@@ -116,7 +116,7 @@ class HomeScreen extends PureComponent {
                   backgroundColor={Koji.config.preGameScreen.playButtonColor}
                   onClick={() => this.props.setAppView('game')}
                 >
-                  {'Play'}
+                  {Koji.config.preGameScreen.playButtonText}
                 </PlayButton>
               </div>
             </Content>
