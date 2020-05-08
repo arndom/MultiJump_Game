@@ -116,7 +116,7 @@ export class Player extends Entity {
                     obstacles[i].handleDestroy();
 
                     if (!this.isPowerupEnabled && this.invincibilityTimer <= 0) {
-                        // this.loseLife();
+                        this.loseLife();
                     }
 
                     break;
