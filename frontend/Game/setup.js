@@ -7,7 +7,7 @@ export default function setup() {
 
  window.addEventListener('touchstart', function(e) {
 
-        if (!hasGameEnded ){  
+        if (!hasGameEnded && startCountdown <= -1 ){  
         console.log(e.touches[0].clientY);
         
             if(e.touches[0].clientY <= height*0.45 ){
