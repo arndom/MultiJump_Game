@@ -3,7 +3,7 @@ export default function setup() {
   width = window.innerWidth;
   height = window.innerHeight;
 
-    createCanvas(width, height);
+  createCanvas(width, height);
 
  window.addEventListener('touchstart', function(e) {
 

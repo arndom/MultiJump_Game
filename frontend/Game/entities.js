@@ -345,7 +345,7 @@ export class Obstacle extends Entity {
         const x = this.pos.x;
         // const x = width + objSize * 10;
         // let y = this.pos.y;
-        let y = this.pos.y - globalSizeMod * objSize;
+        let y = this.pos.y - globalSizeMod * objSize* random(1, 1.5);
 
         if (this.isAir) {
             if (random() < 0.5) {
@@ -871,6 +871,8 @@ class PlayerDummy extends Entity {
 
             this.scale.y = Ease(EasingFunctions.easeOutCubic, this.landAnimTimer, 0.5, 0.5);
             this.modifierY = Ease(EasingFunctions.easeOutCubic, this.landAnimTimer, this.sizeMod * objSize / 4, -this.sizeMod * objSize / 4);
+           
+
         }
     }
 

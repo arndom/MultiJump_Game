@@ -39,8 +39,10 @@ export default function draw() {
     //     handleEndTransition();
     // }
 
+    if(!hasGameEnded){
+        drawScore();    
+    }
 
-    drawScore();
     cleanup();
 }
 
@@ -544,7 +546,7 @@ function manageSpawn() {
 function spawnObstacle() {
 
     const x = width + objSize * 5;
-    const x2 = width + objSize * 3;
+    const x2 = width + objSize;
 
     let y = groundLevel - objSize * groundSizeMod / 2 - globalSizeMod * objSize / 2;
     let y2 = midLevel - objSize * groundSizeMod /2 -globalSizeMod *objSize /2;
@@ -567,7 +569,10 @@ function spawnObstacle() {
 }
 
 function spawnBackground() {
-    for (let i = 0; i < imgBackground.length; i++) {
-        backgroundLayers.push(new BackgroundLayer(i));
+    if (backgroundLayers.length < imgBackground.length) {
+        for (let i = 0; i < imgBackground.length; i++) {
+            backgroundLayers.push(new BackgroundLayer(i));
+        }
     }
+    
 }
