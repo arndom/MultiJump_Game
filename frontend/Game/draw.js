@@ -159,7 +159,6 @@ function cleanup() {
 }
 
 export function init() {
-    clearArrays();
     cleanup();
 
     updateSound();
@@ -209,6 +208,7 @@ function clearArrays() {
     floatingTexts = [];
     particles = [];
     collectibles = [];
+    backgroundLayers = [];
 }
 
 export function addScore(amount) {
@@ -465,8 +465,8 @@ function updateEntities() {
 }
 
 export function endGame() {
-    clearArrays();
-    cleanup();
+    // clearArrays();
+    // cleanup();
 
     hasGameEnded = true;
     gameTimer = 0;
